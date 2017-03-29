@@ -9,5 +9,45 @@
 
 
 <ion-content padding>
-
+  <form [formGroup]="bmiForm">
+    <ion-item>
+      <ion-label>Gender:</ion-label>
+      <ion-select formControlName="gender">
+        <ion-option value="male">Male</ion-option>
+        <ion-option value="female">Female</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Date of Birth</ion-label>
+      <ion-datetime displayFormat="MM/DD/YYYY" formControlName="birth"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-range *ngIf="kilo" min="0" max="635" pin="true" color="primary" >
+        <ion-label range-left>0 kg</ion-label>
+        <ion-label range-right>635 kg</ion-label>
+      </ion-range>
+      <ion-range *ngIf="pound" min="0" max="1400" pin="true" color="primary">
+        <ion-label range-left>0 lb</ion-label>
+        <ion-label range-right>1400 lb</ion-label>
+      </ion-range>
+      <ion-label>Weight:</ion-label>
+    </ion-item>
+    <ion-grid>
+      <ion-row>
+        <ion-col width-25>
+          <ion-item>
+            <ion-input type="number" formControlName="noWeight"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col width-70>
+          <ion-item>
+            <ion-select (ionChange)="weightChange()" formControlName="weight">
+              <ion-option value="kg">Kilogram</ion-option>
+              <ion-option value="lb">Pound</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
 </ion-content>
