@@ -3,8 +3,14 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { Page1 } from '../pages/page1/page1';
-import { Page2 } from '../pages/page2/page2';
+import { BmiPage } from '../pages/bmi/bmi';
+import { DbwPage } from '../pages/dbw/dbw';
+import { EnergyRequirementPage } from '../pages/energy-requirement/energy-requirement';
+import { WaistCircumferencePage } from '../pages/waist-circumference/waist-circumference';
+import { WaistHipPage } from '../pages/waist-hip/waist-hip';
+import { WaistHeightPage } from '../pages/waist-height/waist-height';
+
+// import { Page2 } from '../pages/page2/page2';
 
 
 @Component({
@@ -13,7 +19,7 @@ import { Page2 } from '../pages/page2/page2';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = Page1;
+  rootPage: any = BmiPage;
 
   pages: Array<{title: string, component: any}>;
 
@@ -22,8 +28,12 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Page One', component: Page1 },
-      { title: 'Page Two', component: Page2 }
+      { title: 'Body Mass Index', component: BmiPage },
+      { title: 'Desirable Body Weight', component: DbwPage },
+      { title: 'Energy Requirement', component: EnergyRequirementPage },
+      { title: 'Waist Circumference', component: WaistCircumferencePage },
+      { title: 'Waist-Hip Ratio', component: WaistHipPage },
+      { title: 'Waist-Height Ratio', component: WaistHeightPage },
     ];
 
   }
