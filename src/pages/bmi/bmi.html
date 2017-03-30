@@ -22,32 +22,50 @@
       <ion-datetime displayFormat="MM/DD/YYYY" formControlName="birth"></ion-datetime>
     </ion-item>
     <ion-item>
-      <ion-range *ngIf="kilo" min="0" max="635" pin="true" color="primary" >
+      <ion-range (ionChange)="kiloChange()" *ngIf="kilo" formControlName="kiloRange" min="0" max="635" pin="true" color="dark" >
         <ion-label range-left>0 kg</ion-label>
         <ion-label range-right>635 kg</ion-label>
       </ion-range>
-      <ion-range *ngIf="pound" min="0" max="1400" pin="true" color="primary">
+      <ion-range (ionChange)="poundChange()" *ngIf="pound" formControlName="poundRange" min="0" max="1400" pin="true" color="dark">
         <ion-label range-left>0 lb</ion-label>
         <ion-label range-right>1400 lb</ion-label>
       </ion-range>
       <ion-label>Weight:</ion-label>
     </ion-item>
-    <ion-grid>
-      <ion-row>
-        <ion-col width-25>
-          <ion-item>
-            <ion-input type="number" formControlName="noWeight"></ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col width-70>
-          <ion-item>
-            <ion-select (ionChange)="weightChange()" formControlName="weight">
-              <ion-option value="kg">Kilogram</ion-option>
-              <ion-option value="lb">Pound</ion-option>
-            </ion-select>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+    <ion-item>
+      <ion-input (blur)="weightChange()" type="number" formControlName="noWeight"></ion-input>
+      <ion-select (ionChange)="weightTypeChange()" formControlName="weight">
+        <ion-option value="kg">Kilogram</ion-option>
+        <ion-option value="lb">Pound</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-range (ionChange)="cmChange()" *ngIf="cm" formControlName="cmRange" min="0" max="275" pin="true" color="dark" >
+        <ion-label range-left>0 cm</ion-label>
+        <ion-label range-right>275 cm</ion-label>
+      </ion-range>
+      <ion-range (ionChange)="ftChange()" *ngIf="ft" formControlName="ftRange" min="0" max="9" pin="true" color="dark" >
+        <ion-label range-left>0 ft</ion-label>
+        <ion-label range-right>9 ft</ion-label>
+      </ion-range>
+      <ion-label>Height:</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-input (blur)="heightChange()" *ngIf="cm" type="number" formControlName="noHeight"></ion-input>
+      <ion-input (blur)="heightChange()" *ngIf="ft" type="number" formControlName="noHeight"></ion-input>
+      <ion-select (ionChange)="heightTypeChange()" formControlName="height">
+        <ion-option value="cm">Centimeters</ion-option>
+        <ion-option value="ft">Feet</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="ft">
+      <ion-input (blur)="heightChange()" type="number" formControlName="noHeightIn"></ion-input>
+      <ion-select formControlName="heightIn" disabled>
+        <ion-option value="in">Inches</ion-option>
+      </ion-select>
+    </ion-item>
+    <div style="text-align: center">
+      <button ion-button color="primary" outline (click)="submit()">Submit</button>
+    </div>  
   </form>
 </ion-content>
