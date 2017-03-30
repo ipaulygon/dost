@@ -20,7 +20,7 @@ export class BmiPage {
   pound : boolean = false;
   cm : boolean = true;
   ft : boolean = false;
-  store : any;
+  background : boolean = true;
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public toastCtrl: ToastController,) {
     this.bmiForm = formBuilder.group({
         gender: ['', Validators.compose([Validators.required])],
