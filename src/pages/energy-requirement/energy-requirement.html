@@ -9,5 +9,32 @@
 
 
 <ion-content padding>
-
+    <ion-list>
+      <ion-item padding>
+        <ion-label>Gender:</ion-label>
+          <ion-select [(ngModel)]="gender">
+            <ion-option value="Male" selected="true">Male</ion-option>
+            <ion-option value="Female">Female</ion-option>
+          </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Age Range:</ion-label>
+        <ion-select [(ngModel)]="ageRange" interface = "action-sheet">
+          <ion-option value="Children, 1-2">Children, 1-2</ion-option>
+          <ion-option value="Children, 3-5">Children, 3-5</ion-option>
+          <ion-option value="Children, 6-9">Children, 6-9</ion-option>
+          <ion-option value="Children, 10-12">Children, 10-12</ion-option>
+          <ion-option value="Adolescents, 13-15">Adolescents, 13-15</ion-option>
+          <ion-option value="Adolescents, 16-18">Adolescents, 16-18</ion-option>
+          <ion-option value="Adult, 19 and above">"Adult, 19 and above</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label>Height:</ion-label>
+        <ion-range min="122" max="243" [(ngModel)]="height_cm" pin="true" color="dark">
+          <ion-label range-left>122 cm</ion-label>
+          <ion-label range-right>243 cm</ion-label>
+        </ion-range>
+      </ion-item>
+    </ion-list>
 </ion-content>
