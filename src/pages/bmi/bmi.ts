@@ -46,7 +46,7 @@ export class BmiPage {
   kiloChange(){
     this.bmiForm.controls['noWeight'].setValue(this.bmiForm.value.kiloRange);
     this.submit();
-}
+  }
 
   poundChange(){
     this.bmiForm.controls['noWeight'].setValue(this.bmiForm.value.poundRange);
@@ -111,7 +111,7 @@ export class BmiPage {
         if(inch=='' || inch==null){
           inch = 0;
         }
-        let toInch = feet+inch;
+        let toInch = eval(feet+"+"+inch);
         let cm = Math.round((toInch*2.54)*100)/100;
         this.bmiForm.controls['noHeight'].setValue(cm);
         this.bmiForm.controls['cmRange'].setValue(cm);
@@ -137,6 +137,19 @@ export class BmiPage {
     }
   }
 
+  getAge() 
+  {
+    var today = new Date();
+    var birthDate = new Date(this.bmiForm.value.birth);
+    var age = today.getFullYear() - birthDate.getFullYear();
+    var m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
+    {
+        age--;
+    }
+    return age;
+  }
+
   submit(){
     if(this.bmiForm.valid){
       if(this.bmiForm.value.noWeight!=0 || this.bmiForm.value.noHeight!=0 || this.bmiForm.value.noHeightIn!=0){
@@ -156,10 +169,12 @@ export class BmiPage {
           if(inch=='' || inch==null){
             inch = 0;
           }
-          let toInch = feet+inch;
+          let toInch = eval(feet+"+"+inch);
           let cm = Math.round((toInch*2.54)*100)/100;
           height = Math.round((cm/100)*100)/100;
         }//end of height
+        //getAge
+        let age = this.getAge();
         //start BMI
         let bmi = Math.round((weight/(height*height))*100)/100;
         this.message = "Your BMI is " + bmi + "kg/m²";

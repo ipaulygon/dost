@@ -12,14 +12,14 @@
   <form [formGroup]="bmiForm">
     <ion-item>
       <ion-label>Gender:</ion-label>
-      <ion-select formControlName="gender">
+      <ion-select (ionChange)="submit()" formControlName="gender">
         <ion-option value="male">Male</ion-option>
         <ion-option value="female">Female</ion-option>
       </ion-select>
     </ion-item>
     <ion-item>
       <ion-label floating>Date of Birth</ion-label>
-      <ion-datetime displayFormat="MMMM DD, YYYY" formControlName="birth"></ion-datetime>
+      <ion-datetime (ionChange)="submit()" displayFormat="MMMM DD, YYYY" formControlName="birth"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-range (ionChange)="kiloChange()" *ngIf="kilo" formControlName="kiloRange" min="0" max="635" pin="true" color="dark" >
@@ -59,7 +59,7 @@
       </ion-select>
     </ion-item>
     <ion-item *ngIf="ft">
-      <ion-input (blur)="heightChange()" type="number" formControlName="noHeightIn"></ion-input>
+      <ion-input (blur)="submit()" type="number" formControlName="noHeightIn"></ion-input>
       <ion-select formControlName="heightIn" disabled>
         <ion-option value="in">Inches</ion-option>
       </ion-select>
@@ -67,7 +67,7 @@
   </form>
   <br>
   <div style="text-align: center">
-    <div style="font-size: 14px" *ngIf="submitAttempt">
+    <div style="font-size: 16px" *ngIf="submitAttempt">
       {{message}}<br>
       <span *ngIf="abnormal">You are <b style="color:red">{{status}}</b></span>
       <span *ngIf="normal">You are <b style="color:green">{{status}}</b></span>
