@@ -19,7 +19,7 @@
     </ion-item>
     <ion-item>
       <ion-label floating>Date of Birth</ion-label>
-      <ion-datetime displayFormat="MM/DD/YYYY" formControlName="birth"></ion-datetime>
+      <ion-datetime displayFormat="MMMM DD, YYYY" formControlName="birth"></ion-datetime>
     </ion-item>
     <ion-item>
       <ion-range (ionChange)="kiloChange()" *ngIf="kilo" formControlName="kiloRange" min="0" max="635" pin="true" color="dark" >
@@ -63,9 +63,15 @@
       <ion-select formControlName="heightIn" disabled>
         <ion-option value="in">Inches</ion-option>
       </ion-select>
-    </ion-item>
-    <div style="text-align: center">
-      <button ion-button color="primary" outline (click)="submit()">Submit</button>
-    </div>  
+    </ion-item> 
   </form>
+  <br>
+  <div style="text-align: center">
+    <div style="font-size: 14px" *ngIf="submitAttempt">
+      {{message}}<br>
+      <span *ngIf="abnormal">You are <b style="color:red">{{status}}</b></span>
+      <span *ngIf="normal">You are <b style="color:green">{{status}}</b></span>
+    </div>
+    <br>
+  </div>  
 </ion-content>
