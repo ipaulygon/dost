@@ -12,14 +12,14 @@
     <ion-list>
       <ion-item padding>
         <ion-label>Gender:</ion-label>
-          <ion-select [(ngModel)]="gender">
-            <ion-option value="Male" selected="true">Male</ion-option>
+          <ion-select [(ngModel)]="gender" name="gender">
+            <ion-option value="Male">Male</ion-option>
             <ion-option value="Female">Female</ion-option>
           </ion-select>
       </ion-item>
       <ion-item>
         <ion-label>Age Range:</ion-label>
-        <ion-select [(ngModel)]="ageRange" interface = "action-sheet">
+        <ion-select [(ngModel)]="ageRange" name="ageRange">
           <ion-option value="Children, 1-2">Children, 1-2</ion-option>
           <ion-option value="Children, 3-5">Children, 3-5</ion-option>
           <ion-option value="Children, 6-9">Children, 6-9</ion-option>
@@ -31,10 +31,19 @@
       </ion-item>
       <ion-item>
         <ion-label>Height:</ion-label>
-        <ion-range min="122" max="243" [(ngModel)]="height_cm" pin="true" color="dark">
-          <ion-label range-left>122 cm</ion-label>
-          <ion-label range-right>243 cm</ion-label>
+        <ion-range [(ngModel)]="height" name="height" pin="true" color="dark" min="{{heightMin}}" max="{{heightMax}}">
+          <ion-label name="heightMin" range-left>{{heightMin}}&ensp;{{unitMeasureAbbrev}}</ion-label>
+          <ion-label name="heightMax" range-right>{{heightMax}}&ensp;{{unitMeasureAbbrev}}</ion-label>
         </ion-range>
+      </ion-item>
+      <ion-item>
+        <ion-input type="number" [(ngModel)]="height"></ion-input>
+        <ion-select [(ngModel)] = "unitMeasure" name="unitMeasure" (ionChange)="unitChanged()">
+          <ion-option value ="--Select Unit--" disabled>--Select Unit--</ion-option>
+          <ion-option value ="Centimeters">Centimeters</ion-option>
+          <ion-option value ="Feet" >Feet</ion-option>
+          <ion-option value ="Inches" >Inches</ion-option>
+        </ion-select>
       </ion-item>
     </ion-list>
 </ion-content>
