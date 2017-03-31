@@ -9,5 +9,62 @@
 
 
 <ion-content padding>
-  
+    <form [formGroup]="waistHipForm">
+    <ion-item>
+      <ion-label>Gender:</ion-label>
+      <ion-select formControlName="gender" (ionChange)="getRatio()">
+        <ion-option value="male">Male</ion-option>
+        <ion-option value="female">Female</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-range min="51" max="180" pin="true" color="dark" *ngIf="cm" formControlName="cmWaistRange" (ionChange)="cmWaistChange(); getRatio()">
+        <ion-label range-left>20 cm</ion-label>
+        <ion-label range-right>180 cm</ion-label>
+      </ion-range>
+      <ion-range min="20" max="80" pin="true" color="dark" *ngIf="in" formControlName="inWaistRange" (ionChange)="inWaistChange(); getRatio()">
+        <ion-label range-left>20 in</ion-label>
+        <ion-label range-right>80 in</ion-label>
+      </ion-range>
+      <ion-label>Waist Circumference:</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-input type="number" formControlName="noWaist"></ion-input>
+      <ion-select (ionChange)="waistUnitChange()" formControlName="waist">
+        <ion-option value="cm">Centimeters</ion-option>
+        <ion-option value="in">Inches</ion-option>
+      </ion-select>
+    </ion-item>
+
+     <ion-item>
+      <ion-range min="51" max="180" pin="true" color="dark" *ngIf="cm" formControlName="cmHipRange" (ionChange)="cmHipChange(); getRatio()">
+        <ion-label range-left>20 cm</ion-label>
+        <ion-label range-right>180 cm</ion-label>
+      </ion-range>
+      <ion-range min="20" max="80" pin="true" color="dark" *ngIf="in" formControlName="inHipRange" (ionChange)="inHipChange(); getRatio()">
+        <ion-label range-left>20 in</ion-label>
+        <ion-label range-right>80 in</ion-label>
+      </ion-range>
+      <ion-label>Hip Circumference:</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-input type="number" formControlName="noHip"></ion-input>
+      <ion-select (ionChange)="hipUnitChange()" formControlName="hip">
+        <ion-option value="cm">Centimeters</ion-option>
+        <ion-option value="in">Inches</ion-option>
+      </ion-select>
+    </ion-item>
+    
+    <br>
+    <ion-card>
+	  <ion-card-header style="text-align: center;">
+	    <h2>RESULT</h2>
+	  </ion-card-header>
+
+	  <ion-card-content style="text-align: center;">
+	    <!-- Add card content here! -->
+	    Your waist hip ratio is {{ratio}} which may indicate <b>{{ (isOnRisk) ? "HIGHER RISK" : "LOWER RISK" }}</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.
+	  </ion-card-content>
+	</ion-card>
+  </form>
 </ion-content>
