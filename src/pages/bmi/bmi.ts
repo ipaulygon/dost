@@ -15,7 +15,6 @@ import { SQLite } from 'ionic-native';
 })
 export class BmiPage {
   bmiForm : FormGroup;
-  submitAttempt : boolean = true;
   kilo : boolean = true;
   pound : boolean = false;
   cm : boolean = true;
