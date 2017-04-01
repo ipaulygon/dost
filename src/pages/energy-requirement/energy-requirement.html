@@ -9,41 +9,44 @@
 
 
 <ion-content padding>
+  <form [formGroup]="formGroup" (ionChange) = "isFormComplete()">
     <ion-list>
       <ion-item padding>
         <ion-label>Gender:</ion-label>
-          <ion-select [(ngModel)]="gender" name="gender">
+          <ion-select [(ngModel)]="gender" name="gender" formControlName="gender">
             <ion-option value="Male">Male</ion-option>
             <ion-option value="Female">Female</ion-option>
           </ion-select>
       </ion-item>
       <ion-item>
         <ion-label>Age Range:</ion-label>
-        <ion-select [(ngModel)]="ageRange" name="ageRange">
-          <ion-option value="Children, 1-2">Children, 1-2</ion-option>
-          <ion-option value="Children, 3-5">Children, 3-5</ion-option>
-          <ion-option value="Children, 6-9">Children, 6-9</ion-option>
-          <ion-option value="Children, 10-12">Children, 10-12</ion-option>
-          <ion-option value="Adolescents, 13-15">Adolescents, 13-15</ion-option>
-          <ion-option value="Adolescents, 16-18">Adolescents, 16-18</ion-option>
-          <ion-option value="Adult, 19 and above">"Adult, 19 and above</ion-option>
+        <ion-select [(ngModel)]="ageRange" name="ageRange" formControlName="ageRange" (ionChange) = "ageRangeChanged()">
+          <ion-option value="1-2">Children, 1-2</ion-option>
+          <ion-option value="3-5">Children, 3-5</ion-option>
+          <ion-option value="6-9">Children, 6-9</ion-option>
+          <ion-option value="10-12">Children, 10-12</ion-option>
+          <ion-option value="13-15">Adolescents, 13-15</ion-option>
+          <ion-option value="16-18">Adolescents, 16-18</ion-option>
+          <ion-option value="19+">"Adult, 19 and above</ion-option>
         </ion-select>
       </ion-item>
+    </ion-list>
+    <ion-list *ngIf = "isAdult">
       <ion-item>
         <ion-label>Height:</ion-label>
-        <ion-range [(ngModel)]="height" name="height" pin="true" color="dark" min="{{heightMin}}" max="{{heightMax}}">
+        <ion-range [(ngModel)]="height" name="height" pin="true" color="dark" min="{{heightMin}}" max="{{heightMax}}" [ngModelOptions]="{standalone: true}" step="0.01">
           <ion-label name="heightMin" range-left>{{heightMin}}&ensp;{{unitMeasureAbbrev}}</ion-label>
           <ion-label name="heightMax" range-right>{{heightMax}}&ensp;{{unitMeasureAbbrev}}</ion-label>
         </ion-range>
       </ion-item>
       <ion-item>
-        <ion-input type="number" [(ngModel)]="height"></ion-input>
-        <ion-select [(ngModel)] = "unitMeasure" name="unitMeasure" (ionChange)="unitChanged()">
-          <ion-option value ="--Select Unit--" disabled>--Select Unit--</ion-option>
+        <ion-input type="number" [(ngModel)]="height" formControlName="height" step="0.01"></ion-input>
+        <ion-select [(ngModel)] = "unitMeasure" name="unitMeasure" (ionChange)="unitChanged()" [ngModelOptions]="{standalone: true}">
           <ion-option value ="Centimeters">Centimeters</ion-option>
           <ion-option value ="Feet" >Feet</ion-option>
           <ion-option value ="Inches" >Inches</ion-option>
         </ion-select>
       </ion-item>
     </ion-list>
+  </form>
 </ion-content>
