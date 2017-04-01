@@ -137,17 +137,36 @@ export class BmiPage {
     }
   }
 
-  getAge() 
-  {
-    var today = new Date();
-    var birthDate = new Date(this.bmiForm.value.birth);
-    var age = today.getFullYear() - birthDate.getFullYear();
-    var m = today.getMonth() - birthDate.getMonth();
+  getAge(){
+    let today = new Date();
+    let birthDate = new Date(this.bmiForm.value.birth);
+    let age = today.getFullYear() - birthDate.getFullYear();
+    let m = today.getMonth() - birthDate.getMonth();
     if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
     {
         age--;
     }
     return age;
+  }
+
+  getMonth(){
+    let today = new Date();
+    let birthDate = new Date(this.bmiForm.value.birth);
+    let m = today.getMonth() - birthDate.getMonth();
+    if (m < 0 && today.getDate() > birthDate.getDate()){
+      m = 12-(Math.abs(m));
+    }else if(m < 0 && today.getDate() < birthDate.getDate()){
+      m = 11-(Math.abs(m));
+    }else if(m > 0 && today.getDate() > birthDate.getDate()){
+      m = m;
+    }else if(m > 0 && today.getDate() < birthDate.getDate()){
+      m = m-1;
+    }else if(m === 0 && today.getDate() < birthDate.getDate()){
+      m = 11;
+    }else{
+      m = 0;
+    }
+    return m;
   }
 
   submit(){
@@ -173,28 +192,207 @@ export class BmiPage {
           let cm = Math.round((toInch*2.54)*100)/100;
           height = Math.round((cm/100)*100)/100;
         }//end of height
-        //getAge
+        //getAge && getMonth
         let age = this.getAge();
+        let month = this.getMonth();
         //start BMI
         let bmi = Math.round((weight/(height*height))*100)/100;
         this.message = "Your BMI is " + bmi + "kg/m²";
         //start status
-        if(bmi<18.5){
-          this.abnormal = true;
-          this.normal = false;
-          this.status = "UNDERWEIGHT";
-        }else if(bmi >= 18.5 && bmi<25){
-          this.abnormal = false;
-          this.normal = true;
-          this.status = "NORMAL";
-        }else if(bmi >=25 && bmi <30){
-          this.abnormal = true;
-          this.normal = false;
-          this.status = "OVERWEIGHT";
-        }else{
-          this.abnormal = true;
-          this.normal = false;
-          this.status = "OBESE";
+        //14
+        if(age == 14){
+          //male
+          if(this.bmiForm.value.gender=="male"){
+            if(bmi < 16){
+              this.abnormal = true; this.normal = false; this.status = "SEVERE THINNESS";
+            }else if(bmi >= 16 && bmi < 17.6){
+              this.abnormal = true; this.normal = false; this.status = "THINNESS";
+            }else if(bmi >= 17.6 && bmi < 19.7){
+              this.abnormal = true; this.normal = false; this.status = "UNDERWEIGHT";
+            }else if(bmi >= 19.7 && bmi < 22.6){
+              this.abnormal = false; this.normal = true; this.status = "NORMAL";
+            }else if(bmi >= 22.6 && bmi < 26.9){
+              this.abnormal = true; this.normal = false; this.status = "OVERWEIGHT";
+            }else if(bmi >= 26.9){
+              this.abnormal = true; this.normal = false; this.status = "OBESE";
+            }
+          }
+          //female
+          else{
+            if(bmi < 15.8){
+              this.abnormal = true; this.normal = false; this.status = "SEVERE THINNESS";
+            }else if(bmi >= 15.8 && bmi < 17.7){
+              this.abnormal = true; this.normal = false; this.status = "THINNESS";
+            }else if(bmi >= 17.7 && bmi < 20.2){
+              this.abnormal = true; this.normal = false; this.status = "UNDERWEIGHT";
+            }else if(bmi >= 20.2 && bmi < 23.5){
+              this.abnormal = false; this.normal = true; this.status = "NORMAL";
+            }else if(bmi >= 23.5 && bmi < 28.2){
+              this.abnormal = true; this.normal = false; this.status = "OVERWEIGHT";
+            }else if(bmi >= 28.2){
+              this.abnormal = true; this.normal = false; this.status = "OBESE";
+            }
+          }
+        }
+        //15
+        if(age == 15){
+          //male
+          if(this.bmiForm.value.gender=="male"){
+            if(bmi < 16.5){
+              this.abnormal = true; this.normal = false; this.status = "SEVERE THINNESS";
+            }else if(bmi >= 16.5 && bmi < 18.2){
+              this.abnormal = true; this.normal = false; this.status = "THINNESS";
+            }else if(bmi >= 18.2 && bmi < 20.4){
+              this.abnormal = true; this.normal = false; this.status = "UNDERWEIGHT";
+            }else if(bmi >= 20.4 && bmi < 23.5){
+              this.abnormal = false; this.normal = true; this.status = "NORMAL";
+            }else if(bmi >= 23.5 && bmi < 27.8){
+              this.abnormal = true; this.normal = false; this.status = "OVERWEIGHT";
+            }else if(bmi >= 27.8){
+              this.abnormal = true; this.normal = false; this.status = "OBESE";
+            }
+          }
+          //female
+          else{
+            if(bmi < 16.2){
+              this.abnormal = true; this.normal = false; this.status = "SEVERE THINNESS";
+            }else if(bmi >= 16.2 && bmi < 18.1){
+              this.abnormal = true; this.normal = false; this.status = "THINNESS";
+            }else if(bmi >= 18.1 && bmi < 20.7){
+              this.abnormal = true; this.normal = false; this.status = "UNDERWEIGHT";
+            }else if(bmi >= 20.7 && bmi < 24.1){
+              this.abnormal = false; this.normal = true; this.status = "NORMAL";
+            }else if(bmi >= 24.1 && bmi < 28.8){
+              this.abnormal = true; this.normal = false; this.status = "OVERWEIGHT";
+            }else if(bmi >= 28.8){
+              this.abnormal = true; this.normal = false; this.status = "OBESE";
+            }
+          }
+        }
+        //16
+        if(age == 16){
+          //male
+          if(this.bmiForm.value.gender=="male"){
+            if(bmi < 16.9){
+              this.abnormal = true; this.normal = false; this.status = "SEVERE THINNESS";
+            }else if(bmi >= 16.9 && bmi < 18.7){
+              this.abnormal = true; this.normal = false; this.status = "THINNESS";
+            }else if(bmi >= 18.7 && bmi < 21.1){
+              this.abnormal = true; this.normal = false; this.status = "UNDERWEIGHT";
+            }else if(bmi >= 21.1 && bmi < 24.2){
+              this.abnormal = false; this.normal = true; this.status = "NORMAL";
+            }else if(bmi >= 24.2 && bmi < 28.6){
+              this.abnormal = true; this.normal = false; this.status = "OVERWEIGHT";
+            }else if(bmi >= 28.6){
+              this.abnormal = true; this.normal = false; this.status = "OBESE";
+            }
+          }
+          //female
+          else{
+            if(bmi < 16.3){
+              this.abnormal = true; this.normal = false; this.status = "SEVERE THINNESS";
+            }else if(bmi >= 16.3 && bmi < 18.4){
+              this.abnormal = true; this.normal = false; this.status = "THINNESS";
+            }else if(bmi >= 18.4 && bmi < 21){
+              this.abnormal = true; this.normal = false; this.status = "UNDERWEIGHT";
+            }else if(bmi >= 21 && bmi < 24.5){
+              this.abnormal = false; this.normal = true; this.status = "NORMAL";
+            }else if(bmi >= 24.5 && bmi < 29.3){
+              this.abnormal = true; this.normal = false; this.status = "OVERWEIGHT";
+            }else if(bmi >= 29.3){
+              this.abnormal = true; this.normal = false; this.status = "OBESE";
+            }
+          }
+        }
+        //17
+        if(age == 17){
+          //male
+          if(this.bmiForm.value.gender=="male"){
+            if(bmi < 17.3){
+              this.abnormal = true; this.normal = false; this.status = "SEVERE THINNESS";
+            }else if(bmi >= 17.3 && bmi < 19.2){
+              this.abnormal = true; this.normal = false; this.status = "THINNESS";
+            }else if(bmi >= 19.2 && bmi < 21.7){
+              this.abnormal = true; this.normal = false; this.status = "UNDERWEIGHT";
+            }else if(bmi >= 21.7 && bmi < 24.9){
+              this.abnormal = false; this.normal = true; this.status = "NORMAL";
+            }else if(bmi >= 24.9 && bmi < 29.2){
+              this.abnormal = true; this.normal = false; this.status = "OVERWEIGHT";
+            }else if(bmi >= 29.2){
+              this.abnormal = true; this.normal = false; this.status = "OBESE";
+            }
+          }
+          //female
+          else{
+            if(bmi < 16.4){
+              this.abnormal = true; this.normal = false; this.status = "SEVERE THINNESS";
+            }else if(bmi >= 16.4 && bmi < 18.6){
+              this.abnormal = true; this.normal = false; this.status = "THINNESS";
+            }else if(bmi >= 18.6 && bmi < 21.2){
+              this.abnormal = true; this.normal = false; this.status = "UNDERWEIGHT";
+            }else if(bmi >= 21.2 && bmi < 24.8){
+              this.abnormal = false; this.normal = true; this.status = "NORMAL";
+            }else if(bmi >= 24.8 && bmi < 29.5){
+              this.abnormal = true; this.normal = false; this.status = "OVERWEIGHT";
+            }else if(bmi >= 29.5){
+              this.abnormal = true; this.normal = false; this.status = "OBESE";
+            }
+          }
+        }
+        //18
+        if(age == 18){
+          //male
+          if(this.bmiForm.value.gender=="male"){
+            if(bmi < 17.5){
+              this.abnormal = true; this.normal = false; this.status = "SEVERE THINNESS";
+            }else if(bmi >= 17.5 && bmi < 19.6){
+              this.abnormal = true; this.normal = false; this.status = "THINNESS";
+            }else if(bmi >= 19.6 && bmi < 22.2){
+              this.abnormal = true; this.normal = false; this.status = "UNDERWEIGHT";
+            }else if(bmi >= 22.2 && bmi < 25.4){
+              this.abnormal = false; this.normal = true; this.status = "NORMAL";
+            }else if(bmi >= 25.4 && bmi < 29.7){
+              this.abnormal = true; this.normal = false; this.status = "OVERWEIGHT";
+            }else if(bmi >= 29.7){
+              this.abnormal = true; this.normal = false; this.status = "OBESE";
+            }
+          }
+          //female
+          else{
+            if(bmi < 16.5){
+              this.abnormal = true; this.normal = false; this.status = "SEVERE THINNESS";
+            }else if(bmi >= 16.5 && bmi < 18.7){
+              this.abnormal = true; this.normal = false; this.status = "THINNESS";
+            }else if(bmi >= 18.7 && bmi < 21.4){
+              this.abnormal = true; this.normal = false; this.status = "UNDERWEIGHT";
+            }else if(bmi >= 21.4 && bmi < 25){
+              this.abnormal = false; this.normal = true; this.status = "NORMAL";
+            }else if(bmi >= 25 && bmi < 29.7){
+              this.abnormal = true; this.normal = false; this.status = "OVERWEIGHT";
+            }else if(bmi >= 29.7){
+              this.abnormal = true; this.normal = false; this.status = "OBESE";
+            }
+          }
+        }
+        //above
+        if(age > 19 && month > 0){
+          if(bmi < 18.5){
+            this.abnormal = true;
+            this.normal = false;
+            this.status = "UNDERWEIGHT";
+          }else if(bmi >= 18.5 && bmi< 25){
+            this.abnormal = false;
+            this.normal = true;
+            this.status = "NORMAL";
+          }else if(bmi >= 25 && bmi < 30){
+            this.abnormal = true;
+            this.normal = false;
+            this.status = "OVERWEIGHT";
+          }else{
+            this.abnormal = true;
+            this.normal = false;
+            this.status = "OBESE";
+          }
         }
       }
     }
