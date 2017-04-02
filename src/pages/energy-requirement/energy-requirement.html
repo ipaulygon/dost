@@ -45,7 +45,7 @@
           </ion-range>
         </ion-item>
         <ion-item>
-          <ion-input type="number" [(ngModel)]="height" formControlName="height" step="0.01"></ion-input>
+          <ion-input type="number" [(ngModel)]="height" formControlName="height" step="0.01" minlength="{{inputMinLength}}" maxlength="{{inputMaxLength}}"></ion-input>
           <ion-select [(ngModel)] = "unitMeasure" name="unitMeasure" (ionChange)="unitChanged()" [ngModelOptions]="{standalone: true}">
             <ion-option value ="Centimeters">Centimeters</ion-option>
             <ion-option value ="Feet" >Feet</ion-option>
@@ -67,7 +67,7 @@
     </ion-list>
   </form>
   <ion-card *ngIf = "showOutput" text-wrap>
-    <ion-card-content style="font-size: 16px; text-align: center;">
+    <ion-card-content style="font-size: 25px; text-align: center;">
       <div *ngIf = "isAdult" style="text-align: center">
         <p>Your desirable body weight:</p>
         <p><b style="color:green">{{desirableBodyWeightKg}}&ensp;kgs</b>&ensp;or&ensp;<b style="color:green">{{desirableBodyWeightLb}}&ensp;lbs</b></p>

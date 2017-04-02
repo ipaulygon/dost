@@ -1,22 +1,168 @@
+import { validateDeepLinks } from '@ionic/app-scripts/dist/deep-linking/util';
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams ,AlertController} from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-/*
-  Generated class for the WaistCircumference page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-waist-circumference',
   templateUrl: 'waist-circumference.html'
 })
 export class WaistCircumferencePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  gender:any = "male";
+
+  formGroup: FormGroup;
+
+  minCircum: number = 50.8;
+  maxCircum: number = 180;
+
+  inputMinCircum: number;
+  inputMaxCircum: number;
+
+  unitMeasure: any = "centimeters";
+  unitMeasureAbbrev: any = "cm";
+
+  waistCircum: any = 50.8;
+
+  riskIsLow = false;
+  
+  waistCircumValid = false;
+  showOutput = false;
+
+  constructor(public alertctrl:AlertController,public formBuilder:FormBuilder,public navCtrl: NavController, public navParams: NavParams) {
+    this.formGroup = formBuilder.group({
+      gender: ['', Validators.compose([Validators.required])],
+      waistCircum: ['', Validators.compose([Validators.required])]
+    });
+    this.formGroup.get('waistCircum').valueChanges
+		.debounceTime(2000)
+		.subscribe(data => this.waistCircumChanged());
+
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad WaistCircumferencePage');
   }
 
+  genderChanged(){
+    this.showOutput = false;
+    this.submit();
+  }
+
+  waistCircumChanged(){
+    this.showOutput = false;
+    this.waistCircumValid = false;
+
+    if(this.unitMeasure == "centimeters"){
+
+      let alert = this.alertctrl.create({
+            message: "Please enter a valid number greater than 50.8 cm but less than 180 cm or a number with atleast 2 decimal places.",
+            buttons: 
+            [{
+                text: 'Ok',
+                handler: data => {
+                }
+            }]
+        });
+
+      if(this.formGroup.get('waistCircum').valid){
+        if((this.waistCircum >= 50.8) && (this.waistCircum <= 180)){
+          if(this.gender == "male"){
+            if(this.waistCircum < 94){
+              this.riskIsLow = true;
+            }
+            else if(this.waistCircum >= 94){
+              this.riskIsLow = false;
+            }
+          }
+          else if(this.gender == "female"){
+            if(this.waistCircum < 80){
+              this.riskIsLow = true;
+            }
+            else if(this.waistCircum >= 80){
+              this.riskIsLow = false;
+            }
+          }
+          this.waistCircumValid = true;
+        }
+        else{
+          alert.present();
+        }
+      }
+      else{
+        alert.present();
+      }
+    }
+    else if(this.unitMeasure == "inches"){
+
+      let alert = this.alertctrl.create({
+            message: "Please enter a valid number greater than 20 inches but less than 70.9 inches or a number with atleast 2 decimal places.",
+            buttons: 
+            [{
+                text: 'Ok',
+                handler: data => {
+                }
+            }]
+          });
+
+      if(this.formGroup.get('waistCircum').valid){
+        let cm = Math.round(this.waistCircum * 2.54);
+        if((cm >= 20) && (cm <= 70.90)){
+          if(this.gender == "male"){
+            if(this.waistCircum < 94){
+              this.riskIsLow = true;
+            }
+            else if(this.waistCircum >= 94){
+              this.riskIsLow = false;
+            }
+          }
+          else if(this.gender == "female"){
+            if(this.waistCircum < 80){
+              this.riskIsLow = true;
+            }
+            else if(this.waistCircum >= 80){
+              this.riskIsLow = false;
+            }
+          }
+          this.waistCircumValid = true;
+        }
+        else{
+          alert.present();
+        }
+      }//end of if circum is valid
+      else{
+        alert.present();
+      }
+    }//end of inches
+    this.submit();
+  }
+
+  unitChanged(){
+    this.showOutput = false;
+    if(this.unitMeasure == "centimeters"){
+      this.minCircum = 50.8;
+      this.maxCircum = 180;
+      this.unitMeasureAbbrev = "cm";
+      this.inputMinCircum = 2;
+      this.inputMaxCircum = 6;
+      this.waistCircum = Math.round(this.waistCircum * 2.54);
+    }
+    else if(this.unitMeasure == "inches"){
+      this.minCircum = 20;
+      this.maxCircum = 70.90;
+      this.unitMeasureAbbrev = "in";
+      this.inputMinCircum = 2;
+      this.inputMaxCircum = 5;
+      this.waistCircum = Math.round(this.waistCircum / 2.54);
+    }
+    this.submit();
+  }
+
+  submit(){
+    this.showOutput = false;
+    if((this.formGroup.valid)&&(this.waistCircumValid)){
+      this.showOutput = true;
+    }
+    console.log(this.formGroup.status+" "+this.waistCircumValid);
+  }
 }

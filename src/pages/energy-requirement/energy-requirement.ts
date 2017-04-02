@@ -57,8 +57,8 @@ export class EnergyRequirementPage {
       physicalActivity: ['',Validators.compose([Validators.required])]
    });
 
-   	this.adultFormGroup.valueChanges
-		.debounceTime(3000)
+   	this.adultFormGroup.get('height').valueChanges
+		.debounceTime(1000)
 		.subscribe(data => this.heightChanged());
   }
 
@@ -125,30 +125,36 @@ export class EnergyRequirementPage {
         }]
     });
 
-    if(this.unitMeasure == "Centimeters"){
-      if((Number(this.height) > 121) && (Number(this.height) < 243.01)){
-        this.heightValid = true;
+    if(this.adultFormGroup.get('height').valid){
+      if(this.unitMeasure == "Centimeters"){
+        if((Number(this.height) > 121) && (Number(this.height) < 243.01)){
+          this.heightValid = true;
+        }
+        else{
+          alert.present();
+        }
       }
-      else{
-        alert.present();
+      else if(this.unitMeasure == "Feet"){
+        if((Number(this.height) > 3) && (Number(this.height) < 8.01)){
+          this.heightValid = true;
+        }
+        else{
+          alert.present();
+        }
+      }
+      else if(this.unitMeasure == "Inches"){
+        if((Number(this.height) > 47) && (Number(this.height) < 95.01)){
+          this.heightValid = true;
+        }
+        else{
+          alert.present();
+        }
       }
     }
-    else if(this.unitMeasure == "Feet"){
-      if((Number(this.height) > 3) && (Number(this.height) < 8.01)){
-        this.heightValid = true;
-      }
-      else{
-        alert.present();
-      }
+    else{
+      alert.present();
     }
-    else if(this.unitMeasure == "Inches"){
-      if((Number(this.height) > 47) && (Number(this.height) < 95.01)){
-        this.heightValid = true;
-      }
-      else{
-        alert.present();
-      }
-    }
+    
     this.submit();
   }//end of height changed
 
@@ -185,7 +191,7 @@ export class EnergyRequirementPage {
           this.energyRqmt = this.desirableBodyWeightKg * this.physicalActivityValue;
         }
         else if(this.unitMeasureAbbrev == "ft"){
-          cm = (height / 3.26) * 100;
+          cm = Math.round(height /  0.032808);
           this.desirableBodyWeightKg = ((cm - 100)-((cm - 100)*0.1));
           this.desirableBodyWeightLb = Math.round(this.desirableBodyWeightKg * 2.2);
           this.energyRqmt = this.desirableBodyWeightKg * this.physicalActivityValue;
