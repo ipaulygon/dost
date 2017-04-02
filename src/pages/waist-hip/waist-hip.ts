@@ -16,8 +16,10 @@ export class WaistHipPage {
 
   waistHipForm : FormGroup;
   submitAttempt : boolean = false;
-  cm : boolean = true;
-  in : boolean = false;
+  cmWaist : boolean = true;
+  inWaist : boolean = false;
+  cmHip : boolean = true;
+  inHip : boolean = false;
   background : boolean = true;
   ratio : number = 1.00;
   isOnRisk : boolean = true;
@@ -57,9 +59,30 @@ export class WaistHipPage {
     this.waistHipForm.controls['noHip'].setValue(this.waistHipForm.value.inHipRange);
   }
 
+  setWaistRange(){
+    if(this.waistHipForm.value.waist=="cm"){
+      this.waistHipForm.controls['cmWaistRange'].setValue(this.waistHipForm.value.noWaist);
+    }else{
+      this.waistHipForm.controls['inWaistRange'].setValue(this.waistHipForm.value.noWaist);
+    }
+  }
+
+  setHipRange(){
+    if(this.waistHipForm.value.hip=="cm"){
+      this.waistHipForm.controls['cmHipRange'].setValue(this.waistHipForm.value.noHip);
+    }else{
+      this.waistHipForm.controls['inHipRange'].setValue(this.waistHipForm.value.noHip);
+    }
+  }
+
   getRatio()
   {
-  	 this.ratio = Math.round(eval(this.waistHipForm.value.noWaist + '/' + this.waistHipForm.value.noHip)*100)/100;
+    let waist = (this.waistHipForm.value.waist == 'cm') ? this.waistHipForm.value.noWaist : this.convertToCm(this.waistHipForm.value.noWaist);
+    let hip = (this.waistHipForm.value.hip == 'cm') ? this.waistHipForm.value.noHip : this.convertToCm(this.waistHipForm.value.noHip);
+
+
+  	 this.ratio = Math.round(eval(waist + '/' + hip)*100)/100;
+
   	 if((this.ratio >= 0.90) && (this.waistHipForm.value.gender == 'male')){
   	 	this.isOnRisk = true;
   	 }else if((this.ratio >= 0.85) && (this.waistHipForm.value.gender == 'female')){
@@ -71,64 +94,56 @@ export class WaistHipPage {
 
   waistUnitChange(){
     if(this.waistHipForm.value.waist=="cm"){
-      if(!this.cm){
-        this.cm = true;
-        this.in = false;
-        this.waistHipForm.controls['hip'].setValue('cm');
+      if(!this.cmWaist){
+        this.cmWaist = true;
+        this.inWaist = false;
+        // this.waistHipForm.controls['hip'].setValue('cm');
         let inConv = Math.round(eval(this.waistHipForm.value.noWaist+'*'+2.54)*100)/100;
         this.waistHipForm.controls['noWaist'].setValue(inConv);
         this.waistHipForm.controls['cmWaistRange'].setValue(inConv);
-
-        let inConvHip = Math.round(eval(this.waistHipForm.value.noHip+'*'+2.54)*100)/100;
-        this.waistHipForm.controls['noHip'].setValue(inConvHip);
-        this.waistHipForm.controls['cmHipRange'].setValue(inConvHip);
       }
     }else{
-      if(!this.in){
-        this.cm = false;
-        this.in = true;
-        this.waistHipForm.controls['hip'].setValue('in');
+      if(!this.inWaist){
+        this.cmWaist = false;
+        this.inWaist = true;
+        // this.waistHipForm.controls['hip'].setValue('in');
         let cmConv = Math.round(eval(this.waistHipForm.value.noWaist+'/'+2.54)*100)/100;
         this.waistHipForm.controls['noWaist'].setValue(cmConv);
         this.waistHipForm.controls['inWaistRange'].setValue(cmConv);
-
-        let cmConvHip = Math.round(eval(this.waistHipForm.value.noHip+'/'+2.54)*100)/100;
-        this.waistHipForm.controls['noHip'].setValue(cmConvHip);
-        this.waistHipForm.controls['inHipRange'].setValue(cmConvHip);
       }
     }
   }
 
   hipUnitChange(){
     if(this.waistHipForm.value.hip=="cm"){
-      if(!this.cm){
-        this.cm = true;
-        this.in = false;
-        this.waistHipForm.controls['waist'].setValue('cm');
+      if(!this.cmHip){
+        this.cmHip = true;
+        this.inHip = false;
 
-        let inConv = Math.round(eval(this.waistHipForm.value.noWaist+'*'+2.54)*100)/100;
-        this.waistHipForm.controls['noWaist'].setValue(inConv);
-        this.waistHipForm.controls['cmWaistRange'].setValue(inConv);
-
-        let inConvHip = Math.round(eval(this.waistHipForm.value.noHip+'*'+2.54)*100)/100;
-        this.waistHipForm.controls['noHip'].setValue(inConvHip);
-        this.waistHipForm.controls['cmHipRange'].setValue(inConvHip);
+        let cmConv = this.convertToCm(this.waistHipForm.value.noHip);
+        this.waistHipForm.controls['noHip'].setValue(cmConv);
+        this.waistHipForm.controls['cmHipRange'].setValue(cmConv);
       }
     }else{
-      if(!this.in){
-        this.cm = false;
-        this.in = true;
-        this.waistHipForm.controls['waist'].setValue('in');
+      if(!this.inHip){
+        this.cmHip = false;
+        this.inHip = true;
 
-        let cmConv = Math.round(eval(this.waistHipForm.value.noWaist+'/'+2.54)*100)/100;
-        this.waistHipForm.controls['noWaist'].setValue(cmConv);
-        this.waistHipForm.controls['inWaistRange'].setValue(cmConv);
-
-        let cmConvHip = Math.round(eval(this.waistHipForm.value.noHip+'/'+2.54)*100)/100;
-        this.waistHipForm.controls['noHip'].setValue(cmConvHip);
-        this.waistHipForm.controls['inHipRange'].setValue(cmConvHip);
+        let inConv = this.convertToInch(this.waistHipForm.value.noHip);
+        this.waistHipForm.controls['noHip'].setValue(inConv);
+        this.waistHipForm.controls['inHipRange'].setValue(inConv);
       }
     }
+  }
+
+  convertToInch(val)
+  {
+    return Math.round(eval(val+'/'+2.54)*100)/100;
+  }
+
+  convertToCm(val)
+  {
+    return Math.round(eval(val+'*'+2.54)*100)/100;
   }
 
 }
