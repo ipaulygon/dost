@@ -39,26 +39,36 @@
         </ion-item>
         <ion-item>
           <ion-label>Height:</ion-label>
-          <ion-range [(ngModel)]="height" (ionChange) = "heightChanged()" name="height" pin="true" color="dark" min="{{heightMin}}" max="{{heightMax}}" [ngModelOptions]="{standalone: true}" step="0.01">
+          <ion-range *ngIf="unitMeasureAbbrev == 'cm'" [(ngModel)]="height" (ionChange) = "heightChanged()" name="height" pin="true" color="dark" min="{{heightMin}}" max="{{heightMax}}" [ngModelOptions]="{standalone: true}" step="0.01">
+            <ion-label name="heightMin" range-left>{{heightMin}}&ensp;{{unitMeasureAbbrev}}</ion-label>
+            <ion-label name="heightMax" range-right>{{heightMax}}&ensp;{{unitMeasureAbbrev}}</ion-label>
+          </ion-range>
+          <ion-range *ngIf="unitMeasureAbbrev == 'ft'" [(ngModel)]="ft" (ionChange) = "heightChanged()" name="ft" pin="true" color="dark" min="{{heightMin}}" max="{{heightMax}}" [ngModelOptions]="{standalone: true}">
             <ion-label name="heightMin" range-left>{{heightMin}}&ensp;{{unitMeasureAbbrev}}</ion-label>
             <ion-label name="heightMax" range-right>{{heightMax}}&ensp;{{unitMeasureAbbrev}}</ion-label>
           </ion-range>
         </ion-item>
         <ion-item>
-          <ion-input type="number" [(ngModel)]="height" formControlName="height" step="0.01" minlength="{{inputMinLength}}" maxlength="{{inputMaxLength}}"></ion-input>
+          <ion-input type="number" *ngIf="unitMeasureAbbrev == 'cm'" [(ngModel)]="height" formControlName="height" step="0.01" minlength="{{inputMinLength}}" maxlength="{{inputMaxLength}}"></ion-input>
+          <ion-input type="number" *ngIf="unitMeasureAbbrev == 'ft'" [(ngModel)]="ft" formControlName="ft" maxlength="{{inputMaxLength}}"></ion-input>
           <ion-select [(ngModel)] = "unitMeasure" name="unitMeasure" (ionChange)="unitChanged()" [ngModelOptions]="{standalone: true}">
             <ion-option value ="Centimeters">Centimeters</ion-option>
             <ion-option value ="Feet" >Feet</ion-option>
-            <ion-option value ="Inches" >Inches</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item *ngIf="unitMeasureAbbrev == 'ft'">
+          <ion-input type="number" [(ngModel)]="in" minlength="{{inputMinLengthInch}}" maxlength="{{inputMaxLengthInch}}" [formControl]="inControl"></ion-input>
+          <ion-select disabled color="dark" [(ngModel)] = "inchSelect" [ngModelOptions]="{standalone: true}">
+            <ion-option value ="Inches">Inches</ion-option>
           </ion-select>
         </ion-item>
         <ion-item>
-        <ion-label>Physical activity:</ion-label>
-        <ion-select [(ngModel)]="physicalActivity" name="physicalActivity" formControlName="physicalActivity" (ionChange) = "physicalActivityChanged()">
-          <ion-option value="Sedentary">Sedentary</ion-option>
-          <ion-option value="Light">Light</ion-option>
-          <ion-option value="Moderate">Moderate</ion-option>
-          <ion-option value="Heavy">Very Active</ion-option>
+          <ion-label>Physical activity:</ion-label>
+          <ion-select [(ngModel)]="physicalActivity" name="physicalActivity" formControlName="physicalActivity" (ionChange) = "physicalActivityChanged()">
+            <ion-option value="Sedentary">Sedentary</ion-option>
+            <ion-option value="Light">Light</ion-option>
+            <ion-option value="Moderate">Moderate</ion-option>
+            <ion-option value="Heavy">Very Active</ion-option>
         </ion-select>
       </ion-item>
       <ion-item *ngIf="physicalActivity">

@@ -1,6 +1,7 @@
+import { delay } from 'rxjs/operator/delay';
 import { Component } from '@angular/core';
 import { NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import 'rxjs/add/operator/debounceTime';
 
 /*
@@ -24,7 +25,12 @@ export class EnergyRequirementPage {
   unitMeasure: any = "Centimeters";
   unitMeasureAbbrev:any = 'cm';
 
+  ft:number = 4;
+  in:number = 0;
+
   energyRqmt: any;
+
+  inchSelect = 'Inches';
 
   physicalActivity: any;
   physicalActivityDesc: any;
@@ -42,7 +48,10 @@ export class EnergyRequirementPage {
 
   inputMinLength = 3;
   inputMaxLength = 6;
+  inputMinLengthInch=0;
+  inputMaxLengthInch=2;
 
+  inControl: FormControl;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
               public formBuilder:FormBuilder, public toastCtrl:ToastController,
@@ -54,12 +63,23 @@ export class EnergyRequirementPage {
 
     this.adultFormGroup = formBuilder.group({
       height: ['',Validators.compose([Validators.required])],
-      physicalActivity: ['',Validators.compose([Validators.required])]
+      physicalActivity: ['',Validators.compose([Validators.required])],
+      ft: ['']
    });
 
    	this.adultFormGroup.get('height').valueChanges
-		.debounceTime(1000)
+		.debounceTime(2000)
 		.subscribe(data => this.heightChanged());
+
+    this.adultFormGroup.get('ft').valueChanges
+		.debounceTime(2000)
+		.subscribe(data => this.heightChanged());
+
+    this.inControl = new FormControl();
+    this.inControl.valueChanges
+    .debounceTime(2000)
+    .subscribe(data => this.heightChanged());
+ 
   }
 
   ionViewDidLoad() {
@@ -98,20 +118,15 @@ export class EnergyRequirementPage {
       this.heightMax = 8;
       this.unitMeasureAbbrev = 'ft';
       this.inputMinLength = 1;
-      this.inputMaxLength = 3;
-    } 
-    else if(this.unitMeasure == 'Inches'){
-      this.heightMin = 48;
-      this.heightMax = 95;
-      this.unitMeasureAbbrev = 'in';
-      this.inputMinLength = 2;
-      this.inputMaxLength = 4;
+      this.inputMaxLength = 1;
+      this.inputMinLengthInch = 1;
+      this.inputMaxLengthInch = 1;
     }
-    this.submit();
+    this.heightChanged();
   }//end of unitChanged
 
   heightChanged(){
-    
+  console.log("heightChanged");
     this.heightValid = false;
     this.showOutput = false;
 
@@ -125,36 +140,81 @@ export class EnergyRequirementPage {
         }]
     });
 
-    if(this.adultFormGroup.get('height').valid){
-      if(this.unitMeasure == "Centimeters"){
-        if((Number(this.height) > 121) && (Number(this.height) < 243.01)){
+    if(this.unitMeasure == "Centimeters"){
+      if(this.adultFormGroup.get('height').valid){
+        if((Number(this.height) > 121) && (Number(this.height) < 243.7)){
           this.heightValid = true;
         }
         else{
-          alert.present();
+          this.heightValid = false;
+        }
+      }
+      else{
+        this.heightValid = false;
+      }
+    }
+    else if(this.unitMeasure == "Feet"){
+      if(!(Number.isNaN(this.ft))){
+          if((Number(this.ft) > 3) && (Number(this.ft) < 9)){
+            if(this.in != 0){
+              if((Number(this.in) > 0) && (Number(this.in) < 12)){
+                this.heightValid = true;
+              }
+              else{
+                this.heightValid = false;
+              }
+            }
+            else{
+              this.heightValid = true;
+            }
+          }
+          else{
+            this.heightValid = false;
+          }
+        }
+        else{
+          this.heightValid = false;
+        }
+    }
+/*
+    if(this.adultFormGroup.get('height').valid){
+      if(this.unitMeasure == "Centimeters"){
+        if((Number(this.height) > 121) && (Number(this.height) < 243.7)){
+          this.heightValid = true;
+        }
+        else{
+          this.heightValid = false;
         }
       }
       else if(this.unitMeasure == "Feet"){
-        if((Number(this.height) > 3) && (Number(this.height) < 8.01)){
-          this.heightValid = true;
+        if((this.adultFormGroup.get('ft').valid) && (Math.ceil((this.ft)) === this.ft)){
+          if((Number(this.ft) > 3) && (Number(this.ft) < 9)){
+            if(this.in != 0){
+              if((Number(this.in) >= 0) && (Number(this.in) < 12)){
+                this.heightValid = true;
+              }
+            }
+            else{
+              this.heightValid = true;
+            }
+          }
+          else{
+            this.heightValid = false;
+          }
         }
         else{
-          alert.present();
-        }
-      }
-      else if(this.unitMeasure == "Inches"){
-        if((Number(this.height) > 47) && (Number(this.height) < 95.01)){
-          this.heightValid = true;
-        }
-        else{
-          alert.present();
+          this.heightValid = false;
         }
       }
     }
     else{
+      this.heightValid = false;
+    }*/
+    console.log(this.adultFormGroup.get('ft').status,this.ft,this.in);
+    if(this.heightValid == false){
       alert.present();
     }
-    
+
     this.submit();
   }//end of height changed
 
@@ -180,30 +240,42 @@ export class EnergyRequirementPage {
   }
 
   submit(){
-    var cm: number;
-    var height = Math.round(this.height);
+    var cm: number, ftInch:number, dbwKg_raw:number;
 
     if(this.isAdult){
       if(((this.formGroup.valid) && (this.adultFormGroup.valid))&&(this.heightValid)){
         if(this.unitMeasureAbbrev == "cm"){
-          this.desirableBodyWeightKg = ((height - 100)-((height - 100)*0.1));
-          this.desirableBodyWeightLb = Math.round(this.desirableBodyWeightKg * 2.2);
-          this.energyRqmt = this.desirableBodyWeightKg * this.physicalActivityValue;
+          dbwKg_raw = parseFloat(((this.height - 100)-((this.height - 100)*0.1)).toFixed(3));
+          this.desirableBodyWeightKg = dbwKg_raw.toFixed(1);
+          this.desirableBodyWeightLb = (dbwKg_raw * 2.2).toFixed(1);
+          this.energyRqmt = dbwKg_raw * this.physicalActivityValue;
         }
         else if(this.unitMeasureAbbrev == "ft"){
-          cm = Math.round(height /  0.032808);
-          this.desirableBodyWeightKg = ((cm - 100)-((cm - 100)*0.1));
-          this.desirableBodyWeightLb = Math.round(this.desirableBodyWeightKg * 2.2);
-          this.energyRqmt = this.desirableBodyWeightKg * this.physicalActivityValue;
+          if(this.in != 0){
+            ftInch = +(this.ft+"."+this.in);
+            cm = parseFloat((ftInch /  0.032808).toFixed(3));
+          }
+          else{
+            cm = parseFloat((this.ft /  0.032808).toFixed(3));
+          }
+          dbwKg_raw = parseFloat(((cm - 100)-((cm - 100)*0.1)).toFixed(3));
+          this.desirableBodyWeightKg = dbwKg_raw.toFixed(1);
+          this.desirableBodyWeightLb = (dbwKg_raw * 2.2).toFixed(1);
+          this.energyRqmt = dbwKg_raw * this.physicalActivityValue;
         }
-        else if(this.unitMeasureAbbrev == "in"){
-          cm = 2.54 * height;
-          this.desirableBodyWeightKg = ((cm - 100)-((cm - 100)*0.1));
-          this.desirableBodyWeightLb = Math.round(this.desirableBodyWeightKg * 2.2);
-          this.energyRqmt = this.desirableBodyWeightKg * this.physicalActivityValue;
+        console.log(dbwKg_raw,this.energyRqmt);
+        //this.energyRqmt = Math.floor(this.energyRqmt / 50.0) * 50.0;
+        if(this.energyRqmt % 50 < 25){
+          this.energyRqmt -= (this.energyRqmt % 50);
         }
+        else if(this.energyRqmt % 50 > 25){
+          this.energyRqmt += (50 - (this.energyRqmt % 50));
+        }
+        else if(this.energyRqmt % 50 == 25){
+          this.energyRqmt += 25;
+        }
+
         this.showOutput = true;
-        console.log(this.energyRqmt);
       }
       else
       console.log(this.formGroup.status+" "+this.adultFormGroup.status+" "+this.heightValid);
