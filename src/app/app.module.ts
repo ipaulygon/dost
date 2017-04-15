@@ -8,6 +8,7 @@ import { EnergyRequirementPage } from '../pages/energy-requirement/energy-requir
 import { WaistCircumferencePage } from '../pages/waist-circumference/waist-circumference';
 import { WaistHipPage } from '../pages/waist-hip/waist-hip';
 import { WaistHeightPage } from '../pages/waist-height/waist-height';
+import { UserProfilePage } from '../pages/user-profile/user-profile';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -20,7 +21,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     EnergyRequirementPage,
     WaistCircumferencePage,
     WaistHipPage,
-    WaistHeightPage
+    WaistHeightPage,
+    UserProfilePage,
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -34,7 +36,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     EnergyRequirementPage,
     WaistCircumferencePage,
     WaistHipPage,
-    WaistHeightPage
+    WaistHeightPage,
+    UserProfilePage,
   ],
   providers: [
     StatusBar,

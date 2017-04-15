@@ -10,6 +10,7 @@ import { EnergyRequirementPage } from '../pages/energy-requirement/energy-requir
 import { WaistCircumferencePage } from '../pages/waist-circumference/waist-circumference';
 import { WaistHipPage } from '../pages/waist-hip/waist-hip';
 import { WaistHeightPage } from '../pages/waist-height/waist-height';
+import { UserProfilePage } from '../pages/user-profile/user-profile';
 
 // import { Page2 } from '../pages/page2/page2';
 
@@ -949,6 +950,7 @@ export class MyApp {
       { title: 'Waist Circumference', component: WaistCircumferencePage },
       { title: 'Waist-Hip Ratio', component: WaistHipPage },
       { title: 'Waist-Height Ratio', component: WaistHeightPage },
+      { title: 'User Profile', component: UserProfilePage },
     ];
 
   }

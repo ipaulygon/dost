@@ -1,0 +1,112 @@
+<!--
+  Generated template for the UserProfile page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>User Profile</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+	<form [formGroup]="userProfileForm">
+    <ion-item>
+      <ion-label>Gender:</ion-label>
+      <ion-select formControlName="gender">
+        <ion-option value="male">Male</ion-option>
+        <ion-option value="female">Female</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Date of Birth</ion-label>
+      <ion-datetime displayFormat="MMMM DD, YYYY" formControlName="birth"></ion-datetime>
+    </ion-item>
+    <ion-item>
+      <ion-label>Weight:</ion-label>
+      <ion-range formControlName="kiloRange" *ngIf="weightKg" (ionChange)="kgWeightChange()" min="0" max="635" pin="true" color="dark" >
+        <ion-label range-left>0 kg</ion-label>
+        <ion-label range-right>635 kg</ion-label>
+      </ion-range>
+      <ion-range formControlName="poundRange" *ngIf="weightLb" (ionChange)="lbWeightChange()" min="0" max="1400" pin="true" color="dark">
+        <ion-label range-left>0 lb</ion-label>
+        <ion-label range-right>1400 lb</ion-label>
+      </ion-range>
+    </ion-item>
+    <ion-item>
+      <ion-input type="number" formControlName="noWeight" (blur)="setWeightRange()"></ion-input>
+      <ion-select formControlName="weight" (ionChange)="weightUnitChange()">
+        <ion-option value="kg">Kilogram</ion-option>
+        <ion-option value="lb">Pound</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-range (ionChange)="cmHeightChange()" *ngIf="cm" formControlName="cmRange" min="0" max="275" pin="true" color="dark" >
+        <ion-label range-left>0 cm</ion-label>
+        <ion-label range-right>275 cm</ion-label>
+      </ion-range>
+      <ion-range (ionChange)="ftHeightChange()" *ngIf="ft" formControlName="ftRange" min="0" max="9" pin="true" color="dark" >
+        <ion-label range-left>0 ft</ion-label>
+        <ion-label range-right>9 ft</ion-label>
+      </ion-range>
+      <ion-label>Height:</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-input (blur)="heightChange()" *ngIf="cm" type="number" formControlName="noHeight"></ion-input>
+      <ion-input (blur)="heightChange()" *ngIf="ft" type="number" formControlName="noHeight"></ion-input>
+      <ion-select (ionChange)="heightTypeChange()" formControlName="height">
+        <ion-option value="cm">Centimeters</ion-option>
+        <ion-option value="ft">Feet</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="ft">
+      <ion-input (blur)="submit()" type="number" formControlName="noHeightIn"></ion-input>
+      <ion-select formControlName="heightIn" disabled>
+        <ion-option value="in">Inches</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-range min="51" max="180" pin="true" color="dark" (ionChange)="cmWaistChange();" *ngIf="waistCm" formControlName="cmWaistRange">
+        <ion-label range-left>51 cm</ion-label>
+        <ion-label range-right>180 cm</ion-label>
+      </ion-range>
+      <ion-range min="20" max="80" pin="true" color="dark" (ionChange)="inWaistChange();" *ngIf="waistIn" formControlName="inWaistRange">
+        <ion-label range-left>20 in</ion-label>
+        <ion-label range-right>80 in</ion-label>
+      </ion-range>
+      <ion-label>Waist Circumference:</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-input type="number" formControlName="noWaist" (blur)="setWaistRange()"></ion-input>
+      <ion-select formControlName="waist" (ionChange)="waistUnitChange();">
+        <ion-option value="cm">Centimeters</ion-option>
+        <ion-option value="in">Inches</ion-option>
+      </ion-select>
+    </ion-item>
+
+     <ion-item>
+      <ion-range min="51" max="180" pin="true" color="dark" (ionChange)="cmHipChange();" *ngIf="hipCm" formControlName="cmHipRange">
+        <ion-label range-left>51 cm</ion-label>
+        <ion-label range-right>180 cm</ion-label>
+      </ion-range>
+      <ion-range min="20" max="80" pin="true" color="dark" (ionChange)="inHipChange();" *ngIf="hipIn" formControlName="inHipRange">
+        <ion-label range-left>20 in</ion-label>
+        <ion-label range-right>80 in</ion-label>
+      </ion-range>
+      <ion-label>Hip Circumference:</ion-label>
+    </ion-item>
+    <ion-item>
+      <ion-input type="number" formControlName="noHip" (blur)="setHipRange()"></ion-input>
+      <ion-select formControlName="hip" (ionChange)="hipUnitChange();">
+        <ion-option value="cm">Centimeters</ion-option>
+        <ion-option value="in">Inches</ion-option>
+      </ion-select>
+    </ion-item> 
+  </form>
+</ion-content>
