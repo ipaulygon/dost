@@ -10,6 +10,7 @@ import { EnergyRequirementPage } from '../pages/energy-requirement/energy-requir
 import { WaistCircumferencePage } from '../pages/waist-circumference/waist-circumference';
 import { WaistHipPage } from '../pages/waist-hip/waist-hip';
 import { WaistHeightPage } from '../pages/waist-height/waist-height';
+import { UserProfilePage } from '../pages/user-profile/user-profile';
 
 // import { Page2 } from '../pages/page2/page2';
 
@@ -26,921 +27,713 @@ export class MyApp {
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public storage: Storage) {
     this.initializeApp();
-    storage.clear();
-    //0-0
-    storage.set('bmiM00z',11.1); storage.set('bmiM00x',16.3); 
-    storage.set('bmiM00c',18.1);
-    storage.set('bmiF00z',11.1); storage.set('bmiF00x',16.1); 
-    storage.set('bmiF00c',17.7);
-    //0-1
-    storage.set('bmiM01z',12.4); storage.set('bmiM01x',17.8); 
-    storage.set('bmiM01c',19.4);
-    storage.set('bmiF01z',12); storage.set('bmiF01x',17.5); 
-    storage.set('bmiF01c',19.1);
-    //0-2
-    storage.set('bmiM02z',13.7); storage.set('bmiM02x',19.4); 
-    storage.set('bmiM02c',21.1);
-    storage.set('bmiF02z',13); storage.set('bmiF02x',19); 
-    storage.set('bmiF02c',20.7);
-    //0-3
-    storage.set('bmiM03z',14.3); storage.set('bmiM03x',20); 
-    storage.set('bmiM03c',21.8);
-    storage.set('bmiF03z',13.6); storage.set('bmiF03x',19.7); 
-    storage.set('bmiF03c',21.5);
-    //0-4
-    storage.set('bmiM04z',14.5); storage.set('bmiM04x',20.3); 
-    storage.set('bmiM04c',22.1);
-    storage.set('bmiF04z',13.9); storage.set('bmiF04x',20); 
-    storage.set('bmiF04c',22);
-    //0-5
-    storage.set('bmiM05z',14.7); storage.set('bmiM05x',20.5); 
-    storage.set('bmiM05c',22.3);
-    storage.set('bmiF05z',14.1); storage.set('bmiF05x',20.2); 
-    storage.set('bmiF05c',22.2);
-    //0-6
-    storage.set('bmiM06z',14.7); storage.set('bmiM06x',20.5); 
-    storage.set('bmiM06c',22.3);
-    storage.set('bmiF06z',14.1); storage.set('bmiF06x',20.2); 
-    storage.set('bmiF06c',22.3);
-    //0-7
-    storage.set('bmiM07z',14.8); storage.set('bmiM07x',20.5); 
-    storage.set('bmiM07c',22.3);
-    storage.set('bmiF07z',14.2); storage.set('bmiF07x',20.3); 
-    storage.set('bmiF07c',22.3);
-    //0-8
-    storage.set('bmiM08z',14.7); storage.set('bmiM08x',20.4); 
-    storage.set('bmiM08c',22.3);
-    storage.set('bmiF08z',14.1); storage.set('bmiF08x',20.2); 
-    storage.set('bmiF08c',22.2);
-    //0-9
-    storage.set('bmiM09z',14.7); storage.set('bmiM09x',20.3); 
-    storage.set('bmiM09c',22.1);
-    storage.set('bmiF09z',14.1); storage.set('bmiF09x',20.1); 
-    storage.set('bmiF09c',22.1);
-    //0-10
-    storage.set('bmiM010z',14.6); storage.set('bmiM010x',20.1); 
-    storage.set('bmiM010c',22);
-    storage.set('bmiF010z',14); storage.set('bmiF010x',19.9); 
-    storage.set('bmiF010c',21.9);
-    //0-11
-    storage.set('bmiM011z',14.5); storage.set('bmiM011x',20); 
-    storage.set('bmiM011c',21.8);
-    storage.set('bmiF011z',13.9); storage.set('bmiF011x',19.8); 
-    storage.set('bmiF011c',21.8);
-    //1-0
-    storage.set('bmiM10z',14.4); storage.set('bmiM10x',19.8); 
-    storage.set('bmiM10c',21.6);
-    storage.set('bmiF10z',13.8); storage.set('bmiF10x',19.6); 
-    storage.set('bmiF10c',21.6);
-    //1-1
-    storage.set('bmiM11z',14.3); storage.set('bmiM11x',19.7); 
-    storage.set('bmiM11c',21.5);
-    storage.set('bmiF11z',13.7); storage.set('bmiF11x',19.5); 
-    storage.set('bmiF11c',21.4);
-    //1-2
-    storage.set('bmiM12z',14.2); storage.set('bmiM12x',19.5); 
-    storage.set('bmiM12c',21.3);
-    storage.set('bmiF12z',13.6); storage.set('bmiF12x',19.3); 
-    storage.set('bmiF12c',21.3);
-    //1-3
-    storage.set('bmiM13z',14.1); storage.set('bmiM13x',19.4); 
-    storage.set('bmiM13c',21.2);
-    storage.set('bmiF13z',13.5); storage.set('bmiF13x',19.2); 
-    storage.set('bmiF13c',21.1);
-    //1-4
-    storage.set('bmiM14z',14); storage.set('bmiM14x',19.3); 
-    storage.set('bmiM14c',21);
-    storage.set('bmiF14z',13.5); storage.set('bmiF14x',19.1); 
-    storage.set('bmiF14c',21);
-    //1-5
-    storage.set('bmiM15z',13.9); storage.set('bmiM15x',19.1); 
-    storage.set('bmiM15c',20.9);
-    storage.set('bmiF15z',13.4); storage.set('bmiF15x',18.9); 
-    storage.set('bmiF15c',20.9);
-    //1-6
-    storage.set('bmiM16z',13.9); storage.set('bmiM16x',19); 
-    storage.set('bmiM16c',20.8);
-    storage.set('bmiF16z',13.3); storage.set('bmiF16x',18.8); 
-    storage.set('bmiF16c',20.8);
-    //1-7
-    storage.set('bmiM17z',13.8); storage.set('bmiM17x',18.9); 
-    storage.set('bmiM17c',20.7);
-    storage.set('bmiF17z',13.3); storage.set('bmiF17x',18.8); 
-    storage.set('bmiF17c',20.7);
-    //1-8
-    storage.set('bmiM18z',13.7); storage.set('bmiM18x',18.8); 
-    storage.set('bmiM18c',20.6);
-    storage.set('bmiF18z',13.2); storage.set('bmiF18x',18.7); 
-    storage.set('bmiF18c',20.6);
-    //1-9
-    storage.set('bmiM19z',13.7); storage.set('bmiM19x',18.7); 
-    storage.set('bmiM19c',20.5);
-    storage.set('bmiF19z',13.2); storage.set('bmiF19x',18.6); 
-    storage.set('bmiF19c',20.5);
-    //1-10
-    storage.set('bmiM110z',13.6); storage.set('bmiM110x',18.7); 
-    storage.set('bmiM110c',20.4);
-    storage.set('bmiF110z',13.1); storage.set('bmiF110x',18.5); 
-    storage.set('bmiF110c',20.4);
-    //1-11
-    storage.set('bmiM111z',13.6); storage.set('bmiM111x',18.6); 
-    storage.set('bmiM111c',20.3);
-    storage.set('bmiF111z',13.1); storage.set('bmiF111x',18.5); 
-    storage.set('bmiF111c',20.4);
-    //2-0
-    storage.set('bmiM20z',13.6); storage.set('bmiM20x',18.5); 
-    storage.set('bmiM20c',20.3);
-    storage.set('bmiF20z',13.1); storage.set('bmiF20x',18.4); 
-    storage.set('bmiF20c',20.3);
-    //2-1
-    storage.set('bmiM21z',13.8); storage.set('bmiM21x',18.8); 
-    storage.set('bmiM21c',20.5);
-    storage.set('bmiF21z',13.3); storage.set('bmiF21x',18.7); 
-    storage.set('bmiF21c',20.6);
-    //2-2
-    storage.set('bmiM22z',13.7); storage.set('bmiM22x',18.8); 
-    storage.set('bmiM22c',20.5);
-    storage.set('bmiF22z',13.3); storage.set('bmiF22x',18.7); 
-    storage.set('bmiF22c',20.6);
-    //2-3
-    storage.set('bmiM23z',13.7); storage.set('bmiM23x',18.7); 
-    storage.set('bmiM23c',20.4);
-    storage.set('bmiF23z',13.3); storage.set('bmiF23x',18.6); 
-    storage.set('bmiF23c',20.5);
-    //2-4
-    storage.set('bmiM24z',13.6); storage.set('bmiM24x',18.7); 
-    storage.set('bmiM24c',20.4);
-    storage.set('bmiF24z',13.3); storage.set('bmiF24x',18.6); 
-    storage.set('bmiF24c',20.5);
-    //2-5
-    storage.set('bmiM25z',13.6); storage.set('bmiM25x',18.6); 
-    storage.set('bmiM25c',20.3);
-    storage.set('bmiF25z',13.2); storage.set('bmiF25x',18.6); 
-    storage.set('bmiF25c',20.4);
-    //2-6
-    storage.set('bmiM26z',13.6); storage.set('bmiM26x',18.6); 
-    storage.set('bmiM26c',20.2);
-    storage.set('bmiF26z',13.2); storage.set('bmiF26x',18.5); 
-    storage.set('bmiF26c',20.4);
-    //2-7
-    storage.set('bmiM27z',13.5); storage.set('bmiM27x',18.5); 
-    storage.set('bmiM27c',20.2);
-    storage.set('bmiF27z',13.2); storage.set('bmiF27x',18.5); 
-    storage.set('bmiF27c',20.4);
-    //2-8
-    storage.set('bmiM28z',13.5); storage.set('bmiM28x',18.5); 
-    storage.set('bmiM28c',20.1);
-    storage.set('bmiF28z',13.2); storage.set('bmiF28x',18.5); 
-    storage.set('bmiF28c',20.4);
-    //2-9
-    storage.set('bmiM29z',13.5); storage.set('bmiM29x',18.5); 
-    storage.set('bmiM29c',20.1);
-    storage.set('bmiF29z',13.1); storage.set('bmiF29x',18.5); 
-    storage.set('bmiF29c',20.3);
-    //2-10
-    storage.set('bmiM210z',13.4); storage.set('bmiM210x',18.4); 
-    storage.set('bmiM210c',20);
-    storage.set('bmiF210z',13.1); storage.set('bmiF210x',18.5); 
-    storage.set('bmiF210c',20.3);
-    //2-11
-    storage.set('bmiM211z',13.4); storage.set('bmiM211x',18.4); 
-    storage.set('bmiM211c',20);
-    storage.set('bmiF211z',13.1); storage.set('bmiF211x',18.4); 
-    storage.set('bmiF211c',20.3);
-    //3-0
-    storage.set('bmiM30z',13.4); storage.set('bmiM30x',18.4); 
-    storage.set('bmiM30c',20);
-    storage.set('bmiF30z',13.1); storage.set('bmiF30x',18.4); 
-    storage.set('bmiF30c',20.3);
-    //3-1
-    storage.set('bmiM31z',13.3); storage.set('bmiM31x',18.3); 
-    storage.set('bmiM31c',19.9);
-    storage.set('bmiF31z',13.1); storage.set('bmiF31x',18.4); 
-    storage.set('bmiF31c',20.3);
-    //3-2
-    storage.set('bmiM32z',13.3); storage.set('bmiM32x',18.3); 
-    storage.set('bmiM32c',19.9);
-    storage.set('bmiF32z',13); storage.set('bmiF32x',18.4); 
-    storage.set('bmiF32c',20.3);
-    //3-3
-    storage.set('bmiM33z',13.3); storage.set('bmiM33x',18.3); 
-    storage.set('bmiM33c',19.9);
-    storage.set('bmiF33z',13); storage.set('bmiF33x',18.4); 
-    storage.set('bmiF33c',20.3);
-    //3-4
-    storage.set('bmiM34z',13.2); storage.set('bmiM34x',18.2); 
-    storage.set('bmiM34c',19.9);
-    storage.set('bmiF34z',13); storage.set('bmiF34x',18.4); 
-    storage.set('bmiF34c',20.3);
-    //3-5
-    storage.set('bmiM35z',13.2); storage.set('bmiM35x',18.2); 
-    storage.set('bmiM35c',19.9);
-    storage.set('bmiF35z',13); storage.set('bmiF35x',18.4); 
-    storage.set('bmiF35c',20.4);
-    //3-6
-    storage.set('bmiM36z',13.2); storage.set('bmiM36x',18.2); 
-    storage.set('bmiM36c',19.9);
-    storage.set('bmiF36z',12.9); storage.set('bmiF36x',18.4); 
-    storage.set('bmiF36c',20.4);
-    //3-7
-    storage.set('bmiM37z',13.2); storage.set('bmiM37x',18.2); 
-    storage.set('bmiM37c',19.8);
-    storage.set('bmiF37z',12.9); storage.set('bmiF37x',18.4); 
-    storage.set('bmiF37c',20.4);
-    //3-8
-    storage.set('bmiM38z',13.1); storage.set('bmiM38x',18.2); 
-    storage.set('bmiM38c',19.8);
-    storage.set('bmiF38z',12.9); storage.set('bmiF38x',18.5); 
-    storage.set('bmiF38c',20.4);
-    //3-9
-    storage.set('bmiM39z',13.1); storage.set('bmiM39x',18.2); 
-    storage.set('bmiM39c',19.8);
-    storage.set('bmiF39z',12.9); storage.set('bmiF39x',18.5); 
-    storage.set('bmiF39c',20.5);
-    //3-10
-    storage.set('bmiM310z',13.4); storage.set('bmiM310x',18.2); 
-    storage.set('bmiM310c',19.8);
-    storage.set('bmiF310z',12.9); storage.set('bmiF310x',18.5); 
-    storage.set('bmiF310c',20.5);
-    //3-11
-    storage.set('bmiM311z',13.1); storage.set('bmiM311x',18.2); 
-    storage.set('bmiM311c',19.9);
-    storage.set('bmiF311z',12.8); storage.set('bmiF311x',18.5); 
-    storage.set('bmiF311c',20.6);
-    //4-0
-    storage.set('bmiM40z',13.1); storage.set('bmiM40x',18.2); 
-    storage.set('bmiM40c',19.9);
-    storage.set('bmiF40z',12.8); storage.set('bmiF40x',18.5); 
-    storage.set('bmiF40c',20.6);
-    //4-1
-    storage.set('bmiM41z',13); storage.set('bmiM41x',18.2); 
-    storage.set('bmiM41c',19.9);
-    storage.set('bmiF41z',12.8); storage.set('bmiF41x',18.5); 
-    storage.set('bmiF41c',20.6);
-    //4-2
-    storage.set('bmiM42z',13); storage.set('bmiM42x',18.2); 
-    storage.set('bmiM42c',19.9);
-    storage.set('bmiF42z',12.8); storage.set('bmiF42x',18.6); 
-    storage.set('bmiF42c',20.7);
-    //4-3
-    storage.set('bmiM43z',13); storage.set('bmiM43x',18.2); 
-    storage.set('bmiM43c',19.9);
-    storage.set('bmiF43z',12.8); storage.set('bmiF43x',18.6); 
-    storage.set('bmiF43c',20.7);
-    //4-4
-    storage.set('bmiM44z',13); storage.set('bmiM44x',18.2); 
-    storage.set('bmiM44c',19.9);
-    storage.set('bmiF44z',12.8); storage.set('bmiF44x',18.6); 
-    storage.set('bmiF44c',20.7);
-    //4-5
-    storage.set('bmiM45z',13); storage.set('bmiM45x',18.2); 
-    storage.set('bmiM45c',20);
-    storage.set('bmiF45z',12.7); storage.set('bmiF45x',18.6); 
-    storage.set('bmiF45c',20.8);
-    //4-6
-    storage.set('bmiM46z',13); storage.set('bmiM46x',18.2); 
-    storage.set('bmiM46c',20);
-    storage.set('bmiF46z',12.7); storage.set('bmiF46x',18.7); 
-    storage.set('bmiF46c',20.8);
-    //4-7
-    storage.set('bmiM47z',13); storage.set('bmiM47x',18.2); 
-    storage.set('bmiM47c',20);
-    storage.set('bmiF47z',12.7); storage.set('bmiF47x',18.7); 
-    storage.set('bmiF47c',20.9);
-    //4-8
-    storage.set('bmiM48z',12.9); storage.set('bmiM48x',18.2); 
-    storage.set('bmiM48c',20.1);
-    storage.set('bmiF48z',12.7); storage.set('bmiF48x',18.7); 
-    storage.set('bmiF48c',20.9);
-    //4-9
-    storage.set('bmiM49z',12.9); storage.set('bmiM49x',18.2); 
-    storage.set('bmiM49c',20.1);
-    storage.set('bmiF49z',12.7); storage.set('bmiF49x',18.7); 
-    storage.set('bmiF49c',21);
-    //4-10
-    storage.set('bmiM410z',12.9); storage.set('bmiM410x',18.3); 
-    storage.set('bmiM410c',20.2);
-    storage.set('bmiF410z',12.7); storage.set('bmiF410x',18.8); 
-    storage.set('bmiF410c',21);
-    //4-11
-    storage.set('bmiM411z',12.9); storage.set('bmiM411x',18.3); 
-    storage.set('bmiM411c',20.2);
-    storage.set('bmiF411z',12.7); storage.set('bmiF411x',18.8); 
-    storage.set('bmiF411c',21);
-    //5-0
-    storage.set('bmiM50z',12.9); storage.set('bmiM50x',18.3); 
-    storage.set('bmiM50c',20.3);
-    storage.set('bmiF50z',12.7); storage.set('bmiF50x',18.8); 
-    storage.set('bmiF50c',21.1);
-    //5-1
-    storage.set('bmiM51z',13); storage.set('bmiM51x',18.3); 
-    storage.set('bmiM51c',20.2);
-    storage.set('bmiF51z',12.7); storage.set('bmiF51x',18.9); 
-    storage.set('bmiF51c',21.3);
-    //5-2
-    storage.set('bmiM52z',13); storage.set('bmiM52x',18.3); 
-    storage.set('bmiM52c',20.2);
-    storage.set('bmiF52z',12.7); storage.set('bmiF52x',18.9); 
-    storage.set('bmiF52c',21.4);
-    //5-3
-    storage.set('bmiM53z',13); storage.set('bmiM53x',18.3); 
-    storage.set('bmiM53c',20.2);
-    storage.set('bmiF53z',12.7); storage.set('bmiF53x',18.9); 
-    storage.set('bmiF53c',21.5);
-    //5-4
-    storage.set('bmiM54z',13); storage.set('bmiM54x',18.3); 
-    storage.set('bmiM54c',20.3);
-    storage.set('bmiF54z',12.7); storage.set('bmiF54x',18.9); 
-    storage.set('bmiF54c',21.5);
-    //5-5
-    storage.set('bmiM55z',13); storage.set('bmiM55x',18.3); 
-    storage.set('bmiM55c',20.3);
-    storage.set('bmiF55z',12.7); storage.set('bmiF55x',19); 
-    storage.set('bmiF55c',21.6);
-    //5-6
-    storage.set('bmiM56z',13); storage.set('bmiM56x',18.4); 
-    storage.set('bmiM56c',20.4);
-    storage.set('bmiF56z',12.7); storage.set('bmiF56x',19); 
-    storage.set('bmiF56c',21.7);
-    //5-7
-    storage.set('bmiM57z',13); storage.set('bmiM57x',18.4); 
-    storage.set('bmiM57c',20.4);
-    storage.set('bmiF57z',12.7); storage.set('bmiF57x',19); 
-    storage.set('bmiF57c',21.7);
-    //5-8
-    storage.set('bmiM58z',13); storage.set('bmiM58x',18.4); 
-    storage.set('bmiM58c',20.5);
-    storage.set('bmiF58z',12.7); storage.set('bmiF58x',19.1); 
-    storage.set('bmiF58c',21.8);
-    //5-9
-    storage.set('bmiM59z',13); storage.set('bmiM59x',18.4); 
-    storage.set('bmiM59c',20.5);
-    storage.set('bmiF59z',12.7); storage.set('bmiF59x',19.1); 
-    storage.set('bmiF59c',21.9);
-    //5-10
-    storage.set('bmiM510z',13); storage.set('bmiM510x',18.5); 
-    storage.set('bmiM510c',20.6);
-    storage.set('bmiF510z',12.7); storage.set('bmiF510x',19.1); 
-    storage.set('bmiF510c',22);
-    //5-11
-    storage.set('bmiM511z',13); storage.set('bmiM511x',18.5); 
-    storage.set('bmiM511c',20.6);
-    storage.set('bmiF511z',12.7); storage.set('bmiF511x',19.2); 
-    storage.set('bmiF511c',22.1);
-    //6-0
-    storage.set('bmiM60z',13); storage.set('bmiM60x',18.5); 
-    storage.set('bmiM60c',20.7);
-    storage.set('bmiF60z',12.7); storage.set('bmiF60x',19.2); 
-    storage.set('bmiF60c',22.1);
-    //6-1
-    storage.set('bmiM61z',13); storage.set('bmiM61x',18.6); 
-    storage.set('bmiM61c',20.8);
-    storage.set('bmiF61z',12.7); storage.set('bmiF61x',19.3); 
-    storage.set('bmiF61c',22.2);
-    //6-2
-    storage.set('bmiM62z',13.1); storage.set('bmiM62x',18.6); 
-    storage.set('bmiM62c',20.8);
-    storage.set('bmiF62z',12.7); storage.set('bmiF62x',19.3); 
-    storage.set('bmiF62c',22.3);
-    //6-3
-    storage.set('bmiM63z',13.1); storage.set('bmiM63x',18.6); 
-    storage.set('bmiM63c',20.9);
-    storage.set('bmiF63z',12.7); storage.set('bmiF63x',19.3); 
-    storage.set('bmiF63c',22.4);
-    //6-4
-    storage.set('bmiM64z',13.1); storage.set('bmiM64x',18.7); 
-    storage.set('bmiM64c',21);
-    storage.set('bmiF64z',12.7); storage.set('bmiF64x',19.4); 
-    storage.set('bmiF64c',22.5);
-    //6-5
-    storage.set('bmiM65z',13.1); storage.set('bmiM65x',18.7); 
-    storage.set('bmiM65c',21);
-    storage.set('bmiF65z',12.7); storage.set('bmiF65x',19.4); 
-    storage.set('bmiF65c',22.6);
-    //6-6
-    storage.set('bmiM66z',13.1); storage.set('bmiM66x',18.7); 
-    storage.set('bmiM66c',21.1);
-    storage.set('bmiF66z',12.7); storage.set('bmiF66x',19.5); 
-    storage.set('bmiF66c',22.7);
-    //6-7
-    storage.set('bmiM67z',13.1); storage.set('bmiM67x',18.8); 
-    storage.set('bmiM67c',21.2);
-    storage.set('bmiF67z',12.7); storage.set('bmiF67x',19.5); 
-    storage.set('bmiF67c',22.8);
-    //6-8
-    storage.set('bmiM68z',13.1); storage.set('bmiM68x',18.8); 
-    storage.set('bmiM68c',21.3);
-    storage.set('bmiF68z',12.7); storage.set('bmiF68x',19.6); 
-    storage.set('bmiF68c',22.9);
-    //6-9
-    storage.set('bmiM69z',13.1); storage.set('bmiM69x',18.9); 
-    storage.set('bmiM69c',21.3);
-    storage.set('bmiF69z',12.7); storage.set('bmiF69x',19.6); 
-    storage.set('bmiF69c',23);
-    //6-10
-    storage.set('bmiM610z',13.1); storage.set('bmiM610x',18.9); 
-    storage.set('bmiM610c',21.4);
-    storage.set('bmiF610z',12.7); storage.set('bmiF610x',19.7); 
-    storage.set('bmiF610c',23.1);
-    //6-11
-    storage.set('bmiM611z',13.1); storage.set('bmiM611x',19); 
-    storage.set('bmiM611c',21.5);
-    storage.set('bmiF611z',12.7); storage.set('bmiF611x',19.7); 
-    storage.set('bmiF611c',23.2);
-    //7-0
-    storage.set('bmiM70z',13.1); storage.set('bmiM70x',19); 
-    storage.set('bmiM70c',21.6);
-    storage.set('bmiF70z',12.7); storage.set('bmiF70x',19.8); 
-    storage.set('bmiF70c',23.3);
-    //7-1
-    storage.set('bmiM71z',13.2); storage.set('bmiM71x',19.1); 
-    storage.set('bmiM71c',21.7);
-    storage.set('bmiF71z',12.7); storage.set('bmiF71x',19.8); 
-    storage.set('bmiF71c',23.4);
-    //7-2
-    storage.set('bmiM72z',13.2); storage.set('bmiM72x',19.1); 
-    storage.set('bmiM72c',21.8);
-    storage.set('bmiF72z',12.8); storage.set('bmiF72x',19.9); 
-    storage.set('bmiF72c',23.5);
-    //7-3
-    storage.set('bmiM73z',13.2); storage.set('bmiM73x',19.2); 
-    storage.set('bmiM73c',21.9);
-    storage.set('bmiF73z',12.8); storage.set('bmiF73x',20); 
-    storage.set('bmiF73c',23.6);
-    //7-4
-    storage.set('bmiM74z',13.2); storage.set('bmiM74x',19.2); 
-    storage.set('bmiM74c',22);
-    storage.set('bmiF74z',12.8); storage.set('bmiF74x',20); 
-    storage.set('bmiF74c',23.7);
-    //7-5
-    storage.set('bmiM75z',13.2); storage.set('bmiM75x',19.3); 
-    storage.set('bmiM75c',22);
-    storage.set('bmiF75z',12.8); storage.set('bmiF75x',20.1); 
-    storage.set('bmiF75c',23.9);
-    //7-6
-    storage.set('bmiM76z',13.2); storage.set('bmiM76x',19.3); 
-    storage.set('bmiM76c',22.1);
-    storage.set('bmiF76z',12.8); storage.set('bmiF76x',20.1); 
-    storage.set('bmiF76c',24);
-    //7-7
-    storage.set('bmiM77z',13.2); storage.set('bmiM77x',19.4); 
-    storage.set('bmiM77c',22.2);
-    storage.set('bmiF77z',12.8); storage.set('bmiF77x',20.2); 
-    storage.set('bmiF77c',24.1);
-    //7-8
-    storage.set('bmiM78z',13.3); storage.set('bmiM78x',19.4); 
-    storage.set('bmiM78c',22.4);
-    storage.set('bmiF78z',12.8); storage.set('bmiF78x',20.3); 
-    storage.set('bmiF78c',24.2);
-    //7-9
-    storage.set('bmiM79z',13.3); storage.set('bmiM79x',19.5); 
-    storage.set('bmiM79c',22.5);
-    storage.set('bmiF79z',12.8); storage.set('bmiF79x',20.3); 
-    storage.set('bmiF79c',24.4);
-    //7-10
-    storage.set('bmiM710z',13.3); storage.set('bmiM710x',19.6); 
-    storage.set('bmiM710c',22.6);
-    storage.set('bmiF710z',12.9); storage.set('bmiF710x',20.4); 
-    storage.set('bmiF710c',24.5);
-    //7-11
-    storage.set('bmiM711z',13.3); storage.set('bmiM711x',19.6); 
-    storage.set('bmiM711c',22.7);
-    storage.set('bmiF711z',12.9); storage.set('bmiF711x',20.5); 
-    storage.set('bmiF711c',24.6);
-    //8-0
-    storage.set('bmiM80z',13.3); storage.set('bmiM80x',19.7); 
-    storage.set('bmiM80c',22.8);
-    storage.set('bmiF80z',12.9); storage.set('bmiF80x',20.6); 
-    storage.set('bmiF80c',24.8);
-    //8-1
-    storage.set('bmiM81z',13.3); storage.set('bmiM81x',19.7); 
-    storage.set('bmiM81c',22.9);
-    storage.set('bmiF81z',12.9); storage.set('bmiF81x',20.6); 
-    storage.set('bmiF81c',24.9);
-    //8-2
-    storage.set('bmiM82z',13.3); storage.set('bmiM82x',19.8); 
-    storage.set('bmiM82c',23);
-    storage.set('bmiF82z',12.9); storage.set('bmiF82x',20.7); 
-    storage.set('bmiF82c',25.1)
-    //8-3
-    storage.set('bmiM83z',13.3); storage.set('bmiM83x',19.9); 
-    storage.set('bmiM83c',23.1);
-    storage.set('bmiF83z',12.9); storage.set('bmiF83x',20.8); 
-    storage.set('bmiF83c',25.2);
-    //8-4
-    storage.set('bmiM84z',13.4); storage.set('bmiM84x',19.9); 
-    storage.set('bmiM84c',23.3);
-    storage.set('bmiF84z',13); storage.set('bmiF84x',20.9); 
-    storage.set('bmiF84c',25.3);
-    //8-5
-    storage.set('bmiM85z',13.4); storage.set('bmiM85x',20); 
-    storage.set('bmiM85c',23.4);
-    storage.set('bmiF85z',13); storage.set('bmiF85x',20.9); 
-    storage.set('bmiF85c',25.5);
-    //8-6
-    storage.set('bmiM86z',13.4); storage.set('bmiM86x',20.1); 
-    storage.set('bmiM86c',23.5);
-    storage.set('bmiF86z',13); storage.set('bmiF86x',21.0); 
-    storage.set('bmiF86c',25.6);
-    //8-7
-    storage.set('bmiM87z',13.4); storage.set('bmiM87x',20.1); 
-    storage.set('bmiM87c',23.6);
-    storage.set('bmiF87z',13.0); storage.set('bmiF87x',21.1); 
-    storage.set('bmiF87c',25.8);
-    //8-8
-    storage.set('bmiM88z',13.4); storage.set('bmiM88x',20.2); 
-    storage.set('bmiM88c',23.8);
-    storage.set('bmiF88z',13.0); storage.set('bmiF88x',21.2); 
-    storage.set('bmiF88c',25.9);
-    //8-9
-    storage.set('bmiM89z',13.4); storage.set('bmiM89x',20.3); 
-    storage.set('bmiM89c',23.9);
-    storage.set('bmiF89z',13.1); storage.set('bmiF89x',21.3); 
-    storage.set('bmiF89c',26.1);
-    //8-10
-    storage.set('bmiM810z',13.5); storage.set('bmiM810x',20.3); 
-    storage.set('bmiM810c',24.0);
-    storage.set('bmiF810z',13.1); storage.set('bmiF810x',21.3); 
-    storage.set('bmiF810c',26.2);
-    //8-11
-    storage.set('bmiM811z',13.5); storage.set('bmiM811x',20.4); 
-    storage.set('bmiM811c',24.2);
-    storage.set('bmiF811z',13.1); storage.set('bmiF811x',21.4); 
-    storage.set('bmiF811c',26.4);
-    //9-0
-    storage.set('bmiM90z',13.5); storage.set('bmiM90x',20.5); 
-    storage.set('bmiM90c',24.3);
-    storage.set('bmiF90z',13.1); storage.set('bmiF90x',21.5); 
-    storage.set('bmiF90c',26.5);
-    //9-1
-    storage.set('bmiM91z',13.5); storage.set('bmiM91x',20.5); 
-    storage.set('bmiM91c',24.4);
-    storage.set('bmiF91z',13.2); storage.set('bmiF91x',21.6); 
-    storage.set('bmiF91c',26.7);
-    //9-2
-    storage.set('bmiM92z',13.5); storage.set('bmiM92x',20.6); 
-    storage.set('bmiM92c',24.6);
-    storage.set('bmiF92z',13.2); storage.set('bmiF92x',21.7); 
-    storage.set('bmiF92c',26.8)
-    //9-3
-    storage.set('bmiM93z',13.5); storage.set('bmiM93x',20.7); 
-    storage.set('bmiM93c',24.7);
-    storage.set('bmiF93z',13.2); storage.set('bmiF93x',21.8); 
-    storage.set('bmiF93c',27.0);
-    //9-4
-    storage.set('bmiM94z',13.6); storage.set('bmiM94x',20.8); 
-    storage.set('bmiM94c',24.9);
-    storage.set('bmiF94z',13.2); storage.set('bmiF94x',21.9); 
-    storage.set('bmiF94c',27.2);
-    //9-5
-    storage.set('bmiM95z',13.6); storage.set('bmiM95x',20.8); 
-    storage.set('bmiM95c',25.0);
-    storage.set('bmiF95z',13.3); storage.set('bmiF95x',21.9); 
-    storage.set('bmiF95c',27.3);
-    //9-6
-    storage.set('bmiM96z',13.6); storage.set('bmiM96x',20.9); 
-    storage.set('bmiM96c',25.1);
-    storage.set('bmiF96z',13.3); storage.set('bmiF96x',22.0); 
-    storage.set('bmiF96c',27.5);
-    //9-7
-    storage.set('bmiM97z',13.6); storage.set('bmiM97x',21.0); 
-    storage.set('bmiM97c',25.3);
-    storage.set('bmiF97z',13.3); storage.set('bmiF97x',22.1); 
-    storage.set('bmiF97c',27.6);
-    //9-8
-    storage.set('bmiM98z',13.6); storage.set('bmiM98x',21.1); 
-    storage.set('bmiM98c',25.5);
-    storage.set('bmiF98z',13.4); storage.set('bmiF98x',22.2); 
-    storage.set('bmiF98c',27.8);
-    //9-9
-    storage.set('bmiM99z',13.7); storage.set('bmiM99x',21.2); 
-    storage.set('bmiM99c',25.6);
-    storage.set('bmiF99z',13.4); storage.set('bmiF99x',22.3); 
-    storage.set('bmiF99c',27.9);
-    //9-10
-    storage.set('bmiM910z',13.7); storage.set('bmiM910x',21.2); 
-    storage.set('bmiM910c',25.8);
-    storage.set('bmiF910z',13.4); storage.set('bmiF910x',22.4); 
-    storage.set('bmiF910c',28.1);
-    //9-11
-    storage.set('bmiM911z',13.7); storage.set('bmiM911x',21.3); 
-    storage.set('bmiM911c',25.9);
-    storage.set('bmiF911z',13.4); storage.set('bmiF911x',22.5); 
-    storage.set('bmiF911c',28.2);
-    //10-0
-    storage.set('bmiM100z',13.7); storage.set('bmiM100x',21.4); 
-    storage.set('bmiM100c',26.1);
-    storage.set('bmiF100z',13.4); storage.set('bmiF100x',22.6); 
-    storage.set('bmiF100c',28.4);
-    //10-1
-    storage.set('bmiM101z',13.8); storage.set('bmiM101x',21.5); 
-    storage.set('bmiM101c',26.2);
-    storage.set('bmiF101z',13.5); storage.set('bmiF101x',22.7); 
-    storage.set('bmiF101c',28.5);
-    //10-2
-    storage.set('bmiM102z',13.8); storage.set('bmiM102x',21.6); 
-    storage.set('bmiM102c',26.4);
-    storage.set('bmiF102z',13.5); storage.set('bmiF102x',22.8); 
-    storage.set('bmiF102c',28.7)
-    //10-3
-    storage.set('bmiM103z',13.8); storage.set('bmiM103x',21.7); 
-    storage.set('bmiM103c',26.6);
-    storage.set('bmiF103z',13.6); storage.set('bmiF103x',22.8); 
-    storage.set('bmiF103c',28.8);
-    //10-4
-    storage.set('bmiM104z',13.8); storage.set('bmiM104x',21.7); 
-    storage.set('bmiM104c',26.7);
-    storage.set('bmiF104z',13.6); storage.set('bmiF104x',22.9); 
-    storage.set('bmiF104c',29.0);
-    //10-5
-    storage.set('bmiM105z',13.9); storage.set('bmiM105x',21.8); 
-    storage.set('bmiM105c',26.9);
-    storage.set('bmiF105z',13.6); storage.set('bmiF105x',23.0); 
-    storage.set('bmiF105c',29.1);
-    //10-6
-    storage.set('bmiM106z',13.9); storage.set('bmiM106x',21.9); 
-    storage.set('bmiM106c',27.0);
-    storage.set('bmiF106z',13.7); storage.set('bmiF106x',23.1); 
-    storage.set('bmiF106c',29.3);
-    //10-7
-    storage.set('bmiM107z',13.9); storage.set('bmiM107x',22.0); 
-    storage.set('bmiM107c',27.2);
-    storage.set('bmiF107z',13.7); storage.set('bmiF107x',23.2); 
-    storage.set('bmiF107c',29.4);
-    //10-8
-    storage.set('bmiM108z',13.9); storage.set('bmiM108x',22.1); 
-    storage.set('bmiM108c',27.4);
-    storage.set('bmiF108z',13.7); storage.set('bmiF108x',23.3); 
-    storage.set('bmiF108c',29.6);
-    //10-9
-    storage.set('bmiM109z',14.0); storage.set('bmiM109x',22.2); 
-    storage.set('bmiM109c',27.5);
-    storage.set('bmiF109z',13.8); storage.set('bmiF109x',23.4); 
-    storage.set('bmiF109c',29.7);
-    //10-10
-    storage.set('bmiM1010z',14.0); storage.set('bmiM1010x',22.3); 
-    storage.set('bmiM1010c',27.7);
-    storage.set('bmiF1010z',13.8); storage.set('bmiF1010x',23.5); 
-    storage.set('bmiF1010c',29.9);
-    //10-11
-    storage.set('bmiM1011z',14.0); storage.set('bmiM1011x',22.4); 
-    storage.set('bmiM1011c',27.9);
-    storage.set('bmiF1011z',13.8); storage.set('bmiF1011x',23.6); 
-    storage.set('bmiF1011c',30.0);
-    //11-0
-    storage.set('bmiM110z',14.1); storage.set('bmiM110x',22.5); 
-    storage.set('bmiM110c',28.0);
-    storage.set('bmiF110z',13.9); storage.set('bmiF110x',23.7); 
-    storage.set('bmiF110c',30.2);
-    //11-1
-    storage.set('bmiM111z',14.1); storage.set('bmiM111x',22.5); 
-    storage.set('bmiM111c',28.2);
-    storage.set('bmiF111z',13.9); storage.set('bmiF111x',23.8); 
-    storage.set('bmiF111c',30.3);
-    //11-2
-    storage.set('bmiM112z',14.1); storage.set('bmiM112x',22.6); 
-    storage.set('bmiM112c',28.4);
-    storage.set('bmiF112z',14.0); storage.set('bmiF112x',23.9); 
-    storage.set('bmiF112c',30.5)
-    //11-3
-    storage.set('bmiM113z',14.1); storage.set('bmiM113x',22.7); 
-    storage.set('bmiM113c',28.5);
-    storage.set('bmiF113z',14.0); storage.set('bmiF113x',24.0); 
-    storage.set('bmiF113c',30.6);
-    //11-4
-    storage.set('bmiM114z',14.2); storage.set('bmiM114x',22.8); 
-    storage.set('bmiM114c',28.7);
-    storage.set('bmiF114z',14.0); storage.set('bmiF114x',24.1); 
-    storage.set('bmiF114c',30.8);
-    //11-5
-    storage.set('bmiM115z',14.2); storage.set('bmiM115x',22.9); 
-    storage.set('bmiM115c',28.8);
-    storage.set('bmiF115z',14.1); storage.set('bmiF115x',24.2); 
-    storage.set('bmiF115c',30.9);
-    //11-6
-    storage.set('bmiM116z',14.2); storage.set('bmiM116x',23.0); 
-    storage.set('bmiM116c',29.0);
-    storage.set('bmiF116z',14.1); storage.set('bmiF116x',24.3); 
-    storage.set('bmiF116c',31.1);
-    //11-7
-    storage.set('bmiM117z',14.3); storage.set('bmiM117x',23.1); 
-    storage.set('bmiM117c',29.2);
-    storage.set('bmiF117z',14.2); storage.set('bmiF117x',24.4); 
-    storage.set('bmiF117c',31.2);
-    //11-8
-    storage.set('bmiM118z',14.3); storage.set('bmiM118x',23.2); 
-    storage.set('bmiM118c',29.3);
-    storage.set('bmiF118z',14.2); storage.set('bmiF118x',24.5); 
-    storage.set('bmiF118c',31.4);
-    //11-9
-    storage.set('bmiM119z',14.3); storage.set('bmiM119x',23.3); 
-    storage.set('bmiM119c',29.5);
-    storage.set('bmiF119z',14.3); storage.set('bmiF119x',24.7); 
-    storage.set('bmiF119c',31.5);
-    //11-10
-    storage.set('bmiM1110z',14.4); storage.set('bmiM1110x',23.4); 
-    storage.set('bmiM1110c',29.6);
-    storage.set('bmiF1110z',14.3); storage.set('bmiF1110x',24.8); 
-    storage.set('bmiF1110c',31.6);
-    //11-11
-    storage.set('bmiM1111z',14.4); storage.set('bmiM1111x',23.5); 
-    storage.set('bmiM1111c',29.8);
-    storage.set('bmiF1111z',14.3); storage.set('bmiF1111x',24.9); 
-    storage.set('bmiF1111c',31.8);
-    //12-0
-    storage.set('bmiM120z',14.5); storage.set('bmiM120x',23.6); 
-    storage.set('bmiM120c',30.0);
-    storage.set('bmiF120z',14.4); storage.set('bmiF120x',25.0); 
-    storage.set('bmiF120c',31.9);
-    //12-1
-    storage.set('bmiM121z',14.5); storage.set('bmiM121x',23.7); 
-    storage.set('bmiM121c',30.1);
-    storage.set('bmiF121z',14.4); storage.set('bmiF121x',25.1); 
-    storage.set('bmiF121c',32.0);
-    //12-2
-    storage.set('bmiM122z',14.5); storage.set('bmiM122x',23.8); 
-    storage.set('bmiM122c',30.3);
-    storage.set('bmiF122z',14.5); storage.set('bmiF122x',25.2); 
-    storage.set('bmiF122c',32.2)
-    //12-3
-    storage.set('bmiM123z',14.6); storage.set('bmiM123x',23.9); 
-    storage.set('bmiM123c',30.4);
-    storage.set('bmiF123z',14.5); storage.set('bmiF123x',25.3); 
-    storage.set('bmiF123c',32.3);
-    //12-4
-    storage.set('bmiM124z',14.6); storage.set('bmiM124x',24.0); 
-    storage.set('bmiM124c',30.6);
-    storage.set('bmiF124z',14.6); storage.set('bmiF124x',25.4); 
-    storage.set('bmiF124c',32.4);
-    //12-5
-    storage.set('bmiM125z',14.6); storage.set('bmiM125x',24.1); 
-    storage.set('bmiM125c',30.7);
-    storage.set('bmiF125z',14.6); storage.set('bmiF125x',25.5); 
-    storage.set('bmiF125c',32.6);
-    //12-6
-    storage.set('bmiM126z',14.7); storage.set('bmiM126x',24.2); 
-    storage.set('bmiM126c',30.9);
-    storage.set('bmiF126z',14.7); storage.set('bmiF126x',25.6); 
-    storage.set('bmiF126c',32.7);
-    //12-7
-    storage.set('bmiM127z',14.7); storage.set('bmiM127x',24.3); 
-    storage.set('bmiM127c',31.0);
-    storage.set('bmiF127z',14.7); storage.set('bmiF127x',25.7); 
-    storage.set('bmiF127c',32.8);
-    //12-8
-    storage.set('bmiM128z',14.8); storage.set('bmiM128x',24.4); 
-    storage.set('bmiM128c',31.1);
-    storage.set('bmiF128z',14.8); storage.set('bmiF128x',25.8); 
-    storage.set('bmiF128c',33.0);
-    //12-9
-    storage.set('bmiM129z',14.8); storage.set('bmiM129x',24.5); 
-    storage.set('bmiM129c',31.3);
-    storage.set('bmiF129z',14.8); storage.set('bmiF129x',25.9); 
-    storage.set('bmiF129c',33.1);
-    //12-10
-    storage.set('bmiM1210z',14.8); storage.set('bmiM1210x',24.6); 
-    storage.set('bmiM1210c',31.4);
-    storage.set('bmiF1210z',14.8); storage.set('bmiF1210x',26.0); 
-    storage.set('bmiF1210c',33.2);
-    //12-11
-    storage.set('bmiM1211z',14.9); storage.set('bmiM1211x',24.7); 
-    storage.set('bmiM1211c',31.6);
-    storage.set('bmiF1211z',14.9); storage.set('bmiF1211x',26.1); 
-    storage.set('bmiF1211c',33.3);
-    //13-0
-    storage.set('bmiM130z',14.9); storage.set('bmiM130x',24.8); 
-    storage.set('bmiM130c',31.7);
-    storage.set('bmiF130z',14.9); storage.set('bmiF130x',26.2); 
-    storage.set('bmiF130c',33.4);
-    //13-1
-    storage.set('bmiM131z',15.0); storage.set('bmiM131x',24.9); 
-    storage.set('bmiM131c',31.8);
-    storage.set('bmiF131z',15.0); storage.set('bmiF131x',26.3); 
-    storage.set('bmiF131c',33.6);
-    //13-2
-    storage.set('bmiM132z',15.0); storage.set('bmiM132x',25.0); 
-    storage.set('bmiM132c',31.9);
-    storage.set('bmiF132z',15.0); storage.set('bmiF132x',26.4); 
-    storage.set('bmiF132c',33.7)
-    //13-3
-    storage.set('bmiM133z',15.1); storage.set('bmiM133x',25.1); 
-    storage.set('bmiM133c',32.1);
-    storage.set('bmiF133z',15.1); storage.set('bmiF133x',26.5); 
-    storage.set('bmiF133c',33.8);
-    //13-4
-    storage.set('bmiM134z',15.1); storage.set('bmiM134x',25.2); 
-    storage.set('bmiM134c',32.2);
-    storage.set('bmiF134z',15.1); storage.set('bmiF134x',26.6); 
-    storage.set('bmiF134c',33.9);
-    //13-5
-    storage.set('bmiM135z',15.2); storage.set('bmiM135x',25.2); 
-    storage.set('bmiM135c',32.3);
-    storage.set('bmiF135z',15.2); storage.set('bmiF135x',26.7); 
-    storage.set('bmiF135c',34.0);
-    //13-6
-    storage.set('bmiM136z',15.2); storage.set('bmiM136x',25.3); 
-    storage.set('bmiM136c',32.4);
-    storage.set('bmiF136z',15.2); storage.set('bmiF136x',26.8); 
-    storage.set('bmiF136c',34.1);
-    //13-7
-    storage.set('bmiM137z',15.2); storage.set('bmiM137x',25.4); 
-    storage.set('bmiM137c',32.6);
-    storage.set('bmiF137z',15.2); storage.set('bmiF137x',26.9); 
-    storage.set('bmiF137c',34.2);
-    //13-8
-    storage.set('bmiM138z',15.3); storage.set('bmiM138x',25.5); 
-    storage.set('bmiM138c',32.7);
-    storage.set('bmiF138z',15.3); storage.set('bmiF138x',27.0); 
-    storage.set('bmiF138c',34.3);
-    //13-9
-    storage.set('bmiM139z',15.3); storage.set('bmiM139x',25.6); 
-    storage.set('bmiM139c',32.8);
-    storage.set('bmiF139z',15.3); storage.set('bmiF139x',27.1); 
-    storage.set('bmiF139c',34.4);
-    //13-10
-    storage.set('bmiM1310z',15.4); storage.set('bmiM1310x',25.7); 
-    storage.set('bmiM1310c',32.9);
-    storage.set('bmiF1310z',15.4); storage.set('bmiF1310x',27.1); 
-    storage.set('bmiF1310c',34.5);
-    //13-11
-    storage.set('bmiM1311z',15.4); storage.set('bmiM1311x',25.8); 
-    storage.set('bmiM1311c',33.0);
-    storage.set('bmiF1311z',15.4); storage.set('bmiF1311x',27.2); 
-    storage.set('bmiF1311c',34.6);
-    //14-0
-    storage.set('bmiM140z',15.5); storage.set('bmiM140x',25.9); 
-    storage.set('bmiM140c',33.1);
-    storage.set('bmiF140z',15.4); storage.set('bmiF140x',27.3); 
-    storage.set('bmiF140c',34.7);
-    //14-1
-    storage.set('bmiM141z',15.5); storage.set('bmiM141x',26.0); 
-    storage.set('bmiM141c',33.2);
-    storage.set('bmiF141z',15.5); storage.set('bmiF141x',27.4); 
-    storage.set('bmiF141c',34.7);
-    //14-2
-    storage.set('bmiM142z',15.6); storage.set('bmiM142x',26.1); 
-    storage.set('bmiM142c',33.3);
-    storage.set('bmiF142z',15.5); storage.set('bmiF142x',27.5); 
-    storage.set('bmiF142c',34.8)
-    //14-3
-    storage.set('bmiM143z',15.6); storage.set('bmiM143x',26.2); 
-    storage.set('bmiM143c',33.4);
-    storage.set('bmiF143z',15.6); storage.set('bmiF143x',27.6); 
-    storage.set('bmiF143c',34.9);
-    //14-4
-    storage.set('bmiM144z',15.6); storage.set('bmiM144x',26.3); 
-    storage.set('bmiM144c',33.5);
-    storage.set('bmiF144z',15.6); storage.set('bmiF144x',27.7); 
-    storage.set('bmiF144c',35.0);
-    //14-5
-    storage.set('bmiM145z',15.7); storage.set('bmiM145x',26.4); 
-    storage.set('bmiM145c',33.5);
-    storage.set('bmiF145z',15.6); storage.set('bmiF145x',27.7); 
-    storage.set('bmiF145c',35.1);
-    //14-6
-    storage.set('bmiM146z',15.7); storage.set('bmiM146x',26.5); 
-    storage.set('bmiM146c',33.6);
-    storage.set('bmiF146z',15.7); storage.set('bmiF146x',27.8); 
-    storage.set('bmiF146c',35.1);
-    //14-7
-    storage.set('bmiM147z',15.8); storage.set('bmiM147x',25.4); 
-    storage.set('bmiM147c',32.6);
-    storage.set('bmiF147z',15.2); storage.set('bmiF147x',26.9); 
-    storage.set('bmiF147c',34.2);
-    //14-8
-    storage.set('bmiM148z',15.8); storage.set('bmiM148x',25.5); 
-    storage.set('bmiM148c',32.7);
-    storage.set('bmiF148z',15.3); storage.set('bmiF148x',27.0); 
-    storage.set('bmiF148c',34.3);
-    //14-9
-    storage.set('bmiM149z',15.9); storage.set('bmiM149x',25.6); 
-    storage.set('bmiM149c',32.8);
-    storage.set('bmiF149z',15.3); storage.set('bmiF149x',27.1); 
-    storage.set('bmiF149c',34.4);
-    //14-10
-    storage.set('bmiM1410z',15.9); storage.set('bmiM1410x',25.7); 
-    storage.set('bmiM1410c',32.9);
-    storage.set('bmiF1410z',15.4); storage.set('bmiF1410x',27.1); 
-    storage.set('bmiF1410c',34.5);
-    //14-11
-    storage.set('bmiM1411z',16.0); storage.set('bmiM1411x',25.8); 
-    storage.set('bmiM1411c',33.0);
-    storage.set('bmiF1411z',15.4); storage.set('bmiF1411x',27.2); 
-    storage.set('bmiF1411c',34.6);
-    //15-0
-    storage.set('bmiM150z',16.0); storage.set('bmiM150x',25.9); 
-    storage.set('bmiM150c',33.1);
-    storage.set('bmiF150z',15.4); storage.set('bmiF150x',27.3); 
-    storage.set('bmiF150c',34.7);
     
+    // storage.clear();
 
-
-    // storage.get('bmiM20z').then((val) => {
-    //   console.log('Your age is', val);
-    // });
-    // storage.get('bmiM19z').then((val) => {
-    //   console.log('Your age is', val);
-    // });
+    storage.get('wfaF10').then((val) => {
+      if(val==null || val==''){
+        storage.set('bmiM0',[10.2,11.1,12.2,13.4,14.8,16.3,18.1]);
+        storage.set('bmiM01',[11.3,12.4,13.6,14.9,16.3,17.8,19.4]);
+        storage.set('bmiM02',[12.5,13.7,15,16.3,17.8,19.4,21.1]);
+        storage.set('bmiM03',[13.1,14.3,15.5,16.9,18.4,20,21.8]);
+        storage.set('bmiM04',[13.4,14.5,15.8,17.2,18.7,20.3,22.1]);
+        storage.set('bmiM05',[13.5,14.7,15.9,17.3,18.8,20.5,22.3]);
+        storage.set('bmiM06',[13.6,14.7,16,17.3,18.8,20.5,22.3]);
+        storage.set('bmiM07',[13.7,14.8,16,17.3,18.8,20.5,22.3]);
+        storage.set('bmiM08',[13.6,14.7,15.9,17.3,18.7,20.4,22.2]);
+        storage.set('bmiM09',[13.6,14.7,15.8,17.2,18.6,20.3,22.1]);
+        storage.set('bmiM010',[13.5,14.6,15.7,17,18.5,20.1,22]);
+        storage.set('bmiM011',[13.4,14.5,15.6,16.9,18.4,20,21.8]);
+        storage.set('bmiM1',[13.4,14.4,15.5,16.8,18.2,19.8,21.6]);
+        storage.set('bmiM11',[13.3,14.3,15.4,16.7,18.1,19.7,21.5]);
+        storage.set('bmiM12',[13.2,14.2,15.3,16.6,18,19.5,21.3]);
+        storage.set('bmiM13',[13.1,14.1,15.2,16.4,17.8,19.4,21.2]);
+        storage.set('bmiM14',[13.1,14,15.1,16.3,17.7,19.3,21]);
+        storage.set('bmiM15',[13,13.9,15,16.2,17.6,19.1,20.9]);
+        storage.set('bmiM16',[12.9,13.9,14.9,16.1,17.5,19,20.8]);
+        storage.set('bmiM17',[12.9,13.8,14.9,16.1,17.4,18.9,20.7]);
+        storage.set('bmiM18',[12.8,13.7,14.8,16,17.3,18.8,20.6]);
+        storage.set('bmiM19',[12.8,13.7,14.7,15.9,17.2,18.7,20.5]);
+        storage.set('bmiM110',[12.7,13.6,14.7,15.8,17.2,18.7,20.4]);
+        storage.set('bmiM111',[12.7,13.6,14.6,15.8,17.1,18.6,20.3]);
+        storage.set('bmiM2',[12.7,13.6,14.6,15.7,17,18.5,20.3]);
+        storage.set('bmiM21',[12.8,13.8,14.8,16,17.3,18.8,20.5]);
+        storage.set('bmiM22',[12.8,13.7,14.8,15.9,17.3,18.8,20.5]);
+        storage.set('bmiM23',[12.7,13.7,14.7,15.9,17.2,18.7,20.4]);
+        storage.set('bmiM24',[12.7,13.6,14.7,15.9,17.2,18.7,20.4]);
+        storage.set('bmiM25',[12.7,13.6,14.7,15.8,17.1,18.6,20.3]);
+        storage.set('bmiM26',[12.6,13.6,14.6,15.8,17.1,18.6,20.2]);
+        storage.set('bmiM27',[12.6,13.5,14.6,15.8,17.1,18.5,20.2]);
+        storage.set('bmiM28',[12.5,13.5,14.6,15.7,17,18.5,20.1]);
+        storage.set('bmiM29',[12.5,13.5,14.5,15.7,17,18.5,20.1]);
+        storage.set('bmiM210',[12.5,13.4,14.5,15.7,17,18.4,20]);
+        storage.set('bmiM211',[12.4,13.4,14.5,15.6,16.9,18.4,20]);
+        storage.set('bmiM3',[12.4,13.4,14.4,15.6,16.9,18.4,20]);
+        storage.set('bmiM31',[12.4,13.3,14.4,15.6,16.9,18.3,19.9]);
+        storage.set('bmiM32',[12.3,13.3,14.4,15.5,16.8,18.3,19.9]);
+        storage.set('bmiM33',[12.3,13.3,14.3,15.5,16.8,18.3,19.9]);
+        storage.set('bmiM34',[12.3,13.2,14.3,15.5,16.8,18.2,19.9]);
+        storage.set('bmiM35',[12.2,13.2,14.3,15.5,16.8,18.2,19.9]);
+        storage.set('bmiM36',[12.2,13.2,14.3,15.4,16.8,18.2,19.8]);
+        storage.set('bmiM37',[12.2,13.2,14.2,15.4,16.7,18.2,19.8]);
+        storage.set('bmiM38',[12.2,13.1,14.2,15.4,16.7,18.2,19.8]);
+        storage.set('bmiM39',[12.2,13.1,14.2,15.4,16.7,18.2,19.8]);
+        storage.set('bmiM310',[12.1,13.1,14.2,15.4,16.7,18.2,19.8]);
+        storage.set('bmiM311',[12.1,13.1,14.2,15.3,16.7,18.2,19.9]);
+        storage.set('bmiM4',[12.1,13.1,14.1,15.3,16.7,18.2,19.9]);
+        storage.set('bmiM41',[12.1,13,14.1,15.3,16.7,18.2,19.9]);
+        storage.set('bmiM42',[12.1,13,14.1,15.3,16.7,18.2,19.9]);
+        storage.set('bmiM43',[12.1,13,14.1,15.3,16.6,18.2,19.9]);
+        storage.set('bmiM44',[12,13,14.1,15.3,16.6,18.2,19.9]);
+        storage.set('bmiM45',[12,13,14.1,15.3,16.6,18.2,20]);
+        storage.set('bmiM46',[12,13,14,15.3,16.6,18.2,20]);
+        storage.set('bmiM47',[12,13,14,15.2,16.6,18.2,20]);
+        storage.set('bmiM48',[12,12.9,14,15.2,16.6,18.2,20.1]);
+        storage.set('bmiM49',[12,12.9,14,15.2,16.6,18.2,20.1]);
+        storage.set('bmiM410',[12,12.9,14,15.2,16.6,18.3,20.2]);
+        storage.set('bmiM411',[12,12.9,14,15.2,16.6,18.3,20.2]);
+        storage.set('bmiM5',[12,12.9,14,15.2,16.6,18.3,20.3]);
+        storage.set('bmiM51',[12.1,13,14.1,15.3,16.6,18.3,20.2]);
+        storage.set('bmiM52',[12.1,13,14.1,15.3,16.6,18.3,20.2]);
+        storage.set('bmiM53',[12.1,13,14.1,15.3,16.7,18.3,20.2]);
+        storage.set('bmiM54',[12.1,13,14.1,15.3,16.7,18.3,20.3]);
+        storage.set('bmiM55',[12.1,13,14.1,15.3,16.7,18.3,20.3]);
+        storage.set('bmiM56',[12.1,13,14.1,15.3,16.7,18.4,20.4]);
+        storage.set('bmiM57',[12.1,13,14.1,15.3,16.7,18.4,20.4]);
+        storage.set('bmiM58',[12.1,13,14.1,15.3,16.7,18.4,20.5]);
+        storage.set('bmiM59',[12.1,13,14.1,15.3,16.7,18.4,20.5]);
+        storage.set('bmiM510',[12.1,13,14.1,15.3,16.7,18.5,20.6]);
+        storage.set('bmiM511',[12.1,13,14.1,15.3,16.7,18.5,20.6]);
+        storage.set('bmiM6',[12.1,13,14.1,15.3,16.8,18.5,20.7]);
+        storage.set('bmiM61',[12.1,13,14.1,15.3,16.8,18.6,20.8]);
+        storage.set('bmiM62',[12.2,13.1,14.1,15.3,16.8,18.6,20.8]);
+        storage.set('bmiM63',[12.2,13.1,14.1,15.3,16.8,18.6,20.9]);
+        storage.set('bmiM64',[12.2,13.1,14.1,15.4,16.8,18.7,21]);
+        storage.set('bmiM65',[12.2,13.1,14.1,15.4,16.9,18.7,21]);
+        storage.set('bmiM66',[12.2,13.1,14.1,15.4,16.9,18.7,21.1]);
+        storage.set('bmiM67',[12.2,13.1,14.1,15.4,16.9,18.8,21.2]);
+        storage.set('bmiM68',[12.2,13.1,14.2,15.4,16.9,18.8,21.3]);
+        storage.set('bmiM69',[12.2,13.1,14.2,15.4,17,18.9,21.3]);
+        storage.set('bmiM610',[12.2,13.1,14.2,15.4,17,18.9,21.4]);
+        storage.set('bmiM611',[12.2,13.1,14.2,15.5,17,19,21.5]);
+        storage.set('bmiM7',[12.3,13.1,14.2,15.5,17,19,21.6]);
+        storage.set('bmiM71',[12.3,13.2,14.2,15.5,17.1,19.1,21.7]);
+        storage.set('bmiM72',[12.3,13.2,14.2,15.5,17.1,19.1,21.8]);
+        storage.set('bmiM73',[12.3,13.2,14.3,15.5,17.1,19.2,21.9]);
+        storage.set('bmiM74',[12.3,13.2,14.3,15.6,17.2,19.2,22]);
+        storage.set('bmiM75',[12.3,13.2,14.3,15.6,17.2,19.3,22]);
+        storage.set('bmiM76',[12.3,13.2,14.3,15.6,17.2,19.3,22.1]);
+        storage.set('bmiM77',[12.3,13.2,14.3,15.6,17.3,19.4,22.2]);
+        storage.set('bmiM78',[12.3,13.2,14.3,15.6,17.3,19.4,22.4]);
+        storage.set('bmiM79',[12.4,13.3,14.3,15.7,17.3,19.5,22.5]);
+        storage.set('bmiM710',[12.4,13.3,14.4,15.7,17.4,19.6,22.6]);
+        storage.set('bmiM711',[12.4,13.3,14.4,15.7,17.4,19.6,22.7]);
+        storage.set('bmiM8',[12.4,13.3,14.4,15.7,17.4,19.7,22.8]);
+        storage.set('bmiM81',[12.4,13.3,14.4,15.8,17.5,19.7,22.9]);
+        storage.set('bmiM82',[12.4,13.3,14.4,15.8,17.5,19.8,23]);
+        storage.set('bmiM83',[12.4,13.3,14.4,15.8,17.5,19.9,23.1]);
+        storage.set('bmiM84',[12.4,13.4,14.5,15.8,17.6,19.9,23.3]);
+        storage.set('bmiM85',[12.5,13.4,14.5,15.9,17.6,20,23.4]);
+        storage.set('bmiM86',[12.5,13.4,14.5,15.9,17.7,20.1,23.5]);
+        storage.set('bmiM87',[12.5,13.4,14.5,15.9,17.7,20.1,23.6]);
+        storage.set('bmiM88',[12.5,13.4,14.5,15.9,17.7,20.2,23.8]);
+        storage.set('bmiM89',[12.5,13.4,14.6,16,17.8,20.3,23.9]);
+        storage.set('bmiM810',[12.5,13.5,14.6,16,17.8,20.3,24]);
+        storage.set('bmiM811',[12.5,13.5,14.6,16,17.9,20.4,24.2]);
+        storage.set('bmiM9',[12.6,13.5,14.6,16,17.9,20.5,24.3]);
+        storage.set('bmiM91',[12.6,13.5,14.6,16.1,18,20.5,24.4]);
+        storage.set('bmiM92',[12.6,13.5,14.7,16.1,18,20.6,24.6]);
+        storage.set('bmiM93',[12.6,13.5,14.7,16.1,18,20.7,24.7]);
+        storage.set('bmiM94',[12.6,13.6,14.7,16.2,18.1,20.8,24.9]);
+        storage.set('bmiM95',[12.6,13.6,14.7,16.2,18.1,20.8,25]);
+        storage.set('bmiM96',[12.7,13.6,14.8,16.2,18.2,20.9,25.1]);
+        storage.set('bmiM97',[12.7,13.6,14.8,16.3,18.2,21,25.3]);
+        storage.set('bmiM98',[12.7,13.6,14.8,16.3,18.3,21.1,25.5]);
+        storage.set('bmiM99',[12.7,13.7,14.8,16.3,18.3,21.2,25.6]);
+        storage.set('bmiM910',[12.7,13.7,14.9,16.4,18.4,21.2,25.8]);
+        storage.set('bmiM911',[12.8,13.7,14.9,16.4,18.4,21.3,25.9]);
+        storage.set('bmiM10',[12.8,13.7,14.9,16.4,18.5,21.4,26.1]);
+        storage.set('bmiM101',[12.8,13.8,15,16.5,18.5,21.5,26.2]);
+        storage.set('bmiM102',[12.8,13.8,15,16.5,18.6,21.6,26.4]);
+        storage.set('bmiM103',[12.8,13.8,15,16.6,18.6,21.7,26.6]);
+        storage.set('bmiM104',[12.9,13.8,15,16.6,18.7,21.7,26.7]);
+        storage.set('bmiM105',[12.9,13.9,15.1,16.6,18.8,21.8,26.9]);
+        storage.set('bmiM106',[12.9,13.9,15.1,16.7,18.8,21.9,27]);
+        storage.set('bmiM107',[12.9,13.9,15.1,16.7,18.9,22,27.2]);
+        storage.set('bmiM108',[13,13.9,15.2,16.8,18.9,22.1,27.4]);
+        storage.set('bmiM109',[13,14,15.2,16.8,19,22.2,27.5]);
+        storage.set('bmiM1010',[13,14,15.2,16.9,19,22.3,27.7]);
+        storage.set('bmiM1011',[13,14,15.3,16.9,19.1,22.4,27.9]);
+        storage.set('bmiM11',[13.1,14.1,15.3,16.9,19.2,22.5,28]);
+        storage.set('bmiM111',[13.1,14.1,15.3,17,19.2,22.5,28.2]);
+        storage.set('bmiM112',[13.1,14.1,15.4,17,19.3,22.6,28.4]);
+        storage.set('bmiM113',[13.1,14.1,15.4,17.1,19.3,22.7,28.5]);
+        storage.set('bmiM114',[13.2,14.2,15.5,17.1,19.4,22.8,28.7]);
+        storage.set('bmiM115',[13.2,14.2,15.5,17.2,19.5,22.9,28.8]);
+        storage.set('bmiM116',[13.2,14.2,15.5,17.2,19.5,23,29]);
+        storage.set('bmiM117',[13.2,14.3,15.6,17.3,19.6,23.1,29.2]);
+        storage.set('bmiM118',[13.3,14.3,15.6,17.3,19.7,23.2,29.3]);
+        storage.set('bmiM119',[13.3,14.3,15.7,17.4,19.7,23.3,29.5]);
+        storage.set('bmiM1110',[13.3,14.4,15.7,17.4,19.8,23.4,29.6]);
+        storage.set('bmiM1111',[13.4,14.4,15.7,17.5,19.9,23.5,29.8]);
+        storage.set('bmiM12',[13.4,14.5,15.8,17.5,19.9,23.6,30]);
+        storage.set('bmiM121',[13.4,14.5,15.8,17.6,20,23.7,30.1]);
+        storage.set('bmiM122',[13.5,14.5,15.9,17.6,20.1,23.8,30.3]);
+        storage.set('bmiM123',[13.5,14.6,15.9,17.7,20.2,23.9,30.4]);
+        storage.set('bmiM124',[13.5,14.6,16,17.8,20.2,24,30.6]);
+        storage.set('bmiM125',[13.6,14.6,16,17.8,20.3,24.1,30.7]);
+        storage.set('bmiM126',[13.6,14.7,16.1,17.9,20.4,24.2,30.9]);
+        storage.set('bmiM127',[13.6,14.7,16.1,17.9,20.4,24.3,31]);
+        storage.set('bmiM128',[13.7,14.8,16.2,18,20.5,24.4,31.1]);
+        storage.set('bmiM129',[13.7,14.8,16.2,18,20.6,24.5,31.3]);
+        storage.set('bmiM1210',[13.7,14.8,16.3,18.1,20.7,24.6,31.4]);
+        storage.set('bmiM1211',[13.8,14.9,16.3,18.2,20.8,24.7,31.6]);
+        storage.set('bmiM13',[13.8,14.9,16.4,18.2,20.8,24.8,31.7]);
+        storage.set('bmiM131',[13.8,15,16.4,18.3,20.9,24.9,31.8]);
+        storage.set('bmiM132',[13.9,15,16.5,18.4,21,25,31.9]);
+        storage.set('bmiM133',[13.9,15.1,16.5,18.4,21.1,25.1,32.1]);
+        storage.set('bmiM134',[14,15.1,16.6,18.5,21.1,25.2,32.2]);
+        storage.set('bmiM135',[14,15.2,16.6,18.6,21.2,25.2,32.3]);
+        storage.set('bmiM136',[14,15.2,16.7,18.6,21.3,25.3,32.4]);
+        storage.set('bmiM137',[14.1,15.2,16.7,18.7,21.4,25.4,32.6]);
+        storage.set('bmiM138',[14.1,15.3,16.8,18.7,21.5,25.5,32.7]);
+        storage.set('bmiM139',[14.1,15.3,16.8,18.8,21.5,25.6,32.8]);
+        storage.set('bmiM1310',[14.2,15.4,16.9,18.9,21.6,25.7,32.9]);
+        storage.set('bmiM1311',[14.2,15.4,17,18.9,21.7,25.8,33]);
+        storage.set('bmiM14',[14.3,15.5,17,19,21.8,25.9,33.1]);
+        storage.set('bmiM141',[14.3,15.5,17.1,19.1,21.8,26,33.2]);
+        storage.set('bmiM142',[14.3,15.6,17.1,19.1,21.9,26.1,33.3]);
+        storage.set('bmiM143',[14.4,15.6,17.2,19.2,22,26.2,33.4]);
+        storage.set('bmiM144',[14.4,15.7,17.2,19.3,22.1,26.3,33.5]);
+        storage.set('bmiM145',[14.5,15.7,17.3,19.3,22.2,26.4,33.5]);
+        storage.set('bmiM146',[14.5,15.7,17.3,19.4,22.2,26.5,33.6]);
+        storage.set('bmiM147',[14.5,15.8,17.4,19.5,22.3,26.5,33.7]);
+        storage.set('bmiM148',[14.6,15.8,17.4,19.5,22.4,26.6,33.8]);
+        storage.set('bmiM149',[14.6,15.9,17.5,19.6,22.5,26.7,33.9]);
+        storage.set('bmiM1410',[14.6,15.9,17.5,19.6,22.5,26.8,33.9]);
+        storage.set('bmiM1411',[14.7,16,17.6,19.7,22.6,26.9,34]);
+        storage.set('bmiM15',[14.7,16,17.6,19.8,22.7,27,34.1]);
+        storage.set('bmiM151',[14.7,16.1,17.7,19.8,22.8,27.1,34.1]);
+        storage.set('bmiM152',[14.8,16.1,17.8,19.9,22.8,27.1,34.2]);
+        storage.set('bmiM153',[14.8,16.1,17.8,20,22.9,27.2,34.3]);
+        storage.set('bmiM154',[14.8,16.2,17.9,20,23,27.3,34.3]);
+        storage.set('bmiM155',[14.9,16.2,17.9,20.1,23,27.4,34.4]);
+        storage.set('bmiM156',[14.9,16.3,18,20.1,23.1,27.4,34.5]);
+        storage.set('bmiM157',[15,16.3,18,20.2,23.2,27.5,34.5]);
+        storage.set('bmiM158',[15,16.3,18.1,20.3,23.3,27.6,34.6]);
+        storage.set('bmiM159',[15,16.4,18.1,20.3,23.3,27.7,34.6]);
+        storage.set('bmiM1510',[15,16.4,18.2,20.4,23.4,27.7,34.7]);
+        storage.set('bmiM1511',[15.1,16.5,18.2,20.4,23.5,27.8,34.7]);
+        storage.set('bmiM16',[15.1,16.5,18.2,20.5,23.5,27.9,34.8]);
+        storage.set('bmiM161',[15.1,16.5,18.3,20.6,23.6,27.9,34.8]);
+        storage.set('bmiM162',[15.2,16.6,18.3,20.6,23.7,28,34.8]);
+        storage.set('bmiM163',[15.2,16.6,18.4,20.7,23.7,28.1,34.9]);
+        storage.set('bmiM164',[15.2,16.7,18.4,20.7,23.8,28.1,34.9]);
+        storage.set('bmiM165',[15.3,16.7,18.5,20.8,23.8,28.2,35]);
+        storage.set('bmiM166',[15.3,16.7,18.5,20.8,23.9,28.3,35]);
+        storage.set('bmiM167',[15.3,16.8,18.6,20.9,24,28.3,35]);
+        storage.set('bmiM168',[15.3,16.8,18.6,20.9,24,28.4,35.1]);
+        storage.set('bmiM169',[15.4,16.8,18.7,21,24.1,28.5,35.1]);
+        storage.set('bmiM1610',[15.4,16.9,18.7,21,24.2,28.5,35.1]);
+        storage.set('bmiM1611',[15.4,16.9,18.7,21.1,24.2,28.6,35.2]);
+        storage.set('bmiM17',[15.4,16.9,18.8,21.1,24.3,28.6,35.2]);
+        storage.set('bmiM171',[15.5,17,18.8,21.2,24.3,28.7,35.2]);
+        storage.set('bmiM172',[15.5,17,18.9,21.2,24.4,28.7,35.2]);
+        storage.set('bmiM173',[15.5,17,18.9,21.3,24.4,28.8,35.3]);
+        storage.set('bmiM174',[15.5,17.1,18.9,21.3,24.5,28.9,35.3]);
+        storage.set('bmiM175',[15.6,17.1,19,21.4,24.5,28.9,35.3]);
+        storage.set('bmiM176',[15.6,17.1,19,21.4,24.6,29,35.3]);
+        storage.set('bmiM177',[15.6,17.1,19.1,21.5,24.7,29,35.4]);
+        storage.set('bmiM178',[15.6,17.2,19.1,21.5,24.7,29.1,35.4]);
+        storage.set('bmiM179',[15.6,17.2,19.1,21.6,24.8,29.1,35.4]);
+        storage.set('bmiM1710',[15.7,17.2,19.2,21.6,24.8,29.2,35.4]);
+        storage.set('bmiM1711',[15.7,17.3,19.2,21.7,24.9,29.2,35.4]);
+        storage.set('bmiM18',[15.7,17.3,19.2,21.7,24.9,29.2,35.4]);
+        storage.set('bmiM181',[15.7,17.3,19.3,21.8,25,29.3,35.4]);
+        storage.set('bmiM182',[15.7,17.3,19.3,21.8,25,29.3,35.5]);
+        storage.set('bmiM183',[15.7,17.4,19.3,21.8,25.1,29.4,35.5]);
+        storage.set('bmiM184',[15.8,17.4,19.4,21.9,25.1,29.4,35.5]);
+        storage.set('bmiM185',[15.8,17.4,19.4,21.9,25.1,29.5,35.5]);
+        storage.set('bmiM186',[15.8,17.4,19.4,22,25.2,29.5,35.5]);
+        storage.set('bmiM187',[15.8,17.5,19.5,22,25.2,29.5,35.5]);
+        storage.set('bmiM188',[15.8,17.5,19.5,22,25.3,29.6,35.5]);
+        storage.set('bmiM189',[15.8,17.5,19.5,22.1,25.3,29.6,35.5]);
+        storage.set('bmiM1810',[15.8,17.5,19.6,22.1,25.4,29.6,35.5]);
+        storage.set('bmiM1811',[15.8,17.5,19.6,22.2,25.4,29.7,35.5]);
+        storage.set('bmiM19',[15.9,17.6,19.6,22.2,25.4,29.7,35.5]);
+        storage.set('bmiF0',[10.1,11.1,12.2,13.3,14.6,16.1,17.7]);
+        storage.set('bmiF01',[10.8,12,13.2,14.6,16,17.5,19.1]);
+        storage.set('bmiF02',[11.8,13,14.3,15.8,17.3,19,20.7]);
+        storage.set('bmiF03',[12.4,13.6,14.9,16.4,17.9,19.7,21.5]);
+        storage.set('bmiF04',[12.7,13.9,15.2,16.7,18.3,20,22]);
+        storage.set('bmiF05',[12.9,14.1,15.4,16.8,18.4,20.2,22.2]);
+        storage.set('bmiF06',[13,14.1,15.5,16.9,18.5,20.3,22.3]);
+        storage.set('bmiF07',[13,14.2,15.5,16.9,18.5,20.3,22.3]);
+        storage.set('bmiF08',[13,14.1,15.4,16.8,18.4,20.2,22.2]);
+        storage.set('bmiF09',[12.9,14.1,15.3,16.7,18.3,20.1,22.1]);
+        storage.set('bmiF010',[12.9,14,15.2,16.6,18.2,19.9,21.9]);
+        storage.set('bmiF111',[12.8,13.9,15.1,16.5,18,19.8,21.8]);
+        storage.set('bmiF1',[12.7,13.8,15,16.4,17.9,19.6,21.6]);
+        storage.set('bmiF11',[12.6,13.7,14.9,16.2,17.7,19.5,21.4]);
+        storage.set('bmiF12',[12.6,13.6,14.8,16.1,17.6,19.3,21.3]);
+        storage.set('bmiF13',[12.5,13.5,14.7,16,17.5,19.2,21.1]);
+        storage.set('bmiF14',[12.4,13.5,14.6,15.9,17.4,19.1,21]);
+        storage.set('bmiF15',[12.4,13.4,14.5,15.8,17.3,18.9,20.9]);
+        storage.set('bmiF16',[12.3,13.3,14.4,15.7,17.2,18.8,20.8]);
+        storage.set('bmiF17',[12.3,13.3,14.4,15.7,17.1,18.8,20.7]);
+        storage.set('bmiF18',[12.2,13.2,14.3,15.6,17,18.7,20.6]);
+        storage.set('bmiF19',[12.2,13.2,14.3,15.5,17,18.6,20.5]);
+        storage.set('bmiF110',[12.2,13.1,14.2,15.5,16.9,18.5,20.4]);
+        storage.set('bmiF111',[12.2,13.1,14.2,15.4,16.9,18.5,20.4]);
+        storage.set('bmiF2',[12.4,13.3,14.4,15.7,17.1,18.7,20.6]);
+        storage.set('bmiF21',[12.4,13.3,14.4,15.7,17.1,18.7,20.6]);
+        storage.set('bmiF22',[12.3,13.3,14.4,15.6,17,18.7,20.6]);
+        storage.set('bmiF23',[12.3,13.3,14.4,15.6,17,18.6,20.5]);
+        storage.set('bmiF24',[12.3,13.3,14.3,15.6,17,18.6,20.5]);
+        storage.set('bmiF25',[12.3,13.2,14.3,15.6,17,18.6,20.4]);
+        storage.set('bmiF26',[12.3,13.2,14.3,15.5,16.9,18.5,20.4]);
+        storage.set('bmiF27',[12.2,13.2,14.3,15.5,16.9,18.5,20.4]);
+        storage.set('bmiF28',[12.2,13.2,14.3,15.5,16.9,18.5,20.4]);
+        storage.set('bmiF29',[12.2,13.1,14.2,15.5,16.9,18.5,20.3]);
+        storage.set('bmiF210',[12.2,13.1,14.2,15.4,16.8,18.5,20.3]);
+        storage.set('bmiF211',[12.1,13.1,14.2,15.4,16.8,18.4,20.3]);
+        storage.set('bmiF3',[12.1,13.1,14.2,15.4,16.8,18.4,20.3]);
+        storage.set('bmiF31',[12.1,13.1,14.1,15.4,16.8,18.4,20.3]);
+        storage.set('bmiF32',[12.1,13,14.1,15.4,16.8,18.4,20.3]);
+        storage.set('bmiF33',[12,13,14.1,15.3,16.8,18.4,20.3]);
+        storage.set('bmiF34',[12,13,14.1,15.3,16.8,18.4,20.3]);
+        storage.set('bmiF35',[12,13,14.1,15.3,16.8,18.4,20.4]);
+        storage.set('bmiF36',[12,12.9,14,15.3,16.8,18.4,20.4]);
+        storage.set('bmiF37',[11.9,12.9,14,15.3,16.8,18.4,20.4]);
+        storage.set('bmiF38',[11.9,12.9,14,15.3,16.8,18.5,20.4]);
+        storage.set('bmiF39',[11.9,12.9,14,15.3,16.8,18.5,20.5]);
+        storage.set('bmiF310',[11.9,12.9,14,15.3,16.8,18.5,20.5]);
+        storage.set('bmiF311',[11.8,12.8,14,15.3,16.8,18.5,20.5]);
+        storage.set('bmiF4',[11.8,12.8,14,15.3,16.8,18.5,20.6]);
+        storage.set('bmiF41',[11.8,12.8,13.9,15.3,16.8,18.5,20.6]);
+        storage.set('bmiF42',[11.8,12.8,13.9,15.3,16.8,18.6,20.7]);
+        storage.set('bmiF43',[11.8,12.8,13.9,15.3,16.8,18.6,20.7]);
+        storage.set('bmiF44',[11.7,12.8,13.9,15.2,16.8,18.6,20.7]);
+        storage.set('bmiF45',[11.7,12.7,13.9,15.3,16.8,18.6,20.8]);
+        storage.set('bmiF46',[11.7,12.7,13.9,15.3,16.8,18.7,20.8]);
+        storage.set('bmiF47',[11.7,12.7,13.9,15.3,16.8,18.7,20.9]);
+        storage.set('bmiF48',[11.7,12.7,13.9,15.3,16.8,18.7,20.9]);
+        storage.set('bmiF49',[11.7,12.7,13.9,15.3,16.9,18.7,21]);
+        storage.set('bmiF410',[11.7,12.7,13.9,15.3,16.9,18.8,21]);
+        storage.set('bmiF411',[11.6,12.7,13.9,15.3,16.9,18.8,21]);
+        storage.set('bmiF5',[11.6,12.7,13.9,15.3,16.9,18.8,21.1]);
+        storage.set('bmiF51',[11.8,12.7,13.9,15.2,16.9,18.9,21.3]);
+        storage.set('bmiF52',[11.8,12.7,13.9,15.2,16.9,18.9,21.4]);
+        storage.set('bmiF53',[11.8,12.7,13.9,15.2,16.9,18.9,21.5]);
+        storage.set('bmiF54',[11.8,12.7,13.9,15.2,16.9,18.9,21.5]);
+        storage.set('bmiF55',[11.7,12.7,13.9,15.2,16.9,19,21.6]);
+        storage.set('bmiF56',[11.7,12.7,13.9,15.2,16.9,19,21.7]);
+        storage.set('bmiF57',[11.7,12.7,13.9,15.2,16.9,19,21.7]);
+        storage.set('bmiF58',[11.7,12.7,13.9,15.3,17,19.1,21.8]);
+        storage.set('bmiF59',[11.7,12.7,13.9,15.3,17,19.1,21.9]);
+        storage.set('bmiF510',[11.7,12.7,13.9,15.3,17,19.1,22]);
+        storage.set('bmiF511',[11.7,12.7,13.9,15.3,17,19.2,22.1]);
+        storage.set('bmiF6',[11.7,12.7,13.9,15.3,17,19.2,22.1]);
+        storage.set('bmiF61',[11.7,12.7,13.9,15.3,17,19.3,22.2]);
+        storage.set('bmiF62',[11.7,12.7,13.9,15.3,17,19.3,22.3]);
+        storage.set('bmiF63',[11.7,12.7,13.9,15.3,17.1,19.3,22.4]);
+        storage.set('bmiF64',[11.7,12.7,13.9,15.3,17.1,19.4,22.5]);
+        storage.set('bmiF65',[11.7,12.7,13.9,15.3,17.1,19.4,22.6]);
+        storage.set('bmiF66',[11.7,12.7,13.9,15.3,17.1,19.5,22.7]);
+        storage.set('bmiF67',[11.7,12.7,13.9,15.3,17.2,19.5,22.8]);
+        storage.set('bmiF68',[11.7,12.7,13.9,15.3,17.2,19.6,22.9]);
+        storage.set('bmiF69',[11.7,12.7,13.9,15.4,17.2,19.6,23]);
+        storage.set('bmiF610',[11.7,12.7,13.9,15.4,17.2,19.7,23.1]);
+        storage.set('bmiF611',[11.7,12.7,13.9,15.4,17.3,19.7,23.2]);
+        storage.set('bmiF7',[11.8,12.7,13.9,15.4,17.3,19.8,23.3]);
+        storage.set('bmiF71',[11.8,12.7,13.9,15.4,17.3,19.8,23.4]);
+        storage.set('bmiF72',[11.8,12.8,14,15.4,17.4,19.9,23.5]);
+        storage.set('bmiF73',[11.8,12.8,14,15.5,17.4,20,23.6]);
+        storage.set('bmiF74',[11.8,12.8,14,15.5,17.4,20,23.7]);
+        storage.set('bmiF75',[11.8,12.8,14,15.5,17.5,20.1,23.9]);
+        storage.set('bmiF76',[11.8,12.8,14,15.5,17.5,20.1,24]);
+        storage.set('bmiF77',[11.8,12.8,14,15.5,17.5,20.2,24.1]);
+        storage.set('bmiF78',[11.8,12.8,14,15.6,17.6,20.3,24.2]);
+        storage.set('bmiF79',[11.8,12.8,14.1,15.6,17.6,20.3,24.4]);
+        storage.set('bmiF710',[11.9,12.9,14.1,15.6,17.6,20.4,24.5]);
+        storage.set('bmiF711',[11.9,12.9,14.1,15.7,17.7,20.5,24.6]);
+        storage.set('bmiF8',[11.9,12.9,14.1,15.7,17.7,20.6,24.8]);
+        storage.set('bmiF81',[11.9,12.9,14.1,15.7,17.8,20.6,24.9]);
+        storage.set('bmiF82',[11.9,12.9,14.2,15.7,17.8,20.7,25.1]);
+        storage.set('bmiF83',[11.9,12.9,14.2,15.8,17.9,20.8,25.2]);
+        storage.set('bmiF84',[11.9,13,14.2,15.8,17.9,20.9,25.3]);
+        storage.set('bmiF85',[12,13,14.2,15.8,18,20.9,25.5]);
+        storage.set('bmiF86',[12,13,14.3,15.9,18,21,25.6]);
+        storage.set('bmiF87',[12,13,14.3,15.9,18.1,21.1,25.8]);
+        storage.set('bmiF88',[12,13,14.3,15.9,18.1,21.2,25.9]);
+        storage.set('bmiF89',[12,13.1,14.3,16,18.2,21.3,26.1]);
+        storage.set('bmiF810',[12.1,13.1,14.4,16,18.2,21.3,26.2]);
+        storage.set('bmiF811',[12.1,13.1,14.4,16.1,18.3,21.4,26.4]);
+        storage.set('bmiF9',[12.1,13.1,14.4,16.1,18.3,21.5,26.5]);
+        storage.set('bmiF91',[12.1,13.2,14.5,16.1,18.4,21.6,26.7]);
+        storage.set('bmiF92',[12.1,13.2,14.5,16.2,18.4,21.7,26.8]);
+        storage.set('bmiF93',[12.2,13.2,14.5,16.2,18.5,21.8,27]);
+        storage.set('bmiF94',[12.2,13.2,14.6,16.3,18.6,21.9,27.2]);
+        storage.set('bmiF95',[12.2,13.3,14.6,16.3,18.6,21.9,27.3]);
+        storage.set('bmiF96',[12.2,13.3,14.6,16.3,18.7,22,27.5]);
+        storage.set('bmiF97',[12.3,13.3,14.7,16.4,18.7,22.1,27.6]);
+        storage.set('bmiF98',[12.3,13.4,14.7,16.4,18.8,22.2,27.8]);
+        storage.set('bmiF99',[12.3,13.4,14.7,16.5,18.8,22.3,27.9]);
+        storage.set('bmiF910',[12.3,13.4,14.8,16.5,18.9,22.4,28.1]);
+        storage.set('bmiF911',[12.4,13.4,14.8,16.6,19,22.5,28.2]);
+        storage.set('bmiF10',[12.4,13.5,14.8,16.6,19,22.6,28.4]);
+        storage.set('bmiF101',[12.4,13.5,14.9,16.7,19.1,22.7,28.5]);
+        storage.set('bmiF102',[12.4,13.5,14.9,16.7,19.2,22.8,28.7]);
+        storage.set('bmiF103',[12.5,13.6,15,16.8,19.2,22.8,28.8]);
+        storage.set('bmiF104',[12.5,13.6,15,16.8,19.3,22.9,29]);
+        storage.set('bmiF105',[12.5,13.6,15,16.9,19.4,23,29.1]);
+        storage.set('bmiF106',[12.5,13.7,15.1,16.9,19.4,23.1,29.3]);
+        storage.set('bmiF107',[12.6,13.7,15.1,17,19.5,23.2,29.4]);
+        storage.set('bmiF108',[12.6,13.7,15.2,17,19.6,23.3,29.6]);
+        storage.set('bmiF109',[12.6,13.8,15.2,17.1,19.6,23.4,29.7]);
+        storage.set('bmiF1010',[12.7,13.8,15.3,17.1,19.7,23.5,29.9]);
+        storage.set('bmiF1011',[12.7,13.8,15.3,17.2,19.8,23.6,30]);
+        storage.set('bmiF11',[12.7,13.9,15.3,17.2,19.9,23.7,30.2]);
+        storage.set('bmiF111',[12.8,13.9,15.4,17.3,19.9,23.8,30.3]);
+        storage.set('bmiF112',[12.8,14,15.4,17.4,20,23.9,30.5]);
+        storage.set('bmiF113',[12.8,14,15.5,17.4,20.1,24,30.6]);
+        storage.set('bmiF114',[12.9,14,15.5,17.5,20.2,24.1,30.8]);
+        storage.set('bmiF115',[12.9,14.1,15.6,17.5,20.2,24.2,30.9]);
+        storage.set('bmiF116',[12.9,14.1,15.6,17.6,20.3,24.3,31.1]);
+        storage.set('bmiF117',[13,14.2,15.7,17.7,20.4,24.4,31.2]);
+        storage.set('bmiF118',[13,14.2,15.7,17.7,20.5,24.5,31.4]);
+        storage.set('bmiF119',[13,14.3,15.8,17.8,20.6,24.7,31.5]);
+        storage.set('bmiF1110',[13.1,14.3,15.8,17.9,20.6,24.8,31.6]);
+        storage.set('bmiF1111',[13.1,14.3,15.9,17.9,20.7,24.9,31.8]);
+        storage.set('bmiF12',[13.2,14.4,16,18,20.8,25,31.9]);
+        storage.set('bmiF121',[13.2,14.4,16,18.1,20.9,25.1,32]);
+        storage.set('bmiF122',[13.2,14.5,16.1,18.1,21,25.2,32.2]);
+        storage.set('bmiF123',[13.3,14.5,16.1,18.2,21.1,25.3,32.3]);
+        storage.set('bmiF124',[13.3,14.6,16.2,18.3,21.1,25.4,32.4]);
+        storage.set('bmiF125',[13.3,14.6,16.2,18.3,21.2,25.5,32.6]);
+        storage.set('bmiF126',[13.4,14.7,16.3,18.4,21.3,25.6,32.7]);
+        storage.set('bmiF127',[13.4,14.7,16.3,18.5,21.4,25.7,32.8]);
+        storage.set('bmiF128',[13.5,14.8,16.4,18.5,21.5,25.8,33]);
+        storage.set('bmiF129',[13.5,14.8,16.4,18.6,21.6,25.9,33.1]);
+        storage.set('bmiF1210',[13.5,14.8,16.5,18.7,21.6,26,33.2]);
+        storage.set('bmiF1211',[13.6,14.9,16.6,18.7,21.7,26.1,33.3]);
+        storage.set('bmiF13',[13.6,14.9,16.6,18.8,21.8,26.2,33.4]);
+        storage.set('bmiF131',[13.6,15,16.7,18.9,21.9,26.3,33.6]);
+        storage.set('bmiF132',[13.7,15,16.7,18.9,22,26.4,33.7]);
+        storage.set('bmiF133',[13.7,15.1,16.8,19,22,26.5,33.8]);
+        storage.set('bmiF134',[13.8,15.1,16.8,19.1,22.1,26.6,33.9]);
+        storage.set('bmiF135',[13.8,15.2,16.9,19.1,22.2,26.7,34]);
+        storage.set('bmiF136',[13.8,15.2,16.9,19.2,22.3,26.8,34.1]);
+        storage.set('bmiF137',[13.9,15.2,17,19.3,22.4,26.9,34.2]);
+        storage.set('bmiF138',[13.9,15.3,17,19.3,22.4,27,34.3]);
+        storage.set('bmiF139',[13.9,15.3,17.1,19.4,22.5,27.1,34.4]);
+        storage.set('bmiF1310',[14,15.4,17.1,19.4,22.6,27.1,34.5]);
+        storage.set('bmiF1311',[14,15.4,17.2,19.5,22.7,27.2,34.6]);
+        storage.set('bmiF14',[14,15.4,17.2,19.6,22.7,27.3,34.7]);
+        storage.set('bmiF141',[14.1,15.5,17.3,19.6,22.8,27.4,34.7]);
+        storage.set('bmiF142',[14.1,15.5,17.3,19.7,22.9,27.5,34.8]);
+        storage.set('bmiF143',[14.1,15.6,17.4,19.7,22.9,27.6,34.9]);
+        storage.set('bmiF144',[14.1,15.6,17.4,19.8,23,27.7,35]);
+        storage.set('bmiF145',[14.2,15.6,17.5,19.9,23.1,27.7,35.1]);
+        storage.set('bmiF146',[14.2,15.7,17.5,19.9,23.1,27.8,35.1]);
+        storage.set('bmiF147',[14.2,15.7,17.6,20,23.2,27.9,35.2]);
+        storage.set('bmiF148',[14.3,15.7,17.6,20,23.3,28,35.3]);
+        storage.set('bmiF149',[14.3,15.8,17.6,20.1,23.3,28,35.4]);
+        storage.set('bmiF1410',[14.3,15.8,17.7,20.1,23.4,28.1,35.4]);
+        storage.set('bmiF1411',[14.3,15.8,17.7,20.2,23.5,28.2,35.5]);
+        storage.set('bmiF15',[14.4,15.9,17.8,20.2,23.5,28.2,35.5]);
+        storage.set('bmiF151',[14.4,15.9,17.8,20.3,23.6,28.3,35.6]);
+        storage.set('bmiF152',[14.4,15.9,17.8,20.3,23.6,28.4,35.7]);
+        storage.set('bmiF153',[14.4,16,17.9,20.4,23.7,28.4,35.7]);
+        storage.set('bmiF154',[14.5,16,17.9,20.4,23.7,28.5,35.8]);
+        storage.set('bmiF155',[14.5,16,17.9,20.4,23.8,28.5,35.8]);
+        storage.set('bmiF156',[14.5,16,18,20.5,23.8,28.6,35.8]);
+        storage.set('bmiF157',[14.5,16.1,18,20.5,23.9,28.6,35.9]);
+        storage.set('bmiF158',[14.5,16.1,18,20.6,23.9,28.7,35.9]);
+        storage.set('bmiF159',[14.5,16.1,18.1,20.6,24,28.7,36]);
+        storage.set('bmiF1510',[14.6,16.1,18.1,20.6,24,28.8,36]);
+        storage.set('bmiF1511',[14.6,16.2,18.1,20.7,24.1,28.8,36]);
+        storage.set('bmiF16',[14.6,16.2,18.2,20.7,24.1,28.9,36.1]);
+        storage.set('bmiF161',[14.6,16.2,18.2,20.7,24.1,28.9,36.1]);
+        storage.set('bmiF162',[14.6,16.2,18.2,20.8,24.2,29,36.1]);
+        storage.set('bmiF163',[14.6,16.2,18.2,20.8,24.2,29,36.1]);
+        storage.set('bmiF164',[14.6,16.2,18.3,20.8,24.3,29,36.2]);
+        storage.set('bmiF165',[14.6,16.3,18.3,20.9,24.3,29.1,36.2]);
+        storage.set('bmiF166',[14.7,16.3,18.3,20.9,24.3,29.1,36.2]);
+        storage.set('bmiF167',[14.7,16.3,18.3,20.9,24.4,29.1,36.2]);
+        storage.set('bmiF168',[14.7,16.3,18.3,20.9,24.4,29.2,36.2]);
+        storage.set('bmiF169',[14.7,16.3,18.4,21,24.4,29.2,36.3]);
+        storage.set('bmiF1610',[14.7,16.3,18.4,21,24.4,29.2,36.3]);
+        storage.set('bmiF1611',[14.7,16.3,18.4,21,24.5,29.3,36.3]);
+        storage.set('bmiF17',[14.7,16.4,18.4,21,24.5,29.3,36.3]);
+        storage.set('bmiF171',[14.7,16.4,18.4,21.1,24.5,29.3,36.3]);
+        storage.set('bmiF172',[14.7,16.4,18.4,21.1,24.6,29.3,36.3]);
+        storage.set('bmiF173',[14.7,16.4,18.5,21.1,24.6,29.4,36.3]);
+        storage.set('bmiF174',[14.7,16.4,18.5,21.1,24.6,29.4,36.3]);
+        storage.set('bmiF175',[14.7,16.4,18.5,21.1,24.6,29.4,36.3]);
+        storage.set('bmiF176',[14.7,16.4,18.5,21.2,24.6,29.4,36.3]);
+        storage.set('bmiF177',[14.7,16.4,18.5,21.2,24.7,29.4,36.3]);
+        storage.set('bmiF178',[14.7,16.4,18.5,21.2,24.7,29.5,36.3]);
+        storage.set('bmiF179',[14.7,16.4,18.5,21.2,24.7,29.5,36.3]);
+        storage.set('bmiF1710',[14.7,16.4,18.5,21.2,24.7,29.5,36.3]);
+        storage.set('bmiF1711',[14.7,16.4,18.6,21.2,24.8,29.5,36.3]);
+        storage.set('bmiF18',[14.7,16.4,18.6,21.3,24.8,29.5,36.3]);
+        storage.set('bmiF181',[14.7,16.5,18.6,21.3,24.8,29.5,36.3]);
+        storage.set('bmiF182',[14.7,16.5,18.6,21.3,24.8,29.6,36.3]);
+        storage.set('bmiF183',[14.7,16.5,18.6,21.3,24.8,29.6,36.3]);
+        storage.set('bmiF184',[14.7,16.5,18.6,21.3,24.8,29.6,36.3]);
+        storage.set('bmiF185',[14.7,16.5,18.6,21.3,24.9,29.6,36.2]);
+        storage.set('bmiF186',[14.7,16.5,18.6,21.3,24.9,29.6,36.2]);
+        storage.set('bmiF187',[14.7,16.5,18.6,21.4,24.9,29.6,36.2]);
+        storage.set('bmiF188',[14.7,16.5,18.6,21.4,24.9,29.6,36.2]);
+        storage.set('bmiF189',[14.7,16.5,18.7,21.4,24.9,29.6,36.2]);
+        storage.set('bmiF1810',[14.7,16.5,18.7,21.4,24.9,29.6,36.2]);
+        storage.set('bmiF1811',[14.7,16.5,18.7,21.4,25,29.7,36.2]);
+        storage.set('bmiF19',[14.7,16.5,18.7,21.4,25,29.7,36.2]);
+        storage.set('wfaM0',[2.1,2.5,2.9,3.3,3.9,4.4,5]);
+        storage.set('wfaM01',[2.9,3.4,3.9,4.5,5.1,5.8,6.6]);
+        storage.set('wfaM02',[3.8,4.3,4.9,5.6,6.3,7.1,8]);
+        storage.set('wfaM03',[4.4,5,5.7,6.4,7.2,8,9]);
+        storage.set('wfaM04',[4.9,5.6,6.2,7,7.8,8.7,9.7]);
+        storage.set('wfaM05',[5.3,6,6.7,7.5,8.4,9.3,10.4]);
+        storage.set('wfaM06',[5.7,6.4,7.1,7.9,8.8,9.8,10.9]);
+        storage.set('wfaM07',[5.9,6.7,7.4,8.3,9.2,10.3,11.4]);
+        storage.set('wfaM08',[6.2,6.9,7.7,8.6,9.6,10.7,11.9]);
+        storage.set('wfaM09',[6.4,7.1,8,8.9,9.9,11,12.3]);
+        storage.set('wfaM010',[6.6,7.4,8.2,9.2,10.2,11.4,12.7]);
+        storage.set('wfaM011',[6.8,7.6,8.4,9.4,10.5,11.7,13]);
+        storage.set('wfaM1',[6.9,7.7,8.6,9.6,10.8,12,13.3]);
+        storage.set('wfaM11',[7.1,7.9,8.8,9.9,11,12.3,13.7]);
+        storage.set('wfaM12',[7.2,8.1,9,10.1,11.3,12.6,14]);
+        storage.set('wfaM13',[7.4,8.3,9.2,10.3,11.5,12.8,14.3]);
+        storage.set('wfaM14',[7.5,8.4,9.4,10.5,11.7,13.1,14.6]);
+        storage.set('wfaM15',[7.7,8.6,9.6,10.7,12,13.4,14.9]);
+        storage.set('wfaM16',[7.8,8.8,9.8,10.9,12.2,13.7,15.3]);
+        storage.set('wfaM17',[8,8.9,10,11.1,12.5,13.9,15.6]);
+        storage.set('wfaM18',[8.1,9.1,10.1,11.3,12.7,14.2,15.9]);
+        storage.set('wfaM19',[8.2,9.2,10.3,11.5,12.9,14.5,16.2]);
+        storage.set('wfaM110',[8.4,9.4,10.5,11.8,13.2,14.7,16.5]);
+        storage.set('wfaM111',[8.5,9.5,10.7,12,13.4,15,16.8]);
+        storage.set('wfaM2',[8.6,9.7,10.8,12.2,13.6,15.3,17.1]);
+        storage.set('wfaM21',[8.8,9.8,11,12.4,13.9,15.5,17.5]);
+        storage.set('wfaM22',[8.9,10,11.2,12.5,14.1,15.8,17.8]);
+        storage.set('wfaM23',[9,10.1,11.3,12.7,14.3,16.1,18.1]);
+        storage.set('wfaM24',[9.1,10.2,11.5,12.9,14.5,16.3,18.4]);
+        storage.set('wfaM25',[9.2,10.4,11.7,13.1,14.8,16.6,18.7]);
+        storage.set('wfaM26',[9.4,10.5,11.8,13.3,15,16.9,19]);
+        storage.set('wfaM27',[9.5,10.7,12,13.5,15.2,17.1,19.3]);
+        storage.set('wfaM28',[9.6,10.8,12.1,13.7,15.4,17.4,19.6]);
+        storage.set('wfaM29',[9.7,10.9,12.3,13.8,15.6,17.6,19.9]);
+        storage.set('wfaM210',[9.8,11,12.4,14,15.8,17.8,20.2]);
+        storage.set('wfaM211',[9.9,11.2,12.6,14.2,16,18.1,20.4]);
+        storage.set('wfaM3',[10,11.3,12.7,14.3,16.2,18.3,20.7]);
+        storage.set('wfaM31',[10.1,11.4,12.9,14.5,16.4,18.6,21]);
+        storage.set('wfaM32',[10.2,11.5,13,14.7,16.6,18.8,21.3]);
+        storage.set('wfaM33',[10.3,11.6,13.1,14.8,16.8,19,21.6]);
+        storage.set('wfaM34',[10.4,11.8,13.3,15,17,19.3,21.9]);
+        storage.set('wfaM35',[10.5,11.9,13.4,15.2,17.2,19.5,22.1]);
+        storage.set('wfaM36',[10.6,12,13.6,15.3,17.4,19.7,22.4]);
+        storage.set('wfaM37',[10.7,12.1,13.7,15.5,17.6,20,22.7]);
+        storage.set('wfaM38',[10.8,12.2,13.8,15.7,17.8,20.2,23]);
+        storage.set('wfaM39',[10.9,12.4,14,15.8,18,20.5,23.3]);
+        storage.set('wfaM310',[11,12.5,14.1,16,18.2,20.7,23.6]);
+        storage.set('wfaM311',[11.1,12.6,14.3,16.2,18.4,20.9,23.9]);
+        storage.set('wfaM4',[11.2,12.7,14.4,16.3,18.6,21.2,24.2]);
+        storage.set('wfaM41',[11.3,12.8,14.5,16.5,18.8,21.4,24.5]);
+        storage.set('wfaM42',[11.4,12.9,14.7,16.7,19,21.7,24.8]);
+        storage.set('wfaM43',[11.5,13.1,14.8,16.8,19.2,21.9,25.1]);
+        storage.set('wfaM44',[11.6,13.2,15,17,19.4,22.2,25.4]);
+        storage.set('wfaM45',[11.7,13.3,15.1,17.2,19.6,22.4,25.7]);
+        storage.set('wfaM46',[11.8,13.4,15.2,17.3,19.8,22.7,26]);
+        storage.set('wfaM47',[11.9,13.5,15.4,17.5,20,22.9,26.3]);
+        storage.set('wfaM48',[12,13.6,15.5,17.7,20.2,23.2,26.6]);
+        storage.set('wfaM49',[12.1,13.7,15.6,17.8,20.4,23.4,26.9]);
+        storage.set('wfaM410',[12.2,13.8,15.8,18,20.6,23.7,27.2]);
+        storage.set('wfaM411',[12.3,14,15.9,18.2,20.8,23.9,27.6]);
+        storage.set('wfaM5',[12.4,14.1,16,18.3,21,24.2,27.9]);
+        storage.set('wfaM51',[12.7,14.4,16.3,18.5,21.1,24.2,27.8]);
+        storage.set('wfaM52',[12.8,14.5,16.4,18.7,21.3,24.4,28.1]);
+        storage.set('wfaM53',[13,14.6,16.6,18.9,21.5,24.7,28.4]);
+        storage.set('wfaM54',[13.1,14.8,16.7,19,21.7,24.9,28.8]);
+        storage.set('wfaM55',[13.2,14.9,16.9,19.2,22,25.2,29.1]);
+        storage.set('wfaM56',[13.3,15,17,19.4,22.2,25.5,29.4]);
+        storage.set('wfaM57',[13.4,15.2,17.2,19.6,22.4,25.7,29.8]);
+        storage.set('wfaM58',[13.6,15.3,17.4,19.8,22.6,26,30.1]);
+        storage.set('wfaM59',[13.7,15.4,17.5,19.9,22.8,26.3,30.4]);
+        storage.set('wfaM510',[13.8,15.6,17.7,20.1,23.1,26.6,30.8]);
+        storage.set('wfaM511',[13.9,15.7,17.8,20.3,23.3,26.8,31.2]);
+        storage.set('wfaM6',[14.1,15.9,18,20.5,23.5,27.1,31.5]);
+        storage.set('wfaM61',[14.2,16,18.2,20.7,23.7,27.4,31.9]);
+        storage.set('wfaM62',[14.3,16.2,18.3,20.9,24,27.7,32.2]);
+        storage.set('wfaM63',[14.5,16.3,18.5,21.1,24.2,28,32.6]);
+        storage.set('wfaM64',[14.6,16.5,18.7,21.3,24.4,28.3,33]);
+        storage.set('wfaM65',[14.7,16.6,18.8,21.5,24.7,28.6,33.3]);
+        storage.set('wfaM66',[14.9,16.8,19,21.7,24.9,28.9,33.7]);
+        storage.set('wfaM67',[15,16.9,19.2,21.9,25.2,29.2,34.1]);
+        storage.set('wfaM68',[15.1,17.1,19.3,22.1,25.4,29.5,34.5]);
+        storage.set('wfaM69',[15.3,17.2,19.5,22.3,25.6,29.8,34.9]);
+        storage.set('wfaM610',[15.4,17.4,19.7,22.5,25.9,30.1,35.3]);
+        storage.set('wfaM611',[15.5,17.5,19.9,22.7,26.1,30.4,35.7]);
+        storage.set('wfaM7',[15.7,17.7,20,22.9,26.4,30.7,36.1]);
+        storage.set('wfaM71',[15.8,17.8,20.2,23.1,26.6,31,36.5]);
+        storage.set('wfaM72',[15.9,18,20.4,23.3,26.9,31.3,36.9]);
+        storage.set('wfaM73',[16.1,18.1,20.6,23.5,27.1,31.7,37.4]);
+        storage.set('wfaM74',[16.2,18.3,20.7,23.7,27.4,32,37.8]);
+        storage.set('wfaM75',[16.3,18.4,20.9,23.9,27.7,32.3,38.2]);
+        storage.set('wfaM76',[16.5,18.6,21.1,24.1,27.9,32.6,38.7]);
+        storage.set('wfaM77',[16.6,18.7,21.3,24.3,28.2,33,39.1]);
+        storage.set('wfaM78',[16.7,18.9,21.4,24.6,28.4,33.3,39.6]);
+        storage.set('wfaM79',[16.9,19,21.6,24.8,28.7,33.7,40.1]);
+        storage.set('wfaM710',[17,19.2,21.8,25,29,34,40.5]);
+        storage.set('wfaM711',[17.1,19.3,22,25.2,29.2,34.4,41]);
+        storage.set('wfaM8',[17.3,19.5,22.1,25.4,29.5,34.7,41.5]);
+        storage.set('wfaM81',[17.4,19.6,22.3,25.6,29.8,35.1,42]);
+        storage.set('wfaM82',[17.5,19.8,22.5,25.9,30.1,35.5,42.5]);
+        storage.set('wfaM83',[17.7,19.9,22.7,26.1,30.3,35.8,43.1]);
+        storage.set('wfaM84',[17.8,20.1,22.9,26.3,30.6,36.2,43.6]);
+        storage.set('wfaM85',[17.9,20.2,23,26.5,30.9,36.6,44.1]);
+        storage.set('wfaM86',[18.1,20.4,23.2,26.7,31.2,37,44.7]);
+        storage.set('wfaM87',[18.2,20.5,23.4,27,31.5,37.4,45.2]);
+        storage.set('wfaM88',[18.3,20.7,23.6,27.2,31.8,37.8,45.8]);
+        storage.set('wfaM89',[18.4,20.8,23.8,27.4,32.1,38.2,46.4]);
+        storage.set('wfaM810',[18.6,21,23.9,27.6,32.4,38.6,47]);
+        storage.set('wfaM811',[18.7,21.1,24.1,27.9,32.7,39,47.6]);
+        storage.set('wfaM9',[18.8,21.3,24.3,28.1,33,39.4,48.2]);
+        storage.set('wfaM91',[18.9,21.4,24.5,28.3,33.3,39.9,48.8]);
+        storage.set('wfaM92',[19.1,21.6,24.7,28.6,33.6,40.3,49.5]);
+        storage.set('wfaM93',[19.2,21.7,24.9,28.8,33.9,40.7,50.1]);
+        storage.set('wfaM94',[19.3,21.9,25.1,29.1,34.3,41.2,50.8]);
+        storage.set('wfaM95',[19.5,22.1,25.3,29.3,34.6,41.7,51.5]);
+        storage.set('wfaM96',[19.6,22.2,25.5,29.6,34.9,42.1,52.1]);
+        storage.set('wfaM97',[19.7,22.4,25.7,29.8,35.3,42.6,52.8]);
+        storage.set('wfaM98',[19.9,22.5,25.9,30.1,35.6,43.1,53.5]);
+        storage.set('wfaM99',[20,22.7,26.1,30.4,36,43.5,54.2]);
+        storage.set('wfaM910',[20.1,22.9,26.3,30.6,36.3,44,55]);
+        storage.set('wfaM911',[20.3,23,26.5,30.9,36.7,44.5,55.7]);
+        storage.set('wfaM10',[20.4,23.2,26.7,31.2,37,45,56.4]);
+        storage.set('wfaF0',[2,2.4,2.8,3.2,3.7,4.2,4.8]);
+        storage.set('wfaF01',[2.7,3.2,3.6,4.2,4.8,5.5,6.2]);
+        storage.set('wfaF02',[3.4,3.9,4.5,5.1,5.8,6.6,7.5]);
+        storage.set('wfaF03',[4,4.5,5.2,5.8,6.6,7.5,8.5]);
+        storage.set('wfaF04',[4.4,5,5.7,6.4,7.3,8.2,9.3]);
+        storage.set('wfaF05',[4.8,5.4,6.1,6.9,7.8,8.8,10]);
+        storage.set('wfaF06',[5.1,5.7,6.5,7.3,8.2,9.3,10.6]);
+        storage.set('wfaF07',[5.3,6,6.8,7.6,8.6,9.8,11.1]);
+        storage.set('wfaF08',[5.6,6.3,7,7.9,9,10.2,11.6]);
+        storage.set('wfaF09',[5.8,6.5,7.3,8.2,9.3,10.5,12]);
+        storage.set('wfaF010',[5.9,6.7,7.5,8.5,9.6,10.9,12.4]);
+        storage.set('wfaF011',[6.1,6.9,7.7,8.7,9.9,11.2,12.8]);
+        storage.set('wfaF1',[6.3,7,7.9,8.9,10.1,11.5,13.1]);
+        storage.set('wfaF11',[6.4,7.2,8.1,9.2,10.4,11.8,13.5]);
+        storage.set('wfaF12',[6.6,7.4,8.3,9.4,10.6,12.1,13.8]);
+        storage.set('wfaF13',[6.7,7.6,8.5,9.6,10.9,12.4,14.1]);
+        storage.set('wfaF14',[6.9,7.7,8.7,9.8,11.1,12.6,14.5]);
+        storage.set('wfaF15',[7,7.9,8.9,10,11.4,12.9,14.8]);
+        storage.set('wfaF16',[7.2,8.1,9.1,10.2,11.6,13.2,15.1]);
+        storage.set('wfaF17',[7.3,8.2,9.2,10.4,11.8,13.5,15.4]);
+        storage.set('wfaF18',[7.5,8.4,9.4,10.6,12.1,13.7,15.7]);
+        storage.set('wfaF19',[7.6,8.6,9.6,10.9,12.3,14,16]);
+        storage.set('wfaF110',[7.8,8.7,9.8,11.1,12.5,14.3,16.4]);
+        storage.set('wfaF111',[7.9,8.9,10,11.3,12.8,14.6,16.7]);
+        storage.set('wfaF2',[8.1,9,10.2,11.5,13,14.8,17]);
+        storage.set('wfaF21',[8.2,9.2,10.3,11.7,13.3,15.1,17.3]);
+        storage.set('wfaF22',[8.4,9.4,10.5,11.9,13.5,15.4,17.7]);
+        storage.set('wfaF23',[8.5,9.5,10.7,12.1,13.7,15.7,18]);
+        storage.set('wfaF24',[8.6,9.7,10.9,12.3,14,16,18.3]);
+        storage.set('wfaF25',[8.8,9.8,11.1,12.5,14.2,16.2,18.7]);
+        storage.set('wfaF26',[8.9,10,11.2,12.7,14.4,16.5,19]);
+        storage.set('wfaF27',[9,10.1,11.4,12.9,14.7,16.8,19.3]);
+        storage.set('wfaF28',[9.1,10.3,11.6,13.1,14.9,17.1,19.6]);
+        storage.set('wfaF29',[9.3,10.4,11.7,13.3,15.1,17.3,20]);
+        storage.set('wfaF210',[9.4,10.5,11.9,13.5,15.4,17.6,20.3]);
+        storage.set('wfaF211',[9.5,10.7,12,13.7,15.6,17.9,20.6]);
+        storage.set('wfaF3',[9.6,10.8,12.2,13.9,15.8,18.1,20.9]);
+        storage.set('wfaF31',[9.7,10.9,12.4,14,16,18.4,21.3]);
+        storage.set('wfaF32',[9.8,11.1,12.5,14.2,16.3,18.7,21.6]);
+        storage.set('wfaF33',[9.9,11.2,12.7,14.4,16.5,19,22]);
+        storage.set('wfaF34',[10.1,11.3,12.8,14.6,16.7,19.2,22.3]);
+        storage.set('wfaF35',[10.2,11.5,13,14.8,16.9,19.5,22.7]);
+        storage.set('wfaF36',[10.3,11.6,13.1,15,17.2,19.8,23]);
+        storage.set('wfaF37',[10.4,11.7,13.3,15.2,17.4,20.1,23.4]);
+        storage.set('wfaF38',[10.5,11.8,13.4,15.3,17.6,20.4,23.7]);
+        storage.set('wfaF39',[10.6,12,13.6,15.5,17.8,20.7,24.1]);
+        storage.set('wfaF310',[10.7,12.1,13.7,15.7,18.1,20.9,24.5]);
+        storage.set('wfaF311',[10.8,12.2,13.9,15.9,18.3,21.2,24.8]);
+        storage.set('wfaF4',[10.9,12.3,14,16.1,18.5,21.5,25.2]);
+        storage.set('wfaF41',[11,12.4,14.2,16.3,18.8,21.8,25.5]);
+        storage.set('wfaF42',[11.1,12.6,14.3,16.4,19,22.1,25.9]);
+        storage.set('wfaF43',[11.2,12.7,14.5,16.6,19.2,22.4,26.3]);
+        storage.set('wfaF44',[11.3,12.8,14.6,16.8,19.4,22.6,26.6]);
+        storage.set('wfaF45',[11.4,12.9,14.8,17,19.7,22.9,27]);
+        storage.set('wfaF46',[11.5,13,14.9,17.2,19.9,23.2,27.4]);
+        storage.set('wfaF47',[11.6,13.2,15.1,17.3,20.1,23.5,27.7]);
+        storage.set('wfaF48',[11.7,13.3,15.2,17.5,20.3,23.8,28.1]);
+        storage.set('wfaF49',[11.8,13.4,15.3,17.7,20.6,24.1,28.5]);
+        storage.set('wfaF410',[11.9,13.5,15.5,17.9,20.8,24.4,28.8]);
+        storage.set('wfaF411',[12,13.6,15.6,18,21,24.6,29.2]);
+        storage.set('wfaF5',[12.1,13.7,15.8,18.2,21.2,24.9,29.5]);
+        storage.set('wfaF51',[12.4,14,15.9,18.3,21.2,24.8,29.5]);
+        storage.set('wfaF52',[12.5,14.1,16,18.4,21.4,25.1,29.8]);
+        storage.set('wfaF53',[12.6,14.2,16.2,18.6,21.6,25.4,30.2]);
+        storage.set('wfaF54',[12.7,14.3,16.3,18.8,21.8,25.6,30.5]);
+        storage.set('wfaF55',[12.8,14.4,16.5,19,22,25.9,30.9]);
+        storage.set('wfaF56',[12.9,14.6,16.6,19.1,22.2,26.2,31.3]);
+        storage.set('wfaF57',[13,14.7,16.8,19.3,22.5,26.5,31.6]);
+        storage.set('wfaF58',[13.1,14.8,16.9,19.5,22.7,26.7,32]);
+        storage.set('wfaF59',[13.2,14.9,17,19.6,22.9,27,32.3]);
+        storage.set('wfaF510',[13.3,15,17.2,19.8,23.1,27.3,32.7]);
+        storage.set('wfaF511',[13.4,15.2,17.3,20,23.3,27.6,33.1]);
+        storage.set('wfaF6',[13.5,15.3,17.5,20.2,23.5,27.8,33.4]);
+        storage.set('wfaF61',[13.6,15.4,17.6,20.3,23.8,28.1,33.8]);
+        storage.set('wfaF62',[13.7,15.5,17.8,20.5,24,28.4,34.2]);
+        storage.set('wfaF63',[13.8,15.6,17.9,20.7,24.2,28.7,34.6]);
+        storage.set('wfaF64',[13.9,15.8,18,20.9,24.4,29,35]);
+        storage.set('wfaF65',[14,15.9,18.2,21,24.6,29.3,35.4]);
+        storage.set('wfaF66',[14.1,16,18.3,21.2,24.9,29.6,35.8]);
+        storage.set('wfaF67',[14.2,16.1,18.5,21.4,25.1,29.9,36.2]);
+        storage.set('wfaF68',[14.3,16.3,18.6,21.6,25.3,30.2,36.6]);
+        storage.set('wfaF69',[14.4,16.4,18.8,21.8,25.6,30.5,37]);
+        storage.set('wfaF610',[14.5,16.5,18.9,22,25.8,30.8,37.4]);
+        storage.set('wfaF611',[14.6,16.6,19.1,22.2,26.1,31.1,37.8]);
+        storage.set('wfaF7',[14.8,16.8,19.3,22.4,26.3,31.4,38.3]);
+        storage.set('wfaF71',[14.9,16.9,19.4,22.6,26.6,31.8,38.7]);
+        storage.set('wfaF72',[15,17.1,19.6,22.8,26.8,32.1,39.2]);
+        storage.set('wfaF73',[15.1,17.2,19.8,23,27.1,32.5,39.6]);
+        storage.set('wfaF74',[15.2,17.3,19.9,23.2,27.4,32.8,40.1]);
+        storage.set('wfaF75',[15.4,17.5,20.1,23.4,27.6,33.1,40.6]);
+        storage.set('wfaF76',[15.5,17.6,20.3,23.6,27.9,33.5,41.1]);
+        storage.set('wfaF77',[15.6,17.8,20.5,23.9,28.2,33.9,41.5]);
+        storage.set('wfaF78',[15.7,17.9,20.7,24.1,28.5,34.2,42]);
+        storage.set('wfaF79',[15.9,18.1,20.9,24.3,28.8,34.6,42.6]);
+        storage.set('wfaF710',[16,18.3,21,24.5,29.1,35,43.1]);
+        storage.set('wfaF711',[16.2,18.4,21.2,24.8,29.4,35.4,43.6]);
+        storage.set('wfaF8',[16.3,18.6,21.4,25,29.7,35.8,44.1]);
+        storage.set('wfaF81',[16.4,18.8,21.6,25.3,30,36.2,44.7]);
+        storage.set('wfaF82',[16.6,18.9,21.8,25.5,30.3,36.6,45.2]);
+        storage.set('wfaF83',[16.7,19.1,22,25.8,30.6,37,45.8]);
+        storage.set('wfaF84',[16.9,19.3,22.3,26,30.9,37.4,46.3]);
+        storage.set('wfaF85',[17,19.5,22.5,26.3,31.2,37.8,46.9]);
+        storage.set('wfaF86',[17.2,19.6,22.7,26.6,31.6,38.3,47.5]);
+        storage.set('wfaF87',[17.3,19.8,22.9,26.8,31.9,38.7,48.1]);
+        storage.set('wfaF88',[17.5,20,23.1,27.1,32.2,39.1,48.7]);
+        storage.set('wfaF89',[17.7,20.2,23.3,27.4,32.6,39.6,49.3]);
+        storage.set('wfaF810',[17.8,20.4,23.6,27.6,32.9,40,49.9]);
+        storage.set('wfaF811',[18,20.6,23.8,27.9,33.3,40.5,50.5]);
+        storage.set('wfaF9',[18.1,20.8,24,28.2,33.6,41,51.1]);
+        storage.set('wfaF91',[18.3,21,24.3,28.5,34,41.4,51.8]);
+        storage.set('wfaF92',[18.5,21.2,24.5,28.8,34.4,41.9,52.4]);
+        storage.set('wfaF93',[18.7,21.4,24.7,29.1,34.7,42.4,53.1]);
+        storage.set('wfaF94',[18.8,21.6,25,29.4,35.1,42.9,53.7]);
+        storage.set('wfaF95',[19,21.8,25.2,29.7,35.5,43.3,54.4]);
+        storage.set('wfaF96',[19.2,22,25.5,30,35.9,43.8,55]);
+        storage.set('wfaF97',[19.4,22.2,25.7,30.3,36.2,44.3,55.7]);
+        storage.set('wfaF98',[19.5,22.4,26,30.6,36.6,44.8,56.4]);
+        storage.set('wfaF99',[19.7,22.6,26.2,30.9,37,45.3,57.1]);
+        storage.set('wfaF910',[19.9,22.8,26.5,31.2,37.4,45.8,57.8]);
+        storage.set('wfaF911',[20.1,23,26.8,31.5,37.8,46.4,58.5]);
+        storage.set('wfaF10',[20.3,23.3,27,31.9,38.2,46.9,59.2]);
+      }
+    });
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Body Mass Index', component: BmiPage },
@@ -949,6 +742,7 @@ export class MyApp {
       { title: 'Waist Circumference', component: WaistCircumferencePage },
       { title: 'Waist-Hip Ratio', component: WaistHipPage },
       { title: 'Waist-Height Ratio', component: WaistHeightPage },
+      { title: 'User Profile', component: UserProfilePage },
     ];
 
   }
