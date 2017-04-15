@@ -3,12 +3,6 @@ import { NavController, NavParams, ToastController, AlertController } from 'ioni
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import 'rxjs/add/operator/debounceTime';
 
-/*
-  Generated class for the EnergyRequirement page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-energy-requirement',
   templateUrl: 'energy-requirement.html'
@@ -27,7 +21,7 @@ export class EnergyRequirementPage {
   ft:number = 4;
   in:number = 0;
 
-  energyRqmt: any;
+  energyRqmt: number;
 
   inchSelect = 'Inches';
 
@@ -51,6 +45,21 @@ export class EnergyRequirementPage {
   inputMaxLengthInch=2;
 
   inControl: FormControl;
+
+  carbsPercentage: number = .65;
+  proteinPercentage: number = .15;
+  fatPercentage: number = .20;
+
+  carbsGrams: number;
+  proteinGrams: number;
+  fatGrams: number;
+
+  minProtein: number;
+  maxProtein: number;
+  minCarbs: number;
+  maxCarbs: number;
+  minFat: number;
+  maxFat: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
               public formBuilder:FormBuilder, public toastCtrl:ToastController,
@@ -92,6 +101,38 @@ export class EnergyRequirementPage {
 
   ageRangeChanged(){
     this.showOutput = false;
+
+    if(this.ageRange =="1-2"){
+      this.minProtein = 6;
+      this.maxProtein = 15;
+
+      this.minCarbs = 25;
+      this.maxCarbs = 35;
+ 
+      this.minFat = 50;
+      this.maxFat = 69;
+    }
+    else if(this.ageRange =="19+"){
+      this.minProtein = 10;
+      this.maxProtein = 15;
+
+      this.minCarbs = 15;
+      this.maxCarbs = 30;
+ 
+      this.minFat = 55;
+      this.maxFat = 75;
+    }
+    else{
+      this.minProtein = 6;
+      this.maxProtein = 15;
+
+      this.minCarbs = 15;
+      this.maxCarbs = 30;
+ 
+      this.minFat = 55;
+      this.maxFat = 79;
+    }
+
     if(this.ageRange == "19+"){
       this.showOutput = false;
       this.isAdult = true;
@@ -273,7 +314,7 @@ export class EnergyRequirementPage {
         else if(this.energyRqmt % 50 == 25){
           this.energyRqmt += 25;
         }
-
+        this.calculateDistribution();
         this.showOutput = true;
       }
       else
@@ -283,116 +324,63 @@ export class EnergyRequirementPage {
       if(this.formGroup.valid){
         if(this.gender == 'Male'){
           if(this.ageRange == '1-2'){
-            this.energyRqmt = '1000 kcal';
+            this.energyRqmt = 1000;
           }
           else if(this.ageRange == '3-5'){
-            this.energyRqmt = '1350 kcal';
+            this.energyRqmt = 1350;
           }
           else if(this.ageRange == '6-9'){
-            this.energyRqmt = '1600 kcal';
+            this.energyRqmt = 1600;
           }
           else if(this.ageRange == '10-12'){
-            this.energyRqmt = '2060 kcal';
+            this.energyRqmt = 2060;
           }
           else if(this.ageRange == '13-15'){
-            this.energyRqmt = '2700 kcal';
+            this.energyRqmt = 2700;
           }
           else if(this.ageRange == '16-18'){
-            this.energyRqmt = '3010 kcal';
+            this.energyRqmt = 3010;
           }
+          this.calculateDistribution();
           this.showOutput = true;
       }//end of if male
       else if(this.gender == 'Female'){
           if(this.ageRange == '1-2'){
-            this.energyRqmt = '920 kcal';
+            this.energyRqmt = 920;
           }
           else if(this.ageRange == '3-5'){
-            this.energyRqmt = '1260 kcal';
+            this.energyRqmt = 1260;
           }
           else if(this.ageRange == '6-9'){
-            this.energyRqmt = '1470 kcal';
+            this.energyRqmt = 1470;
           }
           else if(this.ageRange == '10-12'){
-            this.energyRqmt = '1980 kcal';
+            this.energyRqmt = 1980;
           }
           else if(this.ageRange == '13-15'){
-            this.energyRqmt = '2170 kcal';
+            this.energyRqmt = 2170;
           }
           else if(this.ageRange == '16-18'){
-            this.energyRqmt = '2280 kcal';
+            this.energyRqmt = 2280;
           }
-        this.showOutput = true;
-     }
+          this.calculateDistribution();
+          this.showOutput = true;
+      }
     }
   }
 }//end of submit
 
-  isFormComplete(){
+  calculateDistribution(){
+    console.log('calculate disttribution');
+    let carbsGrams = (this.energyRqmt * this.carbsPercentage) / 4;
+    this.carbsGrams = Math.round( carbsGrams / 5 ) * 5;
 
-    if(this.ageRange == "19+"){
-      if(this.formGroup.valid){
-        if(this.gender == 'Male'){
+    let proteinGrams = (this.energyRqmt * this.proteinPercentage) / 4;
+    this.proteinGrams = Math.round( proteinGrams / 5 ) * 5;
 
-        }
-      }
-    }
-    else{
-     if(this.gender == 'Male'){
-       if(this.ageRange){
-        if(this.ageRange == '1-2'){
-          this.energyRqmt = '1000 kcal';
-          this.showOutput = true;
-        }
-        else if(this.ageRange == '3-5'){
-          this.energyRqmt = '1350 kcal';
-          this.showOutput = true;
-        }
-        else if(this.ageRange == '6-9'){
-          this.energyRqmt = '1600 kcal';
-          this.showOutput = true;
-        }
-        else if(this.ageRange == '10-12'){
-          this.energyRqmt = '2060 kcal';
-          this.showOutput = true;
-        }
-        else if(this.ageRange == '13-15'){
-          this.energyRqmt = '2700 kcal';
-          this.showOutput = true;
-        }
-        else if(this.ageRange == '16-18'){
-          this.energyRqmt = '3010 kcal';
-          this.showOutput = true;
-        }
-       }//end of ageRange
-     }//end of if male
-     if(this.gender == 'Female'){
-       if(this.ageRange){
-        if(this.ageRange == '1-2'){
-          this.energyRqmt = '920 kcal';
-          this.showOutput = true;
-        }
-        else if(this.ageRange == '3-5'){
-          this.energyRqmt = '1260 kcal';
-          this.showOutput = true;
-        }
-        else if(this.ageRange == '6-9'){
-          this.energyRqmt = '1470 kcal';
-          this.showOutput = true;
-        }
-        else if(this.ageRange == '10-12'){
-          this.energyRqmt = '1980 kcal';
-          this.showOutput = true;
-        }
-        else if(this.ageRange == '13-15'){
-          this.energyRqmt = '2170 kcal';
-          this.showOutput = true;
-        }
-        else if(this.ageRange == '16-18'){
-          this.energyRqmt = '2280 kcal';
-          this.showOutput = true;
-        }
-       }//end of ageRange
-     }//end of if male
-    }//end of else not adult
-  }//end of method
+    let fatGrams = (this.energyRqmt * this.fatPercentage) / 9;
+    this.fatGrams = Math.round( fatGrams / 5 ) * 5;
+    
+    console.log(carbsGrams+" "+this.carbsGrams);
+  }
 }//end of class

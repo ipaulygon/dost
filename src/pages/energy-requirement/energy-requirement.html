@@ -77,14 +77,37 @@
     </ion-list>
   </form>
   <ion-card *ngIf = "showOutput" text-wrap>
-    <ion-card-content style="font-size: 25px; text-align: center;">
-      <div *ngIf = "isAdult" style="text-align: center">
-        <p>Your desirable body weight:</p>
-        <p><b style="color:green">{{desirableBodyWeightKg}}&ensp;kgs</b>&ensp;or&ensp;<b style="color:green">{{desirableBodyWeightLb}}&ensp;lbs</b></p>
+    <ion-card-content style="font-size: 25px; text-align: center; color: white; background-color: #26A69A">
+      <div *ngIf = "isAdult" style="text-align: center; color: white">
+        <p style="color: white">Your desirable body weight:</p>
+        <p style="color: white"><b style="color:green">{{desirableBodyWeightKg}}&ensp;kgs</b>&ensp;or&ensp;<b style="color:green">{{desirableBodyWeightLb}}&ensp;lbs</b></p>
       </div>
       <span></span>
       <span>You need&ensp; </span>
-      <span ><b style="color:green">{{energyRqmt}}&ensp;kcal</b>&ensp;per day</span>
+      <span ><b style="color:green">{{energyRqmt}}&ensp;kcal</b>&ensp;per day as distributed as follows:</span>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf = "showOutput" text-wrap>
+    <ion-card-title>Macronutrient Distribution</ion-card-title>
+    <ion-card-content>
+      <ion-card>
+        <ion-card-content style="background-color: #FFEB3B; color: black">
+          <span style="font-size: 25px;">Carbohydrates: {{carbsPercentage * 100}}%</span><br>
+          <span style="font-size: 20px; text-align: center">{{carbsGrams}} grams</span>
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+        <ion-card-content style="background-color: #FF9800; color: black">
+          <span style="font-size: 25px;">Protein: {{proteinPercentage * 100}}%</span><br>
+          <span style="font-size: 20px; text-align: center">{{proteinGrams}} grams</span>
+        </ion-card-content>
+      </ion-card>
+      <ion-card>
+        <ion-card-content style="background-color: #03A9F4; color: black">
+          <span style="font-size: 25px;">Fat: {{fatPercentage * 100}}%</span><br>
+          <span style="font-size: 20px; text-align: center">{{fatGrams}} grams</span>
+        </ion-card-content>
+      </ion-card>
     </ion-card-content>
   </ion-card>
 </ion-content>
