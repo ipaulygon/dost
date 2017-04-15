@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { NavController, NavParams, ToastController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { SQLite } from 'ionic-native';
 
 /*
   Generated class for the Bmi page.
