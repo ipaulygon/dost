@@ -106,7 +106,7 @@ export class WaistCircumferencePage {
           });
 
       if(this.formGroup.get('waistCircum').valid){
-        let cm = Math.round(this.waistCircum * 2.54);
+        let cm = parseFloat((this.waistCircum * 2.54).toFixed(3));
         if((this.waistCircum >= 20) && (this.waistCircum <= 71)){
           if(this.gender == "male"){
             if(cm < 94){
@@ -143,7 +143,7 @@ export class WaistCircumferencePage {
       this.minCircum = 51;
       this.maxCircum = 180;
       this.unitMeasureAbbrev = "cm";
-      this.waistCircum = Math.round(this.waistCircum * 2.54);
+      this.waistCircum = (this.waistCircum * 2.54).toFixed(1);
       this.inputMinCircum = 2;
       this.inputMaxCircum = 6;
     }
@@ -151,7 +151,7 @@ export class WaistCircumferencePage {
       this.minCircum = 20;
       this.maxCircum = 71;
       this.unitMeasureAbbrev = "in";
-      this.waistCircum = Math.round(this.waistCircum / 2.54);
+      this.waistCircum = (this.waistCircum / 2.54).toFixed(1);
       this.inputMinCircum = 2;
       this.inputMaxCircum = 5;
     }
