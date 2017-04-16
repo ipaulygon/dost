@@ -201,19 +201,9 @@ export class EnergyRequirementPage {
   }//end of unitChanged
 
   heightChanged(){
-  console.log("heightChanged");
+    var message:string;
     this.heightValid = false;
     this.showOutput = false;
-
-    let alert = this.alertCtrl.create({
-      message: "Please enter a valid number greater than 121.9 cm but less than 243.8 cm or a number with atleast 2 decimal places.",
-      buttons: 
-      [{
-          text: 'Ok',
-          handler: data => {
-          }
-        }]
-    });
 
     if(this.unitMeasure == "Centimeters"){
       if(this.adultFormGroup.get('height').valid){
@@ -227,6 +217,7 @@ export class EnergyRequirementPage {
       else{
         this.heightValid = false;
       }
+      message = "Please enter a valid number greater than 121.9 cm but less than 243.8 cm or a number with atleast 2 decimal places.";
     }
     else if(this.unitMeasure == "Feet"){
       if(!(Number.isNaN(this.ft))){
@@ -237,6 +228,7 @@ export class EnergyRequirementPage {
               }
               else{
                 this.heightValid = false;
+                message = "Please enter a valid number greater than less than 12in.";
               }
             }
             else{
@@ -245,10 +237,12 @@ export class EnergyRequirementPage {
           }
           else{
             this.heightValid = false;
+            message = "Please enter a valid number greater than 3ft but less than 9ft";
           }
         }
         else{
           this.heightValid = false;
+          message = "Please enter a valid number greater than 3ft but less than 9ft";
         }
     }
 /*
@@ -285,8 +279,17 @@ export class EnergyRequirementPage {
     else{
       this.heightValid = false;
     }*/
-    console.log(this.adultFormGroup.get('ft').status,this.ft,this.in);
+
     if(this.heightValid == false){
+      let alert = this.alertCtrl.create({
+      message: message,
+      buttons: 
+      [{
+          text: 'Ok',
+          handler: data => {
+          }
+        }]
+    });
       alert.present();
     }
 
