@@ -156,11 +156,11 @@ export class ResultsPage {
           this.dbwNormal = false; this.dbwStatus = "SEVERELY WASTED";
         }else if(weight>val[0] && weight<val[1]){
           this.dbwNormal = false; this.dbwStatus = "WASTED";
-        }else if(dbw>=val[1] && dbw<=val[5]){
+        }else if(weight>=val[1] && weight<=val[5]){
           this.dbwNormal = true; this.dbwStatus = "NORMAL";
-        }else if(dbw>val[5] && dbw<val[6]){
+        }else if(weight>val[5] && weight<val[6]){
           this.dbwNormal = false; this.dbwStatus = "OVERWEIGHT";
-        }else if(dbw>=val[6]){
+        }else if(weight>=val[6]){
           this.dbwNormal = false; this.dbwStatus = "OBESE";
         }
         this.dbwRange = val[1]+" kg - "+val[5]+" kg";
@@ -171,11 +171,11 @@ export class ResultsPage {
           this.dbwNormal = false; this.dbwStatus = "SEVERELY WASTED";
         }else if(weight>val[0] && weight<val[1]){
           this.dbwNormal = false; this.dbwStatus = "WASTED";
-        }else if(dbw>=val[1] && dbw<=val[5]){
+        }else if(weight>=val[1] && weight<=val[5]){
           this.dbwNormal = true; this.dbwStatus = "NORMAL";
-        }else if(dbw>val[5] && dbw<val[6]){
+        }else if(weight>val[5] && weight<val[6]){
           this.dbwNormal = false; this.dbwStatus = "OVERWEIGHT";
-        }else if(dbw>=val[6]){
+        }else if(weight>=val[6]){
           this.dbwNormal = false; this.dbwStatus = "OBESE";
         }
         this.dbwRange = val[1]+" kg - "+val[5]+" kg";
@@ -187,13 +187,13 @@ export class ResultsPage {
     }else{
       this.dbw = "Your desirable body weight is " + dbw + " kg";
       this.dbwRange = dbwMin+" kg - "+dbwMax+" kg";
-      if(dbw>=dbwMin && dbw<=dbwMax){
+      if(weight>=dbwMin && weight<=dbwMax){
         this.dbwNormal = true;
         this.dbwStatus = "NORMAL";
-      }else if(dbw<dbwMin){
+      }else if(weight<dbwMin){
         this.dbwNormal = false;
         this.dbwStatus = "UNDERWEIGHT";
-      }else if(dbw>dbwMax){
+      }else if(weight>dbwMax){
         this.dbwNormal = false;
         this.dbwStatus = "OVERWEIGHT";
       }

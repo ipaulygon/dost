@@ -22,7 +22,7 @@ import { ResultsPage } from '../pages/results/results';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = DbwPage;
+  rootPage: any = UserProfilePage;
 
   pages: Array<{title: string, component: any}>;
 
@@ -737,13 +737,13 @@ export class MyApp {
     });
     // used for an example of ngFor and navigation
     this.pages = [
+      { title: 'User Profile', component: UserProfilePage },
       { title: 'Body Mass Index', component: BmiPage },
       { title: 'Desirable Body Weight', component: DbwPage },
       { title: 'Energy Requirement', component: EnergyRequirementPage },
       { title: 'Waist Circumference', component: WaistCircumferencePage },
       { title: 'Waist-Hip Ratio', component: WaistHipPage },
       { title: 'Waist-Height Ratio', component: WaistHeightPage },
-      { title: 'User Profile', component: UserProfilePage },
     ];
 
   }
