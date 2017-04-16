@@ -50,6 +50,14 @@ export class EnergyRequirementPage {
   proteinPercentage: number = .15;
   fatPercentage: number = .20;
 
+  carbsPercentageDefault: number = .65;
+  proteinPercentageDefault: number = .15;
+  fatPercentageDefault: number = .20;
+
+  /*newCarbsPercentage: number = .65;
+  newProteinPercentage: number = .15;
+  newFatPercentage: number = .20;*/
+
   carbsGrams: number;
   proteinGrams: number;
   fatGrams: number;
@@ -60,6 +68,10 @@ export class EnergyRequirementPage {
   maxCarbs: number;
   minFat: number;
   maxFat: number;
+
+  modifyDistribution = false;
+
+  totalPercentage: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
               public formBuilder:FormBuilder, public toastCtrl:ToastController,
@@ -106,31 +118,31 @@ export class EnergyRequirementPage {
       this.minProtein = 6;
       this.maxProtein = 15;
 
-      this.minCarbs = 25;
-      this.maxCarbs = 35;
+      this.minFat = 20;
+      this.maxFat = 35;
  
-      this.minFat = 50;
-      this.maxFat = 69;
+      this.minCarbs = 50;
+      this.maxCarbs= 69;
     }
     else if(this.ageRange =="19+"){
       this.minProtein = 10;
       this.maxProtein = 15;
 
-      this.minCarbs = 15;
-      this.maxCarbs = 30;
+      this.minFat = 15;
+      this.maxFat = 30;
  
-      this.minFat = 55;
-      this.maxFat = 75;
+      this.minCarbs = 55;
+      this.maxCarbs = 75;
     }
     else{
       this.minProtein = 6;
       this.maxProtein = 15;
 
-      this.minCarbs = 15;
-      this.maxCarbs = 30;
+      this.minFat = 15;
+      this.maxFat = 30;
  
-      this.minFat = 55;
-      this.maxFat = 79;
+      this.minCarbs = 55;
+      this.maxCarbs = 79;
     }
 
     if(this.ageRange == "19+"){
@@ -140,6 +152,10 @@ export class EnergyRequirementPage {
     else{
       this.isAdult = false;
     }
+
+    this.carbsPercentage = this.carbsPercentageDefault;
+    this.proteinPercentage = this.proteinPercentageDefault;
+    this.fatPercentage = this.fatPercentageDefault;
     this.submit();
   }
 
@@ -147,9 +163,17 @@ export class EnergyRequirementPage {
     
     this.showOutput = false;
     if(this.unitMeasure == 'Centimeters'){
+      let inch = 0;
       this.heightMin = 122;
       this.heightMax = 243;
       this.unitMeasureAbbrev = 'cm';
+      //this.height = parseFloat((this.height / 0.032808).toFixed(2));
+      inch = this.ft * 12;
+      let inc = parseInt((inch).toString()) + parseInt((this.in).toString())
+      let cm =  inc * 2.54;
+      cm = parseFloat((cm).toFixed(2));
+      this.height = cm;
+      console.log(inch + " " + cm + " " + this.height + " " + this.in+ " " + inc);
       this.inputMinLength = 3;
       this.inputMaxLength = 6;
     }
@@ -157,10 +181,21 @@ export class EnergyRequirementPage {
       this.heightMin = 4;
       this.heightMax = 8;
       this.unitMeasureAbbrev = 'ft';
+      let inc = this.height/2.54;
+      let ft = parseInt((inc/12).toString());
+      this.ft = ft;
+      this.in = parseInt((inc % 12).toFixed(0));
+      console.log(ft + " " + inc + " " + this.in);
+      //let height = parseFloat((this.height *  0.032808).toFixed(2));
+     // let upperLower = height.toString().split('.');
+     // this.ft = parseFloat(upperLower[0]);
+      //this.in = parseFloat(upperLower[1]);
       this.inputMinLength = 1;
       this.inputMaxLength = 1;
       this.inputMinLengthInch = 1;
       this.inputMaxLengthInch = 1;
+
+      //console.log(height+" "+ upperLower+" "+upperLower[0]+" "+upperLower[1]);
     }
     this.heightChanged();
   }//end of unitChanged
@@ -281,6 +316,7 @@ export class EnergyRequirementPage {
 
   submit(){
     var cm: number, ftInch:number, dbwKg_raw:number;
+    this.modifyDistribution = false;
 
     if(this.isAdult){
       if(((this.formGroup.valid) && (this.adultFormGroup.valid))&&(this.heightValid)){
@@ -292,11 +328,18 @@ export class EnergyRequirementPage {
         }
         else if(this.unitMeasureAbbrev == "ft"){
           if(this.in != 0){
-            ftInch = +(this.ft+"."+this.in);
-            cm = parseFloat((ftInch /  0.032808).toFixed(3));
+            let inch = this.ft * 12;
+            let inc = parseInt((inch).toString()) + parseInt((this.in).toString())
+            cm =  inc * 2.54;
+            cm = parseFloat((cm).toFixed(2));
+            //cm = parseFloat((ftInch /  0.032808).toFixed(3));
           }
           else{
-            cm = parseFloat((this.ft /  0.032808).toFixed(3));
+            let inch = this.ft * 12;
+            let inc = parseInt((inch).toString()) + parseInt((this.in).toString())
+            cm =  inc * 2.54;
+            cm = parseFloat((cm).toFixed(2));
+            //cm = parseFloat((this.ft /  0.032808).toFixed(3));
           }
           dbwKg_raw = parseFloat(((cm - 100)-((cm - 100)*0.1)).toFixed(3));
           this.desirableBodyWeightKg = dbwKg_raw.toFixed(1);
@@ -371,16 +414,67 @@ export class EnergyRequirementPage {
 }//end of submit
 
   calculateDistribution(){
-    console.log('calculate disttribution');
-    let carbsGrams = (this.energyRqmt * this.carbsPercentage) / 4;
-    this.carbsGrams = Math.round( carbsGrams / 5 ) * 5;
+    var carbs:number, protein:number, fat:number;
 
-    let proteinGrams = (this.energyRqmt * this.proteinPercentage) / 4;
-    this.proteinGrams = Math.round( proteinGrams / 5 ) * 5;
+    if(this.modifyDistribution){
+      carbs = this.carbsPercentage / 100;
+      protein = this.proteinPercentage / 100;
+      fat = this.fatPercentage / 100;
+    }
+    else{
+      carbs = this.carbsPercentage;
+      this.carbsPercentage *= 100;
 
-    let fatGrams = (this.energyRqmt * this.fatPercentage) / 9;
-    this.fatGrams = Math.round( fatGrams / 5 ) * 5;
-    
-    console.log(carbsGrams+" "+this.carbsGrams);
+      protein = this.proteinPercentage;
+      this.proteinPercentage *= 100;
+
+      fat = this.fatPercentage;
+      this.fatPercentage *= 100;
+    }
+      let carbsGrams = (this.energyRqmt * carbs) / 4;
+      this.carbsGrams = Math.round( carbsGrams / 5 ) * 5;
+
+      let proteinGrams = (this.energyRqmt * protein) / 4;
+      this.proteinGrams = Math.round( proteinGrams / 5 ) * 5;
+
+      let fatGrams = (this.energyRqmt * fat) / 9;
+      this.fatGrams = Math.round( fatGrams / 5 ) * 5;
+
+      this.totalPercentage = this.carbsPercentage + this.proteinPercentage + this.fatPercentage;
+  }
+
+  modifyDistributionClicked(){
+    this.modifyDistribution = true;
+  }
+
+  resetClicked(){
+    this.carbsPercentage = this.carbsPercentageDefault;
+    this.proteinPercentage = this.proteinPercentageDefault;
+    this.fatPercentage = this.fatPercentageDefault;
+    this.modifyDistribution = false;
+    this.calculateDistribution();
+
+  }
+
+  okClicked(){  
+    if(this.totalPercentage == 100){
+      this.modifyDistribution = false;
+      let toast = this.toastCtrl.create({
+        message: 'Changes saved',
+        duration: 3000,
+        position: 'top',
+        showCloseButton: true
+      });
+      toast.present();
+    }
+    else{
+      let toast = this.toastCtrl.create({
+        message: 'Percentage does not equal to 100!',
+        duration: 3000,
+        position: 'top',
+        showCloseButton: true
+      });
+      toast.present();
+    }
   }
 }//end of class
