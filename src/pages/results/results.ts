@@ -27,6 +27,12 @@ export class ResultsPage {
   bmiAbnormal : boolean = false;
   bmiNormal : boolean = false;
 
+  //dbw
+  dbw: any;
+  dbwRange: any;
+  dbwStatus: any;
+  dbwNormal : boolean = false;
+
   //
   waistCircOnRisk: boolean = false;
 
@@ -47,6 +53,7 @@ export class ResultsPage {
     this.hip = this.navParams.get("hip");
 
     this.bmiResult();
+    this.dbwResult();
     this.waistCircumResult();
     this.waistHipResult();
     this.waistHeightResult();
@@ -60,6 +67,10 @@ export class ResultsPage {
     console.log("height: " + this.height);
     console.log("waist: " + this.waist);
     console.log("hip: " + this.hip);
+   }
+
+   closeModal(){
+     this.navCtrl.pop();
    }
 
   bmiResult(){
@@ -118,6 +129,69 @@ export class ResultsPage {
           this.bmiAbnormal = true; this.bmiNormal = false; this.bmiStatus = "OBESE";
         }
       }
+  }
+
+  dbwResult(){
+    //getAge && getMonth
+    let weight = this.weight;
+    let height = this.height;
+    let age = this.getAge();
+    let month = this.getMonth();
+    let gender = this.gender;
+    let p = Math.round(((height-100*.01)*0.1)*100)/100;
+    console.log(p);
+    let dbw = Math.round((height-100)-(p)*100)/100;
+    let dbwCut = dbw*0.1;
+    let dbwMin = dbw-dbwCut;
+    let dbwMax = dbw+dbwCut;
+    if(age<10 && month>0){
+      this.storage.get('wfa'+gender+age.toString()+month.toString()).then((val)=>{
+        if(weight<=val[0]){
+          this.dbwNormal = false; this.dbwStatus = "SEVERELY WASTED";
+        }else if(weight>val[0] && weight<val[1]){
+          this.dbwNormal = false; this.dbwStatus = "WASTED";
+        }else if(dbw>=val[1] && dbw<=val[5]){
+          this.dbwNormal = true; this.dbwStatus = "NORMAL";
+        }else if(dbw>val[5] && dbw<val[6]){
+          this.dbwNormal = false; this.dbwStatus = "OVERWEIGHT";
+        }else if(dbw>=val[6]){
+          this.dbwNormal = false; this.dbwStatus = "OBESE";
+        }
+        this.dbwRange = val[1]+" kg - "+val[5]+" kg";
+      });
+    }else if(age<=10 && month==0){
+      this.storage.get('wfa'+gender+age.toString()).then((val)=>{
+        if(weight<=val[0]){
+          this.dbwNormal = false; this.dbwStatus = "SEVERELY WASTED";
+        }else if(weight>val[0] && weight<val[1]){
+          this.dbwNormal = false; this.dbwStatus = "WASTED";
+        }else if(dbw>=val[1] && dbw<=val[5]){
+          this.dbwNormal = true; this.dbwStatus = "NORMAL";
+        }else if(dbw>val[5] && dbw<val[6]){
+          this.dbwNormal = false; this.dbwStatus = "OVERWEIGHT";
+        }else if(dbw>=val[6]){
+          this.dbwNormal = false; this.dbwStatus = "OBESE";
+        }
+        this.dbwRange = val[1]+" kg - "+val[5]+" kg";
+      });
+    }else if(age>10 && age<19){
+      this.dbwRange = "";
+      this.dbwStatus = "UNDEFINED";
+      this.dbwNormal = true;
+    }else{
+      this.dbw = "Your desirable body weight is " + dbw;
+      this.dbwRange = dbwMin+" kg - "+dbwMax+" kg";
+      if(dbw>=dbwMin && dbw<=dbwMax){
+        this.dbwNormal = true;
+        this.dbwStatus = "NORMAL";
+      }else if(dbw<dbwMin){
+        this.dbwNormal = false;
+        this.dbwStatus = "UNDERWEIGHT";
+      }else if(dbw>dbwMax){
+        this.dbwNormal = false;
+        this.dbwStatus = "OVERWEIGHT";
+      }
+    }
   }
 
   getAge(){

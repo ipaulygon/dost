@@ -7,6 +7,11 @@
 <ion-header>
 
   <ion-navbar color="primary">
+    <ion-buttons start>
+      <button ion-button icon-only (click)="closeModal()">
+        <ion-icon name="close"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-title>Results</ion-title>
   </ion-navbar>
 
@@ -32,7 +37,13 @@
       Desirable Body Weight
     </ion-card-header>
     <ion-card-content>
-      <h1>DBW here</h1>
+      <h1>{{dbw}}</h1>
+      <p>Maintain your weight between these values {{dbwRange}}</p>
+      Classification
+      <h3>
+        <span *ngIf="!dbwNormal"><b style="color:red">{{dbwStatus}}</b></span>
+        <span *ngIf="dbwNormal"><b style="color:green">{{dbwStatus}}</b></span>  
+      </h3> 
     </ion-card-content>
   </ion-card> 
 
@@ -52,8 +63,8 @@
     <ion-card-content>
       <p>Your waist circumference is on</p>
       <h1>
-        <span *ngIf="waistCircOnRisk"><b style="color:red">HIGH RISK</b></span>
-        <span *ngIf="!waistCircOnRisk"><b style="color:green">LOW RISK</b></span>
+        <span *ngIf="!waistCircOnRisk"><b style="color:red">HIGH RISK</b></span>
+        <span *ngIf="waistCircOnRisk"><b style="color:green">LOW RISK</b></span>
       </h1>
       <div>
          of developing cardiovascular diseases and type-2 diabetes.
