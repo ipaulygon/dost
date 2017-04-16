@@ -11,6 +11,7 @@ import { WaistCircumferencePage } from '../pages/waist-circumference/waist-circu
 import { WaistHipPage } from '../pages/waist-hip/waist-hip';
 import { WaistHeightPage } from '../pages/waist-height/waist-height';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
+import { ResultsPage } from '../pages/results/results';
 
 // import { Page2 } from '../pages/page2/page2';
 
@@ -21,7 +22,7 @@ import { UserProfilePage } from '../pages/user-profile/user-profile';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = BmiPage;
+  rootPage: any = UserProfilePage;
 
   pages: Array<{title: string, component: any}>;
 
