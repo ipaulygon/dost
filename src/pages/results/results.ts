@@ -20,6 +20,7 @@ export class ResultsPage {
   height: number;
   waist: number;
   hip: number;
+  age: number;
 
   //bmi
   bmi: any;
@@ -32,6 +33,10 @@ export class ResultsPage {
   dbwRange: any;
   dbwStatus: any;
   dbwNormal : boolean = false;
+
+  //energy
+  activity: any = 30;
+  energy: any = 0;
 
   //
   waistCircOnRisk: boolean = false;
@@ -54,6 +59,7 @@ export class ResultsPage {
 
     this.bmiResult();
     this.dbwResult();
+    this.energyResult();
     this.waistCircumResult();
     this.waistHipResult();
     this.waistHeightResult();
@@ -138,9 +144,9 @@ export class ResultsPage {
     let age = this.getAge();
     let month = this.getMonth();
     let gender = this.gender;
-    let p = Math.round(((height-100*.01)*0.1)*100)/100;
+    let p = Math.round(((height-100)*.1)*100)/100;
     console.log(p);
-    let dbw = Math.round((height-100)-(p)*100)/100;
+    let dbw = Math.round(((height-100)-(p))*100)/100;
     let dbwCut = dbw*0.1;
     let dbwMin = dbw-dbwCut;
     let dbwMax = dbw+dbwCut;
@@ -179,7 +185,7 @@ export class ResultsPage {
       this.dbwStatus = "UNDEFINED";
       this.dbwNormal = true;
     }else{
-      this.dbw = "Your desirable body weight is " + dbw;
+      this.dbw = "Your desirable body weight is " + dbw + " kg";
       this.dbwRange = dbwMin+" kg - "+dbwMax+" kg";
       if(dbw>=dbwMin && dbw<=dbwMax){
         this.dbwNormal = true;
@@ -192,6 +198,46 @@ export class ResultsPage {
         this.dbwStatus = "OVERWEIGHT";
       }
     }
+  }
+
+  energyResult(){
+    let weight = this.weight;
+    let height = this.height;
+    let age = this.getAge();
+    this.age = this.getAge();
+    let p = Math.round(((height-100)*.1)*100)/100;
+    console.log(p);
+    let dbw = Math.round(((height-100)-(p))*100)/100;
+    if(age<=2){
+      this.energy = (this.gender=="M") ? 1000 : 920;
+    }else if(age>2 && age<=5){
+      this.energy = (this.gender=="M") ? 1350: 1260;
+    }else if(age>5 && age<=9){
+      this.energy = (this.gender=="M") ? 1600: 147;
+    }else if(age>9 && age<=12){
+      this.energy = (this.gender=="M") ? 2060 : 1980;
+    }else if(age>12 && age<=15){
+      this.energy = (this.gender=="M") ? 2700 : 2170;
+    }else if(age>15 && age<=18){
+      this.energy = (this.gender=="M") ? 3010 : 2280;
+    }else{
+      let round = dbw*this.activity;
+      console.log(round);
+      if(round % 50 < 25){
+        round -= (round % 50);
+      }
+      else if(round % 50 > 25){
+        round += (50 - (round % 50));
+      }
+      else if(round % 50 == 25){
+        round += 25;
+      }
+      this.energy = round;
+    }
+  }
+
+  activityChange(){
+
   }
 
   getAge(){
