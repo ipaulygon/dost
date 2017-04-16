@@ -69,7 +69,7 @@ export class EnergyRequirementPage {
   minFat: number;
   maxFat: number;
 
-  modifyDistribution = false;
+  modifyDistribution = true;
 
   totalPercentage: number;
 

@@ -22,7 +22,7 @@ import { ResultsPage } from '../pages/results/results';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = UserProfilePage;
+  rootPage: any = DbwPage;
 
   pages: Array<{title: string, component: any}>;
 
