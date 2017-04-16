@@ -38,9 +38,9 @@
     </ion-card-header>
     <ion-card-content>
       <h1>{{dbw}}</h1>
-      <p>Maintain your weight between these values {{dbwRange}}</p>
-      Classification
+      <p>Maintain your weight between these values <br>{{dbwRange}}</p>
       <h3>
+        Classified as
         <span *ngIf="!dbwNormal"><b style="color:red">{{dbwStatus}}</b></span>
         <span *ngIf="dbwNormal"><b style="color:green">{{dbwStatus}}</b></span>  
       </h3> 
@@ -52,7 +52,16 @@
       Energy Requirement
     </ion-card-header>
     <ion-card-content>
-      <h1>ER here</h1>
+      <h1>You need {{energy}} kcal a day</h1>
+      <ion-item *ngIf="age>18">
+        <ion-label>Physical activity:</ion-label>
+        <ion-select [(ngModel)]="activity" (ionChange)="energyResult()">
+          <ion-option value="30">Sedentary</ion-option>
+          <ion-option value="35">Light</ion-option>
+          <ion-option value="40">Moderate</ion-option>
+          <ion-option value="45">Very Active</ion-option>
+        </ion-select>
+      </ion-item>
     </ion-card-content>
   </ion-card> 
 
