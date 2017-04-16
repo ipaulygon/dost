@@ -1,4 +1,3 @@
-import { validateDeepLinks } from '@ionic/app-scripts/dist/deep-linking/util';
 import { Component } from '@angular/core';
 import { NavController, NavParams ,AlertController} from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';

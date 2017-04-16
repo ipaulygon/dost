@@ -6,21 +6,21 @@
 -->
 <ion-header>
   <ion-navbar color="primary">
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
     <ion-title>User Profile</ion-title>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
+  <ion-fab top right edge>
+    <button ion-fab color="dark" (click)="result()">Results</button>
+  </ion-fab>
 	<form [formGroup]="userProfileForm">
     <ion-item>
       <ion-label>Gender:</ion-label>
       <ion-select formControlName="gender">
-        <ion-option value="male">Male</ion-option>
-        <ion-option value="female">Female</ion-option>
+        <ion-option value="M">Male</ion-option>
+        <ion-option value="F">Female</ion-option>
       </ion-select>
     </ion-item>
     <ion-item>
@@ -109,4 +109,23 @@
       </ion-select>
     </ion-item> 
   </form>
+  <br>
+  <ion-card style="text-align: center">
+    <ion-card-header>
+      BMI
+    </ion-card-header>
+    <ion-card-content style="font-size: 16px">
+      {{this.bmiMessage}}<br>
+      <span *ngIf="bmiAbnormal">Classified as <b style="color:red">{{bmiStatus}}</b></span>
+      <span *ngIf="bmiNormal">Classified as <b style="color:green">{{bmiStatus}}</b></span>
+    </ion-card-content>
+  </ion-card>
+  <ion-card style="text-align: center">
+    <ion-card-header>
+      Waist Height Ratio
+    </ion-card-header>
+    <ion-card-content style="font-size: 16px">
+      Your waist-height ratio is {{waistHeightRatio}} which may indicate <b>{{ (waistHeightStatus) ? "HIGHER RISK" : "LOWER RISK" }}</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.
+    </ion-card-content>
+  </ion-card>  
 </ion-content>
