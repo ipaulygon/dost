@@ -71,149 +71,164 @@ export class UserProfilePage {
     console.log('ionViewDidLoad UserProfilePage');
   }
 
+  //pass user profile details to result
   result(){
-    if(this.userProfileForm.value.birth!=null || this.userProfileForm.value.birth!=''){
-      this.bmiResult();
-      this.waistHeightResult();
-      this.bmiCard = true;
-      this.waistHeightCard = true;
-    }
     let results = {
-      bmiCard : this.bmiCard,
-      dbwCard : this.dbwCard,
-      energyCard : this.energyCard,
-      waistCirCard : this.waistCirCard,
-      waistHipCard : this.waistHipCard,
-      waistHeightCard : this.waistHeightCard,
-      bmiMessage: this.bmiMessage,
-      bmiAbnormal: this.bmiAbnormal,
-      bmiNormal: this.bmiNormal,
-      bmiStatus: this.bmiStatus,
-      waistHeightRatio: this.waistHeightRatio,
-      waistHeightStatus: this.waistHeightStatus,
+      gender: this.userProfileForm.value.gender,
+      birthday: this.userProfileForm.value.birth,
+      weight: (this.weightKg) ? this.userProfileForm.value.noWeight : this.convertToKg(this.userProfileForm.value.noWeight),
+      height: (this.cm) ? this.userProfileForm.value.noHeight : this.ft2cm(this.userProfileForm.value.noHeight, this.userProfileForm.value.noHeightIn),
+      waist: (this.waistCm) ? this.userProfileForm.value.noWaist : this.convertToCm(this.userProfileForm.value.noWaist),
+      hip: (this.hipCm) ? this.userProfileForm.value.noHip : this.convertToCm(this.userProfileForm.value.noHip),
     }
+    console.log(results);
     let modal = this.modalCtrl.create(ResultsPage,results);
     modal.present();
   }
 
-  bmiResult(){
-    if(this.userProfileForm.value.noWeight!=0 || this.userProfileForm.value.noHeight!=0 || this.userProfileForm.value.noHeightIn!=0){
-      let weight = 0;
-      let height = 0;
-      if(!this.weightKg){
-        weight = Math.round((this.userProfileForm.value.noWeight/2.2)*100)/100;
-      }else{
-        weight = this.userProfileForm.value.noWeight;
-      }
-      //end of weight
-      if(this.cm){
-        height = Math.round((this.userProfileForm.value.noHeight/100)*100)/100;
-      }else{
-        let feet = this.userProfileForm.value.noHeight*12;
-        let inch = this.userProfileForm.value.noHeightIn;
-        if(inch=='' || inch==null){
-          inch = 0;
-        }
-        let toInch = eval(feet+"+"+inch);
-        let cm = Math.round((toInch*2.54)*100)/100;
-        height = Math.round((cm/100)*100)/100;
-      }//end of height
-      //getAge && getMonth
-      let age = this.getAge();
-      let month = this.getMonth();
-      let gender = this.userProfileForm.value.gender;
-      //start BMI
-      let bmi = Math.round((weight/(height*height))*100)/100;
-      this.bmiMessage = "Your BMI is " + bmi + "kg/m²";
-      if(age<=18 && month>0){
-        this.storage.get('bmi'+gender+age.toString()+month.toString()).then((val)=>{
-          if(bmi<val[0]){
-            this.bmiAbnormal = true; this.bmiNormal = false; this.bmiStatus = "SEVERE THINNESS";
-          }else if(bmi>=val[0] && bmi<val[1]){
-            this.bmiAbnormal = true; this.bmiNormal = false; this.bmiStatus = "UNDERWEIGHT";
-          }else if(bmi>=val[1] && bmi<val[5]){
-            this.bmiAbnormal = false; this.bmiNormal = true; this.bmiStatus = "NORMAL";
-          }else if(bmi>=val[5] && bmi<val[6]){
-            this.bmiAbnormal = true; this.bmiNormal = false; this.bmiStatus = "OVERWEIGHT";
-          }else if(bmi>=val[6]){
-            this.bmiAbnormal = true; this.bmiNormal = false; this.bmiStatus = "OBESE";
-          }
-        });
-      }else if(age<=19 && month==0){
-        this.storage.get('bmi'+gender+age.toString()).then((val)=>{
-          if(bmi<val[0]){
-            this.bmiAbnormal = true; this.bmiNormal = false; this.bmiStatus = "SEVERE THINNESS";
-          }else if(bmi>=val[0] && bmi<val[1]){
-            this.bmiAbnormal = true; this.bmiNormal = false; this.bmiStatus = "UNDERWEIGHT";
-          }else if(bmi>=val[1] && bmi<val[5]){
-            this.bmiAbnormal = false; this.bmiNormal = true; this.bmiStatus = "NORMAL";
-          }else if(bmi>=val[5] && bmi<val[6]){
-            this.bmiAbnormal = true; this.bmiNormal = false; this.bmiStatus = "OVERWEIGHT";
-          }else if(bmi>=val[6]){
-            this.bmiAbnormal = true; this.bmiNormal = false; this.bmiStatus = "OBESE";
-          }
-        });
-      }else{
-        if(bmi<18.5){
-          this.bmiAbnormal = true; this.bmiNormal = false; this.bmiStatus = "UNDERWEIGHT";
-        }else if(bmi>=18.5 && bmi<25){
-          this.bmiAbnormal = false; this.bmiNormal = true; this.bmiStatus = "NORMAL";
-        }else if(bmi>=25 && bmi<30){
-          this.bmiAbnormal = true; this.bmiNormal = false; this.bmiStatus = "OVERWEIGHT";
-        }else if(bmi>=30){
-          this.bmiAbnormal = true; this.bmiNormal = false; this.bmiStatus = "OBESE";
-        }
-      }
-    }
-  }
+  // result(){
+  //   if(this.userProfileForm.value.birth!=null || this.userProfileForm.value.birth!=''){
+  //     this.bmiResult();
+  //     this.waistHeightResult();
+  //     this.bmiCard = true;
+  //     this.waistHeightCard = true;
+  //   }
+  //   let results = {
+  //     bmiCard : this.bmiCard,
+  //     dbwCard : this.dbwCard,
+  //     energyCard : this.energyCard,
+  //     waistCirCard : this.waistCirCard,
+  //     waistHipCard : this.waistHipCard,
+  //     waistHeightCard : this.waistHeightCard,
+  //     bmiMessage: this.bmiMessage,
+  //     bmiAbnormal: this.bmiAbnormal,
+  //     bmiNormal: this.bmiNormal,
+  //     bmiStatus: this.bmiStatus,
+  //     waistHeightRatio: this.waistHeightRatio,
+  //     waistHeightStatus: this.waistHeightStatus,
+  //   }
+  //   let modal = this.modalCtrl.create(ResultsPage,results);
+  //   modal.present();
+  // }
 
-  waistHeightResult(){
-    let feet = this.userProfileForm.value.noHeight*12;
-    let inch = this.userProfileForm.value.noHeightIn;
+  // bmiResult(){
+  //   if(this.userProfileForm.value.noWeight!=0 || this.userProfileForm.value.noHeight!=0 || this.userProfileForm.value.noHeightIn!=0){
+  //     let weight = 0;
+  //     let height = 0;
+  //     if(!this.weightKg){
+  //       weight = Math.round((this.userProfileForm.value.noWeight/2.2)*100)/100;
+  //     }else{
+  //       weight = this.userProfileForm.value.noWeight;
+  //     }
+  //     //end of weight
+  //     if(this.cm){
+  //       height = Math.round((this.userProfileForm.value.noHeight/100)*100)/100;
+  //     }else{
+  //       let feet = this.userProfileForm.value.noHeight*12;
+  //       let inch = this.userProfileForm.value.noHeightIn;
+  //       if(inch=='' || inch==null){
+  //         inch = 0;
+  //       }
+  //       let toInch = eval(feet+"+"+inch);
+  //       let cm = Math.round((toInch*2.54)*100)/100;
+  //       height = Math.round((cm/100)*100)/100;
+  //     }//end of height
+  //     //getAge && getMonth
+  //     let age = this.getAge();
+  //     let month = this.getMonth();
+  //     let gender = this.userProfileForm.value.gender;
+  //     //start BMI
+  //     let bmi = Math.round((weight/(height*height))*100)/100;
+  //     this.bmiMessage = "Your BMI is " + bmi + "kg/m²";
+  //     if(age<=18 && month>0){
+  //       this.storage.get('bmi'+gender+age.toString()+month.toString()).then((val)=>{
+  //         if(bmi<val[0]){
+  //           this.bmiAbnormal = true; this.bmiNormal = false; this.bmiStatus = "SEVERE THINNESS";
+  //         }else if(bmi>=val[0] && bmi<val[1]){
+  //           this.bmiAbnormal = true; this.bmiNormal = false; this.bmiStatus = "UNDERWEIGHT";
+  //         }else if(bmi>=val[1] && bmi<val[5]){
+  //           this.bmiAbnormal = false; this.bmiNormal = true; this.bmiStatus = "NORMAL";
+  //         }else if(bmi>=val[5] && bmi<val[6]){
+  //           this.bmiAbnormal = true; this.bmiNormal = false; this.bmiStatus = "OVERWEIGHT";
+  //         }else if(bmi>=val[6]){
+  //           this.bmiAbnormal = true; this.bmiNormal = false; this.bmiStatus = "OBESE";
+  //         }
+  //       });
+  //     }else if(age<=19 && month==0){
+  //       this.storage.get('bmi'+gender+age.toString()).then((val)=>{
+  //         if(bmi<val[0]){
+  //           this.bmiAbnormal = true; this.bmiNormal = false; this.bmiStatus = "SEVERE THINNESS";
+  //         }else if(bmi>=val[0] && bmi<val[1]){
+  //           this.bmiAbnormal = true; this.bmiNormal = false; this.bmiStatus = "UNDERWEIGHT";
+  //         }else if(bmi>=val[1] && bmi<val[5]){
+  //           this.bmiAbnormal = false; this.bmiNormal = true; this.bmiStatus = "NORMAL";
+  //         }else if(bmi>=val[5] && bmi<val[6]){
+  //           this.bmiAbnormal = true; this.bmiNormal = false; this.bmiStatus = "OVERWEIGHT";
+  //         }else if(bmi>=val[6]){
+  //           this.bmiAbnormal = true; this.bmiNormal = false; this.bmiStatus = "OBESE";
+  //         }
+  //       });
+  //     }else{
+  //       if(bmi<18.5){
+  //         this.bmiAbnormal = true; this.bmiNormal = false; this.bmiStatus = "UNDERWEIGHT";
+  //       }else if(bmi>=18.5 && bmi<25){
+  //         this.bmiAbnormal = false; this.bmiNormal = true; this.bmiStatus = "NORMAL";
+  //       }else if(bmi>=25 && bmi<30){
+  //         this.bmiAbnormal = true; this.bmiNormal = false; this.bmiStatus = "OVERWEIGHT";
+  //       }else if(bmi>=30){
+  //         this.bmiAbnormal = true; this.bmiNormal = false; this.bmiStatus = "OBESE";
+  //       }
+  //     }
+  //   }
+  // }
 
-    let waist = (this.userProfileForm.value.waist == 'cm') ? this.userProfileForm.value.noWaist : this.convertToCm(this.userProfileForm.value.noWaist);
-    let height = (this.userProfileForm.value.height == 'cm') ? this.userProfileForm.value.noHeight : this.convertToCm(eval(feet+"+"+inch));
+  // waistHeightResult(){
+  //   let feet = this.userProfileForm.value.noHeight*12;
+  //   let inch = this.userProfileForm.value.noHeightIn;
 
-    this.waistHeightRatio = Math.round(eval(waist + '/' + height)*100)/100;
+  //   let waist = (this.userProfileForm.value.waist == 'cm') ? this.userProfileForm.value.noWaist : this.convertToCm(this.userProfileForm.value.noWaist);
+  //   let height = (this.userProfileForm.value.height == 'cm') ? this.userProfileForm.value.noHeight : this.convertToCm(eval(feet+"+"+inch));
 
-     if(this.waistHeightRatio <= 0.50){
-       this.waistHeightStatus = false;
-     }else{
-       this.waistHeightStatus = true;
-     }
-  }
+  //   this.waistHeightRatio = Math.round(eval(waist + '/' + height)*100)/100;
 
-  getAge(){
-    let today = new Date();
-    let birthDate = new Date(this.userProfileForm.value.birth);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    let m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
-    {
-        age--;
-    }
-    return age;
-  }
+  //    if(this.waistHeightRatio <= 0.50){
+  //      this.waistHeightStatus = false;
+  //    }else{
+  //      this.waistHeightStatus = true;
+  //    }
+  // }
 
-  getMonth(){
-    let today = new Date();
-    let birthDate = new Date(this.userProfileForm.value.birth);
-    let m = today.getMonth() - birthDate.getMonth();
-    if (m < 0 && today.getDate() > birthDate.getDate()){
-      m = 12-(Math.abs(m));
-    }else if(m < 0 && today.getDate() < birthDate.getDate()){
-      m = 11-(Math.abs(m));
-    }else if(m > 0 && today.getDate() > birthDate.getDate()){
-      m = m;
-    }else if(m > 0 && today.getDate() < birthDate.getDate()){
-      m = m-1;
-    }else if(m === 0 && today.getDate() < birthDate.getDate()){
-      m = 11;
-    }else{
-      m = 0;
-    }
-    return m;
-  }
+  // getAge(){
+  //   let today = new Date();
+  //   let birthDate = new Date(this.userProfileForm.value.birth);
+  //   let age = today.getFullYear() - birthDate.getFullYear();
+  //   let m = today.getMonth() - birthDate.getMonth();
+  //   if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) 
+  //   {
+  //       age--;
+  //   }
+  //   return age;
+  // }
+
+  // getMonth(){
+  //   let today = new Date();
+  //   let birthDate = new Date(this.userProfileForm.value.birth);
+  //   let m = today.getMonth() - birthDate.getMonth();
+  //   if (m < 0 && today.getDate() > birthDate.getDate()){
+  //     m = 12-(Math.abs(m));
+  //   }else if(m < 0 && today.getDate() < birthDate.getDate()){
+  //     m = 11-(Math.abs(m));
+  //   }else if(m > 0 && today.getDate() > birthDate.getDate()){
+  //     m = m;
+  //   }else if(m > 0 && today.getDate() < birthDate.getDate()){
+  //     m = m-1;
+  //   }else if(m === 0 && today.getDate() < birthDate.getDate()){
+  //     m = 11;
+  //   }else{
+  //     m = 0;
+  //   }
+  //   return m;
+  // }
 
   convertToInch(val)
   {
@@ -233,6 +248,16 @@ export class UserProfilePage {
   convertToLb(val)
   {
   	return Math.round((val*2.2)*10)/10;
+  }
+
+  ft2cm(ft, inch)
+  {
+    let feet = ft*12;
+    if(inch=='' || inch==null){
+      inch = 0;
+    }
+    let toInch = eval(feet+"+"+inch);
+    return Math.round((toInch*2.54)*100)/100;
   }
 
   cmWaistChange(){
@@ -346,6 +371,14 @@ export class UserProfilePage {
       this.userProfileForm.controls['kiloRange'].setValue(this.userProfileForm.value.noWeight);
     }else{
       this.userProfileForm.controls['poundRange'].setValue(this.userProfileForm.value.noWeight);
+    }
+  }
+
+  setHeightRange(){
+    if(this.userProfileForm.value.height=="cm"){
+      this.userProfileForm.controls['cmRange'].setValue(this.userProfileForm.value.noHeight);
+    }else{
+      this.userProfileForm.controls['ftRange'].setValue(this.userProfileForm.value.noHeight);
     }
   }
 

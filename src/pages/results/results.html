@@ -19,23 +19,77 @@
       Body Mass Index
     </ion-card-header>
     <ion-card-content>
-      {{bmiCard}}<br>
-      <div *ngIf="bmiCard">
-        {{bmiMessage}}<br>
+      <h1>{{bmi}} kg/m²</h1>
+      <div>
         <span *ngIf="bmiAbnormal">Classified as <b style="color:red">{{bmiStatus}}</b></span>
         <span *ngIf="bmiNormal">Classified as <b style="color:green">{{bmiStatus}}</b></span>
       </div>
     </ion-card-content>
   </ion-card>  
+
   <ion-card style="text-align: center">
     <ion-card-header>
-      Waist Height Ratio
+      Desirable Body Weight
     </ion-card-header>
     <ion-card-content>
-      {{waistHeightCard}}
-      <div *ngIf="waistHeightCard">
-        Your waist-height ratio is {{waistHeightRatio}} which may indicate <b>{{ (waistHeightStatus) ? "HIGHER RISK" : "LOWER RISK" }}</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.
+      <h1>DBW here</h1>
+    </ion-card-content>
+  </ion-card> 
+
+  <ion-card style="text-align: center">
+    <ion-card-header>
+      Energy Requirement
+    </ion-card-header>
+    <ion-card-content>
+      <h1>ER here</h1>
+    </ion-card-content>
+  </ion-card> 
+
+  <ion-card style="text-align: center">
+    <ion-card-header>
+      Waist Circumference
+    </ion-card-header>
+    <ion-card-content>
+      <p>Your waist circumference is on</p>
+      <h1>
+        <span *ngIf="waistCircOnRisk"><b style="color:red">HIGH RISK</b></span>
+        <span *ngIf="!waistCircOnRisk"><b style="color:green">LOW RISK</b></span>
+      </h1>
+      <div>
+         of developing cardiovascular diseases and type-2 diabetes.
       </div>
     </ion-card-content>
-  </ion-card>  
+  </ion-card>
+
+  <ion-card style="text-align: center">
+    <ion-card-header>
+      Waist Hip Ratio 
+    </ion-card-header>
+    <ion-card-content>
+      <p>Your waist hip ratio is:</p>
+      <h1>
+        {{ whRatio }}
+      </h1>
+      <div>
+        <span *ngIf="whOnRisk">which may indicate <b style="color:red">HIGH RISK</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.</span>
+        <span *ngIf="!whOnRisk">which may indicate <b style="color:green">LOW RISK</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.</span>
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card style="text-align: center">
+    <ion-card-header>
+      Waist Height Ratio 
+    </ion-card-header>
+    <ion-card-content>
+      <p>Your waist height ratio is:</p>
+      <h1>
+        {{ whgtRatio }}
+      </h1>
+      <div>
+        <span *ngIf="whgtOnRisk">which may indicate <b style="color:red">HIGH RISK</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.</span>
+        <span *ngIf="!whgtOnRisk">which may indicate <b style="color:green">LOW RISK</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.</span>
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
