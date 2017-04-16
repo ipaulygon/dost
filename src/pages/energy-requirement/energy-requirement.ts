@@ -108,7 +108,7 @@ export class EnergyRequirementPage {
 
   genderChanged(){
     this.showOutput = false;
-    this.submit();
+    this.ageRangeChanged();
   }
 
   ageRangeChanged(){
