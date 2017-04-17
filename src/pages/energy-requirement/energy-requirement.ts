@@ -69,7 +69,7 @@ export class EnergyRequirementPage {
   minFat: number;
   maxFat: number;
 
-  modifyDistribution = false;
+  modifyDistribution = true;
 
   totalPercentage: number;
 
@@ -320,7 +320,9 @@ export class EnergyRequirementPage {
   submit(){
     var cm: number, ftInch:number, dbwKg_raw:number;
     this.modifyDistribution = false;
-
+    this.carbsPercentage = .65;
+    this.proteinPercentage = .15;
+    this.fatPercentage = .20;
     if(this.isAdult){
       if(((this.formGroup.valid) && (this.adultFormGroup.valid))&&(this.heightValid)){
         if(this.unitMeasureAbbrev == "cm"){

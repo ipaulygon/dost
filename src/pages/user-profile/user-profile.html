@@ -4,8 +4,16 @@
   See http://ionicframework.com/docs/v2/components/#navigation for more info on
   Ionic pages and navigation.
 -->
+<<<<<<< HEAD
 <ion-header no-border>
   <ion-navbar>
+=======
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+>>>>>>> d1f6358b0dda70c123d9375bcd3c7197e0c5079c
     <ion-title>User Profile</ion-title>
   </ion-navbar>
 </ion-header>
@@ -13,6 +21,8 @@
 
 <ion-content padding>
   <ion-card>
+    <ion-card-content>
+      <ion-scroll scrollY="true"> 
     <ion-fab top right edge>
       <button ion-fab color="dark" (click)="result()">Results</button>
     </ion-fab>
@@ -110,5 +120,7 @@
         </ion-select>
       </ion-item> 
     </form>
+      </ion-scroll> 
+    </ion-card-content>
   </ion-card>
-</ion-content>
+  </ion-content>
