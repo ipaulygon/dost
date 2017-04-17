@@ -170,7 +170,7 @@ export class BmiPage {
 
   submit(){
     if(this.bmiForm.valid){
-      if(this.bmiForm.value.noWeight!=0 || this.bmiForm.value.noHeight!=0 || this.bmiForm.value.noHeightIn!=0){
+      if(this.bmiForm.value.noWeight!=0 && this.bmiForm.value.noHeight!=0 && this.bmiForm.value.birthDate!=0){
         let weight = 0;
         let height = 0;
         if(!this.kilo){
