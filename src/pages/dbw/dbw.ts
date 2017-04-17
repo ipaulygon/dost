@@ -191,6 +191,7 @@ export class DbwPage {
       height = this.dbwForm.value.noHeight;
     }
     console.log(this.dbwForm.value.birth);
+    console.log(height);
     let age = this.getAge();
     let month = this.getMonth();
     let gender = this.dbwForm.value.gender;
@@ -202,6 +203,7 @@ export class DbwPage {
     if(height!=0 && this.dbwForm.value.birth!=''){
       if(age<10 && month>0){
         this.storage.get('wfa'+gender+age.toString()+month.toString()).then((val)=>{
+          console.log(val + " - "+ val[0]);
           if(weight<=val[0]){
             this.dbwNormal = false; this.dbwStatus = "SEVERELY WASTED";
           }else if(weight>val[0] && weight<val[1]){

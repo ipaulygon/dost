@@ -735,6 +735,9 @@ export class MyApp {
         storage.set('wfaF10',[20.3,23.3,27,31.9,38.2,46.9,59.2]);
       }
     });
+    storage.get('wfaF10').then((val)=>{
+      console.log(val);
+    });
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'User Profile', component: UserProfilePage },
