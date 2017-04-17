@@ -10,6 +10,7 @@ import { WaistHipPage } from '../pages/waist-hip/waist-hip';
 import { WaistHeightPage } from '../pages/waist-height/waist-height';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { ResultsPage } from '../pages/results/results';
+import { HelpPage } from '../pages/help/help';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -25,6 +26,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     WaistHeightPage,
     UserProfilePage,
     ResultsPage,
+    HelpPage,
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -41,6 +43,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
     WaistHeightPage,
     UserProfilePage,
     ResultsPage,
+    HelpPage
   ],
   providers: [
     StatusBar,
