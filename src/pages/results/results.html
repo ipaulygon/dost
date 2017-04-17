@@ -19,24 +19,38 @@
 
 
 <ion-content padding>
-  <ion-card style="text-align: center">
+  <!--bmi-->
+  <ion-card style="text-align: center" (click)="seeBmi()">
     <ion-card-header>
       Body Mass Index
     </ion-card-header>
-    <ion-card-content>
+    <ion-card-content *ngIf="bmiCard">
       <h1>{{bmi}} kg/m²</h1>
       <div>
         <span *ngIf="bmiAbnormal">Classified as <b style="color:red">{{bmiStatus}}</b></span>
         <span *ngIf="bmiNormal">Classified as <b style="color:green">{{bmiStatus}}</b></span>
       </div>
     </ion-card-content>
+    <ion-card-content *ngIf="!bmiCard">
+      Please have an input in Birthdate, Weight and Height.
+    </ion-card-content>
+    <ion-card-content *ngIf="bmiSee && bmiCard">
+      <p>This may indicate that you have a</p>
+      <h3>
+        <span *ngIf="bmiNormal" style="color:green">LOWER RISK</span>
+        <span *ngIf="!bmiNormal" style="color:red">HIGHER RISK</span>
+      </h3>
+      <p>of acquiring heart diseases, hypertension, type 2 diabetes and some types of cancer.</p>
+    </ion-card-content>
+    <span *ngIf="!bmiSee && bmiCard">See More <ion-icon name="arrow-dropdown"></ion-icon></span>
+    <span *ngIf="bmiSee && bmiCard">See Less <ion-icon name="arrow-dropup"></ion-icon></span>
   </ion-card>  
-
-  <ion-card style="text-align: center">
+  <!--dbw-->
+  <ion-card style="text-align: center" (click)="seeDbw()">
     <ion-card-header>
       Desirable Body Weight
     </ion-card-header>
-    <ion-card-content>
+    <ion-card-content *ngIf="dbwCard">
       <h1>{{dbw}}</h1>
       <p>Maintain your weight between these values <br>{{dbwRange}}</p>
       <h3>
@@ -45,13 +59,26 @@
         <span *ngIf="dbwNormal"><b style="color:green">{{dbwStatus}}</b></span>  
       </h3> 
     </ion-card-content>
+    <ion-card-content *ngIf="!dbwCard">
+      Please have an input in Birthdate, Weight and Height.
+    </ion-card-content>
+    <ion-card-content *ngIf="dbwSee && dbwCard">
+      <p *ngIf="age>=10 && age<19">
+        Weight-for-age reference data are not available beyond age 10 because this indicator does not distinguish between height and body mass in an age period where many children are experiencing the pubertal growth spurt and may appear as having excess weight (by weight-for-age) when in fact they are just tall. - World Health Organization
+      </p>
+      <p *ngIf="age<10 || age>19">
+        You can achieve your DBW by eating a healthy and balanced diet and engaging in moderate physical activity like jogging, brisk walking and aerobic dancing.
+      </p>
+    </ion-card-content>
+    <span *ngIf="!dbwSee && dbwCard">See More <ion-icon name="arrow-dropdown"></ion-icon></span>
+    <span *ngIf="dbwSee && dbwCard">See Less <ion-icon name="arrow-dropup"></ion-icon></span>
   </ion-card> 
-
+  <!--energy-->
   <ion-card style="text-align: center">
     <ion-card-header>
       Energy Requirement
     </ion-card-header>
-    <ion-card-content>
+    <ion-card-content *ngIf="energyCard">
       <h1>You need {{energy}} kcal a day</h1>
       <ion-item *ngIf="age>18">
         <ion-label>Physical activity:</ion-label>
@@ -63,13 +90,74 @@
         </ion-select>
       </ion-item>
     </ion-card-content>
+    <ion-card-content *ngIf="!energyCard">
+      Please have an input in Birthdate and Height.
+    </ion-card-content>
+    <ion-card-content *ngIf="energySee && energyCard">
+      <ion-card-title style="font-size: 20px; text-align: center"><b>Macronutrient Distribution</b></ion-card-title>
+      <ion-card-content>
+        <ion-card>
+          <ion-card-content style="background-color: #FFEB3B; color: black">
+            <span style="font-size: 20px;">Carbohydrates: {{carbsPercentage}}%</span><br>
+            <span style="font-size: 15px; text-align: center">{{carbsGrams}} grams</span>
+            <ion-range *ngIf="modifyDistribution" [(ngModel)]= "carbsPercentage" (ionChange) = "calculateDistribution()" pin="true" color="dark" min="{{minCarbs}}" max="{{maxCarbs}}" [ngModelOptions]="{standalone: true}">
+              <ion-label range-left>{{minCarbs}}%</ion-label>
+              <ion-label range-right>{{maxCarbs}}%</ion-label>
+            </ion-range>
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+          <ion-card-content style="background-color: #FF9800; color: black">
+            <span style="font-size: 20px;">Protein: {{proteinPercentage}}%</span><br>
+            <span style="font-size: 15px; text-align: center">{{proteinGrams}} grams</span>
+            <ion-range *ngIf="modifyDistribution" [(ngModel)]= "proteinPercentage" (ionChange) = "calculateDistribution()" pin="true" color="dark" min="{{minProtein}}" max="{{maxProtein}}" [ngModelOptions]="{standalone: true}">
+              <ion-label range-left>{{minProtein}}%</ion-label>
+              <ion-label range-right>{{maxProtein}}%</ion-label>
+            </ion-range>
+          </ion-card-content>
+        </ion-card>
+        <ion-card>
+          <ion-card-content style="background-color: #03A9F4; color: black">
+            <span style="font-size: 20px;">Fat: {{fatPercentage}}%</span><br>
+            <span style="font-size: 15px; text-align: center">{{fatGrams}} grams</span>
+            <ion-range *ngIf="modifyDistribution" [(ngModel)]= "fatPercentage" (ionChange) = "calculateDistribution()" pin="true" color="dark" min="{{minFat}}" max="{{maxFat}}" [ngModelOptions]="{standalone: true}">
+              <ion-label range-left>{{minFat}}%</ion-label>
+              <ion-label range-right>{{maxFat}}%</ion-label>
+            </ion-range>
+          </ion-card-content>
+        </ion-card>
+        <p style="text-align: center" *ngIf="!modifyDistribution" (click) = "modifyDistributionClicked($event)"><em>Click here to modify Macronutrient Distribution.</em></p>
+        <div *ngIf="modifyDistribution" style="text-align: center;">
+          <p>Total percentage must equal to 100</p><br>
+          <p>Current Total: <b *ngIf= "totalPercentage == 100" style="color: green">{{totalPercentage}}</b><b *ngIf= "totalPercentage != 100" style="color: red">{{totalPercentage}}</b></p><br>
+          <button ion-button icon-left (click) = "resetClicked($event)">
+            <ion-icon name="refresh"></ion-icon>
+              Reset
+          </button>
+          <button ion-button icon-left (click) = "okClicked($event)">
+            <ion-icon name="checkmark"></ion-icon>
+              OK
+          </button>
+        </div>
+      </ion-card-content>
+    </ion-card-content>
+    <span *ngIf="!energySee && energyCard"><button ion-button color="dark" clear icon-right (click)="seeEnergy()">
+      See More
+      <ion-icon name="arrow-dropdown"></ion-icon>
+      </button>
+    </span>
+    <span *ngIf="energySee && energyCard"><button ion-button color="dark" clear icon-right (click)="seeEnergy()">
+      See Less
+      <ion-icon name="arrow-dropup"></ion-icon>
+      </button>
+    </span>
   </ion-card> 
-
+  <!--waist cir-->
   <ion-card style="text-align: center">
     <ion-card-header>
       Waist Circumference
     </ion-card-header>
-    <ion-card-content>
+    <ion-card-content *ngIf="waistCirCard">
       <p>Your waist circumference is on</p>
       <h1>
         <span *ngIf="!waistCircOnRisk"><b style="color:red">HIGH RISK</b></span>
@@ -79,13 +167,16 @@
          of developing cardiovascular diseases and type-2 diabetes.
       </div>
     </ion-card-content>
+    <ion-card-content *ngIf="!waistCirCard">
+      Please have an input in Waist Circumference.
+    </ion-card-content>
   </ion-card>
-
+  <!--waist hip-->
   <ion-card style="text-align: center">
     <ion-card-header>
       Waist Hip Ratio 
     </ion-card-header>
-    <ion-card-content>
+    <ion-card-content *ngIf="whCard">
       <p>Your waist hip ratio is:</p>
       <h1>
         {{ whRatio }}
@@ -95,13 +186,16 @@
         <span *ngIf="!whOnRisk">which may indicate <b style="color:green">LOW RISK</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.</span>
       </div>
     </ion-card-content>
+    <ion-card-content *ngIf="!whCard">
+      Please have an input in Waist Circumference and Hip Circumference.
+    </ion-card-content>
   </ion-card>
-
+  <!--waist height-->
   <ion-card style="text-align: center">
     <ion-card-header>
       Waist Height Ratio 
     </ion-card-header>
-    <ion-card-content>
+    <ion-card-content *ngIf="whgtCard">
       <p>Your waist height ratio is:</p>
       <h1>
         {{ whgtRatio }}
@@ -110,6 +204,9 @@
         <span *ngIf="whgtOnRisk">which may indicate <b style="color:red">HIGH RISK</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.</span>
         <span *ngIf="!whgtOnRisk">which may indicate <b style="color:green">LOW RISK</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.</span>
       </div>
+    </ion-card-content>
+    <ion-card-content *ngIf="!whgtCard">
+      Please have an input in Waist Circumference and Height.
     </ion-card-content>
   </ion-card>
 </ion-content>

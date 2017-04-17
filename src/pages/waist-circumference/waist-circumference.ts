@@ -24,7 +24,8 @@ export class WaistCircumferencePage {
   waistCircum: any = 51;
 
   riskIsLow = false;
-  
+  cutOff : any;
+
   waistCircumValid = false;
   showOutput = false;
 
@@ -67,6 +68,7 @@ export class WaistCircumferencePage {
       if(this.formGroup.get('waistCircum').valid){
         if((this.waistCircum >= 51) && (this.waistCircum <= 180)){
           if(this.gender == "male"){
+            this.cutOff = 94;
             if(this.waistCircum < 94){
               this.riskIsLow = true;
             }
@@ -75,6 +77,7 @@ export class WaistCircumferencePage {
             }
           }
           else if(this.gender == "female"){
+            this.cutOff = 80;
             if(this.waistCircum < 80){
               this.riskIsLow = true;
             }
