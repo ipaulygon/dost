@@ -25,9 +25,9 @@ export class EnergyRequirementPage {
 
   inchSelect = 'Inches';
 
-  physicalActivity: any;
+  physicalActivity: any = "Sedentary";
   physicalActivityDesc: any;
-  physicalActivityValue: number;
+  physicalActivityValue: number = 30;
 
   desirableBodyWeightKg: any;
   desirableBodyWeightLb: any;
