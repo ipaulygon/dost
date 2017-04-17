@@ -318,7 +318,7 @@ export class EnergyRequirementPage {
   }
 
   submit(){
-    var cm: number, ftInch:number, dbwKg_raw:number;
+    var cm: number, ftInch:number, dbwKg_raw:number = 0;
     this.modifyDistribution = false;
 
     if(this.isAdult){
