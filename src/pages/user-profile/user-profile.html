@@ -10,14 +10,18 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>User Profile</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="help()"><ion-icon name="help-circle"></ion-icon></button>
+      <button ion-button (click)="result()" outline>Results</button>
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-  <ion-fab top right edge>
+  <!--<ion-fab top right edge>
     <button ion-fab color="dark" (click)="result()">Results</button>
-  </ion-fab>
+  </ion-fab>-->
 	<form [formGroup]="userProfileForm">
     <ion-item>
       <ion-label>Gender:</ion-label>

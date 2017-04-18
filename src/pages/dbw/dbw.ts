@@ -191,6 +191,7 @@ export class DbwPage {
       height = this.dbwForm.value.noHeight;
     }
     console.log(this.dbwForm.value.birth);
+    console.log(height);
     let age = this.getAge();
     let month = this.getMonth();
     let gender = this.dbwForm.value.gender;
@@ -230,7 +231,7 @@ export class DbwPage {
           }
           this.dbwRange = val[1]+" kg - "+val[5]+" kg";
         });
-      }else if(age>10 && age<19){
+      }else if(age>=10 && age<19){
         this.dbwRange = "";
         this.dbwStatus = "UNDEFINED";
         this.dbwNormal = true;

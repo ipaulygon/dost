@@ -25,9 +25,9 @@ export class EnergyRequirementPage {
 
   inchSelect = 'Inches';
 
-  physicalActivity: any;
+  physicalActivity: any = "Sedentary";
   physicalActivityDesc: any;
-  physicalActivityValue: number;
+  physicalActivityValue: number = 30;
 
   desirableBodyWeightKg: any;
   desirableBodyWeightLb: any;
@@ -320,7 +320,9 @@ export class EnergyRequirementPage {
   submit(){
     var cm: number, ftInch:number, dbwKg_raw:number = 0;
     this.modifyDistribution = false;
-
+    this.carbsPercentage = .65;
+    this.proteinPercentage = .15;
+    this.fatPercentage = .20;
     if(this.isAdult){
       if(((this.formGroup.valid) && (this.adultFormGroup.valid))&&(this.heightValid)){
         if(this.unitMeasureAbbrev == "cm"){
