@@ -47,9 +47,25 @@ $colors: (
 // --------------------------------------------------
 // Material Design only Sass variables can go here
 $toolbar-background: transparent;
+
 $card-wp-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 $card-ios-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 $card-md-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+$card-ios-background-color: white;
+$card-md-background-color: white;
+$card-wp-background-color: white;
+$card-wp-border-radius: 10px;
+$card-ios-border-radius: 10px;
+$card-md-border-radius: 10px;
+
+
+$list-background-color: transparent;
+
+
+/*
+$list-text-color: white;
+$label-text-color: white;
+$select-icon-arrow-color: white;*/
 
 
 
