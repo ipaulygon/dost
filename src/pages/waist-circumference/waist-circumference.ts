@@ -35,7 +35,7 @@ export class WaistCircumferencePage {
       waistCircum: ['', Validators.compose([Validators.required])]
     });
     this.formGroup.get('waistCircum').valueChanges
-		.debounceTime(2000)
+		.debounceTime(1000)
 		.subscribe(data => this.waistCircumChanged());
 
   }

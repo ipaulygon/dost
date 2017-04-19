@@ -9,10 +9,12 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
+    <ion-buttons start>
+      <button ion-button icon-only (click)="help()"><ion-icon name="help-circle"></ion-icon></button>
+    </ion-buttons>  
     <ion-title>User Profile</ion-title>
     <ion-buttons end>
-      <button ion-button icon-only (click)="help()"><ion-icon name="help-circle"></ion-icon></button>
-      <button ion-button (click)="result()" outline>Results</button>
+      <button ion-button (click)="result()">Results</button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
