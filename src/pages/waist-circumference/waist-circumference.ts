@@ -32,7 +32,7 @@ export class WaistCircumferencePage {
   constructor(public alertctrl:AlertController,public formBuilder:FormBuilder,public navCtrl: NavController, public navParams: NavParams) {
     this.formGroup = formBuilder.group({
       gender: ['', Validators.compose([Validators.required])],
-      waistCircum: ['', Validators.compose([Validators.required])]
+      waistCircum: ['', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),Validators.required])]
     });
     this.formGroup.get('waistCircum').valueChanges
 		.debounceTime(1000)

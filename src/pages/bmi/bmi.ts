@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 /*
@@ -24,7 +24,7 @@ export class BmiPage {
   status : any;
   abnormal : boolean = false;
   normal : boolean = false;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public toastCtrl: ToastController, public storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public alertCtrl: AlertController, public storage: Storage) {
     this.bmiForm = formBuilder.group({
         gender: ['M', Validators.compose([Validators.required])],
         birth: ['', Validators.compose([Validators.required])],
@@ -40,6 +40,17 @@ export class BmiPage {
         cmRange: [''],
         ftRange: [''],
     });
+  }
+
+  validate(){
+    if(!this.bmiForm.controls['noHeight'].valid || !this.bmiForm.controls['noHeightFt'].valid || !this.bmiForm.controls['noHeightIn'].valid || !this.bmiForm.controls['noWeight'].valid){
+      let alert = this.alertCtrl.create({
+        title: 'Oops!',
+        subTitle: 'Please enter a valid number',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
   }
 
   kiloChange(){
@@ -68,6 +79,7 @@ export class BmiPage {
     }else{
       this.bmiForm.controls['poundRange'].setValue(this.bmiForm.value.noWeight);
     }
+    this.validate();
     this.submit();
   }
 
@@ -77,6 +89,7 @@ export class BmiPage {
     }else{
       this.bmiForm.controls['ftRange'].setValue(this.bmiForm.value.noHeight);
     }
+    this.validate();
     this.submit();
   }
 

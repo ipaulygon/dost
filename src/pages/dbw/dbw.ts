@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 
 /*
   Generated class for the Dbw page.
@@ -25,7 +25,7 @@ export class DbwPage {
   dbwRange: any;
   dbwStatus: any;
   dbwNormal : boolean;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public storage: Storage, public alertCtrl: AlertController) {
     this.dbwForm = formBuilder.group({
         gender: ['M', Validators.compose([Validators.required])],
         birth: ['', Validators.compose([Validators.required])],
@@ -41,6 +41,17 @@ export class DbwPage {
         cmRange: [''],
         ftRange: [''],
     });
+  }
+
+  validate(){
+    if(!this.dbwForm.controls['noHeight'].valid || !this.dbwForm.controls['noHeightFt'].valid || !this.dbwForm.controls['noHeightIn'].valid || !this.dbwForm.controls['noWeight'].valid){
+      let alert = this.alertCtrl.create({
+        title: 'Oops!',
+        subTitle: 'Please enter a valid number',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
   }
 
   cmChange(){
@@ -69,6 +80,7 @@ export class DbwPage {
     }else{
       this.dbwForm.controls['ftRange'].setValue(this.dbwForm.value.noHeight);
     }
+    this.validate();
     this.submit();
   }
 
@@ -78,6 +90,7 @@ export class DbwPage {
     }else{
       this.dbwForm.controls['poundRange'].setValue(this.dbwForm.value.noWeight);
     }
+    this.validate();
     this.submit();
   }
 
