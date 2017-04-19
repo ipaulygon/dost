@@ -1,4 +1,4 @@
-<ion-header no-border>
+<ion-header no-border no-shadow>
   <ion-navbar>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
@@ -7,31 +7,34 @@
   </ion-navbar>
 </ion-header>
 
-
-<ion-content padding>
-  <form [formGroup]="formGroup">
-    <ion-list>
-      <ion-item padding>
-        <ion-label>Gender:</ion-label>
-          <ion-select [(ngModel)]="gender" name="gender" formControlName="gender" (ionChange) = "genderChanged()">
-            <ion-option value="Male">Male</ion-option>
-            <ion-option value="Female">Female</ion-option>
+<ion-content padding no-lines no-shadow>
+  <ion-card>
+    <form [formGroup]="formGroup">
+      <ion-list>
+        <ion-item>
+          <ion-label>Gender:</ion-label>
+            <ion-select [(ngModel)]="gender" name="gender" formControlName="gender" (ionChange) = "genderChanged()">
+              <ion-option value="Male">Male</ion-option>
+              <ion-option value="Female">Female</ion-option>
+            </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label>Age Range:</ion-label>
+          <ion-select [(ngModel)]="ageRange" name="ageRange" formControlName="ageRange" (ionChange) = "ageRangeChanged()">
+            <ion-option value="1-2">Children, 1-2</ion-option>
+            <ion-option value="3-5">Children, 3-5</ion-option>
+            <ion-option value="6-9">Children, 6-9</ion-option>
+            <ion-option value="10-12">Children, 10-12</ion-option>
+            <ion-option value="13-15">Adolescents, 13-15</ion-option>
+            <ion-option value="16-18">Adolescents, 16-18</ion-option>
+            <ion-option value="19+">Adult, 19 and above</ion-option>
           </ion-select>
-      </ion-item>
-      <ion-item>
-        <ion-label>Age Range:</ion-label>
-        <ion-select [(ngModel)]="ageRange" name="ageRange" formControlName="ageRange" (ionChange) = "ageRangeChanged()">
-          <ion-option value="1-2">Children, 1-2</ion-option>
-          <ion-option value="3-5">Children, 3-5</ion-option>
-          <ion-option value="6-9">Children, 6-9</ion-option>
-          <ion-option value="10-12">Children, 10-12</ion-option>
-          <ion-option value="13-15">Adolescents, 13-15</ion-option>
-          <ion-option value="16-18">Adolescents, 16-18</ion-option>
-          <ion-option value="19+">Adult, 19 and above</ion-option>
-        </ion-select>
-      </ion-item>
-    </ion-list>
-  </form>
+        </ion-item>
+      </ion-list>
+    </form>
+  </ion-card>
+
+  <ion-card>
     <form [formGroup]="adultFormGroup">
       <ion-list *ngIf = "isAdult">
         <ion-item style="text-align: center; overflow: hidden"  text-wrap>
@@ -69,15 +72,17 @@
             <ion-option value="Light">Light</ion-option>
             <ion-option value="Moderate">Moderate</ion-option>
             <ion-option value="Heavy">Very Active</ion-option>
-        </ion-select>
-      </ion-item>
-      <ion-item *ngIf="physicalActivity">
+          </ion-select>
+        </ion-item>
+        <ion-item *ngIf="physicalActivity">
         <p text-wrap>{{physicalActivityDesc}}</p>
-      </ion-item>
-    </ion-list>
-  </form>
+        </ion-item>
+      </ion-list>
+    </form>
+  </ion-card>
+
   <ion-card *ngIf = "showOutput" text-wrap>
-    <ion-card-content style="font-size: 20px; text-align: center; color: white; background-color: #26A69A">
+    <ion-card-content style="font-size: 20px; text-align: center;">
       <div *ngIf = "isAdult" style="text-align: center; color: white">
         <p style="color: white">Your desirable body weight:</p>
         <p style="color: white"><b style="color:green">{{desirableBodyWeightKg}}&ensp;kgs</b>&ensp;-&ensp;<b style="color:green">{{desirableBodyWeightLb}}&ensp;lbs</b></p>
@@ -87,6 +92,7 @@
       <span ><b style="color:green">{{energyRqmt}}&ensp;kcal</b>&ensp;per day as distributed as follows:</span>
     </ion-card-content>
   </ion-card>
+
   <ion-card *ngIf = "showOutput" text-wrap>
     <ion-card-title style="font-size: 20px; text-align: center"><b>Macronutrient Distribution</b></ion-card-title>
     <ion-card-content>
@@ -123,7 +129,7 @@
       <p style="text-align: center" *ngIf="!modifyDistribution" (click) = "modifyDistributionClicked($event)"><em>Click here to modify Macronutrient Distribution.</em></p>
       <div *ngIf="modifyDistribution" style="text-align: center;">
         <p>Total percentage must equal to 100</p><br>
-        <p>Current Total: <b *ngIf= "totalPercentage == 100" style="color: green">{{totalPercentage}}</b><b *ngIf= "totalPercentage != 100" style="color: red">{{totalPercentage}}</b></p><br>
+        <p>Current Total: <b *ngIf= "totalPercentage == 100" style="color: green; font-size: 15px;">{{totalPercentage}}</b><b *ngIf= "totalPercentage != 100" style="color: red; font-size: 15px;">{{totalPercentage}}</b></p><br>
         <button ion-button icon-left (click) = "resetClicked($event)">
           <ion-icon name="refresh"></ion-icon>
             Reset
@@ -135,4 +141,7 @@
       </div>
     </ion-card-content>
   </ion-card>
+
+
+
 </ion-content>
