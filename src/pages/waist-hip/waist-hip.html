@@ -1,5 +1,5 @@
-<ion-header>
-  <ion-navbar color="primary">
+<ion-header no-border>
+  <ion-navbar>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
@@ -9,6 +9,7 @@
 
 
 <ion-content padding>
+  <ion-card>
     <form [formGroup]="waistHipForm">
     <ion-item>
       <ion-label>Gender:</ion-label>
@@ -65,5 +66,6 @@
       <!-- Add card content here! -->
       Your waist-hip ratio is {{ratio}} which may indicate <b>{{ (isOnRisk) ? "HIGHER RISK" : "LOWER RISK" }}</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.
     </ion-card-content>
+  </ion-card>
   </ion-card>
 </ion-content>
