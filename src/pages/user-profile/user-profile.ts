@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MaxValueValidator } from '../../validators/max';
 
 import { ResultsPage } from '../results/results';
 import { HelpPage } from '../help/help';
@@ -47,7 +48,13 @@ export class UserProfilePage {
   		  gender: ['M', Validators.compose([Validators.required])],
         birth: ['', Validators.compose([Validators.required])],
         weight: ['kg', Validators.compose([Validators.required])],
-        noWeight: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),Validators.required])],
+        noWeight: ['0', Validators.compose([
+          Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
+          Validators.required,
+          Validators.minLength(1),
+          Validators.maxLength(3),
+          (this.weightKg) ? MaxValueValidator.isValidKg : MaxValueValidator.isValidLb 
+        ])],
         kiloRange: [''],
         poundRange: [''],
         height: ['cm', Validators.compose([Validators.required])],
@@ -68,8 +75,8 @@ export class UserProfilePage {
   	});
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad UserProfilePage');
+  static maxValue(builder: FormGroup): any{
+    console.log("fuck");
   }
 
   //pass user profile details to result
