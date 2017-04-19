@@ -385,8 +385,6 @@ export class ResultsPage {
     this.carbsPercentage = .65;
     this.proteinPercentage = .15;
     this.fatPercentage = .20;
-
-    let weight = this.weight;
     let height = this.height;
     let age = this.getAge();
     this.age = this.getAge();
