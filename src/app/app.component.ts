@@ -26,12 +26,8 @@ export class MyApp {
   pages: Array<{title: string, component: any}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public storage: Storage) {
-    this.initializeApp();
-    
-    // storage.clear();
-
-    storage.get('wfaF10').then((val) => {
-      if(val==null || val==''){
+    storage.length().then((val)=>{
+      if(val==0){
         storage.set('bmiM0',[10.2,11.1,12.2,13.4,14.8,16.3,18.1]);
         storage.set('bmiM01',[11.3,12.4,13.6,14.9,16.3,17.8,19.4]);
         storage.set('bmiM02',[12.5,13.7,15,16.3,17.8,19.4,21.1]);
@@ -734,6 +730,7 @@ export class MyApp {
         storage.set('wfaF10',[20.3,23.3,27,31.9,38.2,46.9,59.2]);
       }
     });
+    this.initializeApp();
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'User Profile', component: UserProfilePage },
