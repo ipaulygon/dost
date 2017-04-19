@@ -1,4 +1,4 @@
-<ion-header no-border no-shadow>
+<ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
@@ -9,7 +9,7 @@
 
 <ion-content padding no-lines no-shadow>
   <ion-card>
-    <form [formGroup]="formGroup">
+    <form [formGroup]="formGroup" >
       <ion-list>
         <ion-item>
           <ion-label>Gender:</ion-label>
@@ -83,9 +83,9 @@
 
   <ion-card *ngIf = "showOutput" text-wrap>
     <ion-card-content style="font-size: 20px; text-align: center;">
-      <div *ngIf = "isAdult" style="text-align: center; color: white">
-        <p style="color: white">Your desirable body weight:</p>
-        <p style="color: white"><b style="color:green">{{desirableBodyWeightKg}}&ensp;kgs</b>&ensp;-&ensp;<b style="color:green">{{desirableBodyWeightLb}}&ensp;lbs</b></p>
+      <div *ngIf = "isAdult" style="text-align: center;">
+        <p>Your desirable body weight:</p>
+        <p><b style="color:green">{{desirableBodyWeightKg}}&ensp;kgs</b>&ensp;-&ensp;<b style="color:green">{{desirableBodyWeightLb}}&ensp;lbs</b></p>
       </div>
       <span></span>
       <span>You need&ensp; </span>
@@ -129,7 +129,7 @@
       <p style="text-align: center" *ngIf="!modifyDistribution" (click) = "modifyDistributionClicked($event)"><em>Click here to modify Macronutrient Distribution.</em></p>
       <div *ngIf="modifyDistribution" style="text-align: center;">
         <p>Total percentage must equal to 100</p><br>
-        <p>Current Total: <b *ngIf= "totalPercentage == 100" style="color: green; font-size: 15px;">{{totalPercentage}}</b><b *ngIf= "totalPercentage != 100" style="color: red; font-size: 15px;">{{totalPercentage}}</b></p><br>
+        <p style="font-size: 15px;">Current Total: <b *ngIf= "totalPercentage == 100" style="color: green;">{{totalPercentage}}</b><b *ngIf= "totalPercentage != 100" style="color: red;">{{totalPercentage}}</b></p><br>
         <button ion-button icon-left (click) = "resetClicked($event)">
           <ion-icon name="refresh"></ion-icon>
             Reset
