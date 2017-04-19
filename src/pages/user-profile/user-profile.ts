@@ -58,7 +58,7 @@ export class UserProfilePage {
         cmRange: [''],
         ftRange: [''],
         waist: ['cm', Validators.compose([Validators.required])],
-        noWaist: ['51', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),Validators.required])],
+        noWaist: ['51', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),Validators.required,Validators.minLength(1)])],
         hip: ['cm', Validators.compose([Validators.required])],
         noHip: ['51', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),Validators.required])],
         cmWaistRange: [''],
