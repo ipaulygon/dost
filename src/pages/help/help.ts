@@ -18,8 +18,4 @@ export class HelpPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad HelpPage');
   }
-
-  closeModal(){
-    this.navCtrl.pop();
-  }
 }

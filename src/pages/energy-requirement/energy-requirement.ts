@@ -318,7 +318,7 @@ export class EnergyRequirementPage {
   }
 
   submit(){
-    var cm: number, ftInch:number, dbwKg_raw:number = 0;
+    var cm: number, dbwKg_raw:number;
     this.modifyDistribution = false;
     this.carbsPercentage = .65;
     this.proteinPercentage = .15;

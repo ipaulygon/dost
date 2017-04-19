@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ResultsPage } from '../results/results';
@@ -42,7 +42,6 @@ export class UserProfilePage {
               public navParams: NavParams, 
               public formBuilder: FormBuilder, 
               public storage: Storage,
-              public modalCtrl: ModalController,
               public alertCtrl: AlertController) {
   	this.userProfileForm = formBuilder.group({
   		  gender: ['M', Validators.compose([Validators.required])],
@@ -83,14 +82,11 @@ export class UserProfilePage {
       waist: (this.waistCm) ? this.userProfileForm.value.noWaist : this.convertToCm(this.userProfileForm.value.noWaist),
       hip: (this.hipCm) ? this.userProfileForm.value.noHip : this.convertToCm(this.userProfileForm.value.noHip),
     }
-    console.log(results);
-    let modal = this.modalCtrl.create(ResultsPage,results);
-    modal.present();
+    this.navCtrl.push(ResultsPage,results);
   }
 
   help(){
-    let modal = this.modalCtrl.create(HelpPage);
-    modal.present();
+    this.navCtrl.push(HelpPage);
   }
 
   convertToInch(val)
