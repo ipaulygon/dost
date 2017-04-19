@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 /*
@@ -30,18 +30,18 @@ export class WaistHeightPage {
     this.waistHeightForm.controls['noWaist'].setValue(this.waistHeightForm.value.inWaistRange);
   }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public alertCtrl: AlertController) {
   	this.waistHeightForm = formBuilder.group({
         gender: ['male', Validators.compose([Validators.required])],
         height: ['cm', Validators.compose([Validators.required])],
         heightIn: ['in', Validators.compose([Validators.required])],
-        noHeight: ['0', Validators.compose([Validators.pattern('[0-9.]*'),Validators.required])],
-        noHeightFt: ['0', Validators.compose([Validators.pattern('[0-9]*'),Validators.required])],
-        noHeightIn: ['0', Validators.compose([Validators.pattern('[0-9.]*'),Validators.required])],
+        noHeight: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),Validators.required])],
+        noHeightFt: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),Validators.required])],
+        noHeightIn: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),Validators.required])],
         cmRange: [''],
         ftRange: [''],
         waist: ['cm', Validators.compose([Validators.required])],
-        noWaist: ['51', Validators.compose([Validators.required])],
+        noWaist: ['51', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),Validators.required])],
         cmWaistRange: [''],
         inWaistRange: [''],
     });
@@ -49,6 +49,17 @@ export class WaistHeightPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad WaistHeightPage');
+  }
+
+  validate(){
+    if(!this.waistHeightForm.controls['noHeight'].valid || !this.waistHeightForm.controls['noHeightFt'].valid || !this.waistHeightForm.controls['noHeightIn'].valid || !this.waistHeightForm.controls['noWaist'].valid){
+      let alert = this.alertCtrl.create({
+        title: 'Oops!',
+        subTitle: 'Please enter a valid number',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
   }
 
   cmChange(){
@@ -65,6 +76,7 @@ export class WaistHeightPage {
     }else{
       this.waistHeightForm.controls['inWaistRange'].setValue(this.waistHeightForm.value.noWaist);
     }
+    this.validate();
   }
 
   setHeightRange(){
@@ -73,6 +85,7 @@ export class WaistHeightPage {
     }else{
       this.waistHeightForm.controls['ftRange'].setValue(this.waistHeightForm.value.noHeight);
     }
+    this.validate();
   }
 
   waistUnitChange(){

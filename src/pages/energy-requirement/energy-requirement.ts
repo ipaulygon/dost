@@ -82,7 +82,7 @@ export class EnergyRequirementPage {
     });
 
     this.adultFormGroup = formBuilder.group({
-      height: ['',Validators.compose([Validators.required])],
+      height: ['',Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),Validators.required])],
       physicalActivity: ['',Validators.compose([Validators.required])],
       ft: ['']
    });

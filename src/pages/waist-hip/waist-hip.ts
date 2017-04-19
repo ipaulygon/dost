@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 /*
@@ -25,13 +25,13 @@ export class WaistHipPage {
   isOnRisk : boolean = true;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public toastCtrl: ToastController,) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public alertCtrl: AlertController) {
     this.waistHipForm = formBuilder.group({
     	gender: ['male', Validators.compose([Validators.required])],
         waist: ['cm', Validators.compose([Validators.required])],
-        noWaist: ['51', Validators.compose([Validators.required])],
+        noWaist: ['51', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),Validators.required])],
         hip: ['cm', Validators.compose([Validators.required])],
-        noHip: ['51', Validators.compose([Validators.required])],
+        noHip: ['51', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),Validators.required])],
         cmWaistRange: [''],
         inWaistRange: [''],
         cmHipRange: [''],
@@ -41,6 +41,17 @@ export class WaistHipPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad WaistHipPage');
+  }
+
+  validate(){
+    if(!this.waistHipForm.controls['noWaist'].valid || !this.waistHipForm.controls['noHip'].valid){
+      let alert = this.alertCtrl.create({
+        title: 'Oops!',
+        subTitle: 'Please enter a valid number',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
   }
 
   cmWaistChange(){
@@ -65,6 +76,7 @@ export class WaistHipPage {
     }else{
       this.waistHipForm.controls['inWaistRange'].setValue(this.waistHipForm.value.noWaist);
     }
+    this.validate();
   }
 
   setHipRange(){
@@ -73,6 +85,7 @@ export class WaistHipPage {
     }else{
       this.waistHipForm.controls['inHipRange'].setValue(this.waistHipForm.value.noHip);
     }
+    this.validate();
   }
 
   getRatio()
