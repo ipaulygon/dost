@@ -8,7 +8,7 @@
 </ion-header>
 
 
-<ion-content padding class="container">
+<ion-content padding no-lines class="container">
   <ion-card>
     <form [formGroup]="bmiForm">
       <ion-item>
@@ -20,7 +20,7 @@
       </ion-item>
       <ion-item>
         <ion-label>Date of Birth</ion-label>
-        <ion-datetime (ionChange)="submit()" displayFormat="MMMM DD, YYYY" formControlName="birth"></ion-datetime>
+        <ion-datetime (ionChange)="submit()" displayFormat="MMMM DD, YYYY" formControlName="birth" placeholder="MMMM-DD-YYYY"></ion-datetime>
       </ion-item>
       <ion-item>
         <ion-range (ionChange)="kiloChange()" *ngIf="kilo" formControlName="kiloRange" min="0" max="635" pin="true" color="dark" >
