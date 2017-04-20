@@ -71,7 +71,7 @@
         </ion-select>
       </ion-item>
       <ion-item *ngIf="ft">
-        <ion-input (blur)="submit()" maxlength="{{maxLengthHeightIn}}" type="number" formControlName="noHeightIn"></ion-input>
+        <ion-input maxlength="{{maxLengthHeightIn}}" type="number" formControlName="noHeightIn"></ion-input>
         <ion-select formControlName="heightIn" disabled>
           <ion-option value="in">Inches</ion-option>
         </ion-select>
