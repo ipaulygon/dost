@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MaxValueValidator } from '../../validators/max';
+
+import { MaxValidator } from '../../validators/max';
 
 import { ResultsPage } from '../results/results';
 import { HelpPage } from '../help/help';
@@ -38,6 +39,12 @@ export class UserProfilePage {
   bmiStatus: string;
   waistHeightRatio;
   waistHeightStatus: boolean;
+  maxLengthWeight: number =  5;
+  maxLengthHeightCm: number = 5;
+  maxLengthHeightFt: number = 1;
+  maxLengthHeightIn: number = 5;
+  maxLengthHip: number = 6;
+  maxLengthWaist: number = 6;
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
@@ -48,26 +55,44 @@ export class UserProfilePage {
   		  gender: ['M', Validators.compose([Validators.required])],
         birth: ['', Validators.compose([Validators.required])],
         weight: ['kg', Validators.compose([Validators.required])],
-        noWeight: ['0', Validators.compose([
-          Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
+        noWeight: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
           Validators.required,
-          Validators.minLength(1),
-          Validators.maxLength(3),
-          (this.weightKg) ? MaxValueValidator.isValidKg : MaxValueValidator.isValidLb 
+          Validators.maxLength(5),
+          MaxValidator.maxValueKg
         ])],
-        kiloRange: [''],
+        kiloRange: [''],  
         poundRange: [''],
         height: ['cm', Validators.compose([Validators.required])],
         heightIn: ['in', Validators.compose([Validators.required])],
-        noHeight: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),Validators.required])],
-        noHeightFt: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),Validators.required])],
-        noHeightIn: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),Validators.required])],
+        noHeight: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
+          Validators.required,
+          Validators.maxLength(5),
+          MaxValidator.maxValueHeightCm
+        ])],
+        noHeightFt: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
+          Validators.required,
+          Validators.maxLength(1),
+          MaxValidator.maxValueHeightFt
+        ])],
+        noHeightIn: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
+          Validators.required,
+          Validators.maxLength(1),
+          MaxValidator.maxValueHeightIn
+        ])],
         cmRange: [''],
         ftRange: [''],
         waist: ['cm', Validators.compose([Validators.required])],
-        noWaist: ['51', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),Validators.required,Validators.minLength(1)])],
+        noWaist: ['51', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
+          Validators.required,
+          Validators.maxLength(6),
+          MaxValidator.maxValueWaistCm
+        ])],
         hip: ['cm', Validators.compose([Validators.required])],
-        noHip: ['51', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),Validators.required])],
+        noHip: ['51', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
+          Validators.required,
+          Validators.maxLength(6),
+          MaxValidator.maxValueHipCm
+        ])],
         cmWaistRange: [''],
         inWaistRange: [''],
         cmHipRange: [''],
@@ -75,8 +100,8 @@ export class UserProfilePage {
   	});
   }
 
-  static maxValue(builder: FormGroup): any{
-    console.log("fuck");
+  ionViewDidLoad() {
+    console.log('ionViewDidLoad UserProfilePage');
   }
 
   //pass user profile details to result
@@ -94,6 +119,15 @@ export class UserProfilePage {
 
   help(){
     this.navCtrl.push(HelpPage);
+  }
+
+  numberError(){
+    let alert = this.alertCtrl.create({
+      title: 'Oops!',
+      subTitle: 'Please enter a valid number',
+      buttons: ['OK']
+    });
+    alert.present();
   }
 
   convertToInch(val)
@@ -163,7 +197,12 @@ export class UserProfilePage {
       if(!this.waistCm){
         this.waistCm = true;
         this.waistIn = false;
-        // this.userProfileForm.controls['hip'].setValue('cm');
+        this.maxLengthWaist = 6;
+        this.userProfileForm.controls["noWaist"].setValidators([Validators.required,
+          Validators.pattern('^[0-9]+(\.[0-9]{2})?$'), 
+          Validators.maxLength(6),
+          MaxValidator.maxValueWaistCm
+        ]);
         let inConv = this.convertToCm(this.userProfileForm.value.noWaist);
         this.userProfileForm.controls['noWaist'].setValue(inConv);
         this.userProfileForm.controls['cmWaistRange'].setValue(inConv);
@@ -172,7 +211,12 @@ export class UserProfilePage {
       if(!this.waistIn){
         this.waistCm = false;
         this.waistIn = true;
-        // this.userProfileForm.controls['hip'].setValue('in');
+        this.maxLengthWaist = 5;
+        this.userProfileForm.controls["noWaist"].setValidators([Validators.required,
+          Validators.pattern('^[0-9]+(\.[0-9]{2})?$'), 
+          Validators.maxLength(5),
+          MaxValidator.maxValueWaistIn
+        ]);
         let cmConv = this.convertToInch(this.userProfileForm.value.noWaist);
         this.userProfileForm.controls['noWaist'].setValue(cmConv);
         this.userProfileForm.controls['inWaistRange'].setValue(cmConv);
@@ -185,7 +229,12 @@ export class UserProfilePage {
       if(!this.hipCm){
         this.hipCm = true;
         this.hipIn = false;
-
+        this.maxLengthHip = 6;
+        this.userProfileForm.controls["noHip"].setValidators([Validators.required,
+          Validators.pattern('^[0-9]+(\.[0-9]{2})?$'), 
+          Validators.maxLength(6),
+          MaxValidator.maxValueHipCm
+        ]);
         let cmConv = this.convertToCm(this.userProfileForm.value.noHip);
         this.userProfileForm.controls['noHip'].setValue(cmConv);
         this.userProfileForm.controls['cmHipRange'].setValue(cmConv);
@@ -194,7 +243,12 @@ export class UserProfilePage {
       if(!this.hipIn){
         this.hipCm = false;
         this.hipIn = true;
-
+        this.maxLengthHip = 5;
+        this.userProfileForm.controls["noHip"].setValidators([Validators.required,
+          Validators.pattern('^[0-9]+(\.[0-9]{2})?$'), 
+          Validators.maxLength(5),
+          MaxValidator.maxValueHipIn
+        ]);
         let inConv = this.convertToInch(this.userProfileForm.value.noHip);
         this.userProfileForm.controls['noHip'].setValue(inConv);
         this.userProfileForm.controls['inHipRange'].setValue(inConv);
@@ -207,7 +261,12 @@ export class UserProfilePage {
       if(!this.weightKg){
         this.weightKg = true;
         this.weightLb = false;
-        // this.userProfileForm.controls['hip'].setValue('cm');
+        this.maxLengthWeight = 5;
+        this.userProfileForm.controls["noWeight"].setValidators([Validators.required,
+          Validators.pattern('^[0-9]+(\.[0-9]{2})?$'), 
+          Validators.maxLength(5),
+          MaxValidator.maxValueKg
+        ]);
         let conv = this.convertToKg(this.userProfileForm.value.noWeight);
         this.userProfileForm.controls['noWeight'].setValue(conv);
         this.userProfileForm.controls['kiloRange'].setValue(conv);
@@ -216,7 +275,12 @@ export class UserProfilePage {
       if(!this.weightLb){
         this.weightKg = false;
         this.weightLb = true;
-        // this.userProfileForm.controls['hip'].setValue('in');
+        this.maxLengthWeight = 6;
+        this.userProfileForm.controls["noWeight"].setValidators([Validators.required,
+          Validators.pattern('^[0-9]+(\.[0-9]{2})?$'), 
+          Validators.maxLength(6),
+          MaxValidator.maxValueLb
+        ]);
         let conv = this.convertToLb(this.userProfileForm.value.noWeight);
         this.userProfileForm.controls['noWeight'].setValue(conv);
         this.userProfileForm.controls['poundRange'].setValue(conv);
