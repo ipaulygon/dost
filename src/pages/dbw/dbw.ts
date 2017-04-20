@@ -232,8 +232,6 @@ export class DbwPage {
         }else{
           height = this.dbwForm.value.noHeight;
         }
-        console.log(this.dbwForm.value.birth);
-        console.log(height);
         let age = this.getAge();
         let month = this.getMonth();
         let gender = this.dbwForm.value.gender;

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { MaxValidator } from '../../validators/max';
@@ -39,25 +39,70 @@ export class UserProfilePage {
   bmiStatus: string;
   waistHeightRatio;
   waistHeightStatus: boolean;
-  maxLengthWeight: number =  5;
-  maxLengthHeightCm: number = 5;
-  maxLengthHeightFt: number = 1;
+  maxLengthWeight: number =  6;
+  maxLengthHeight: number = 6;
   maxLengthHeightIn: number = 5;
   maxLengthHip: number = 6;
   maxLengthWaist: number = 6;
+  loadTimeout: boolean = false;
+  formErrors = {
+    'noWeight': [],
+    'noHeight': [],
+    'noHeightIn': [],
+    'noWaist': [],
+    'noHip': [],
+  };
 
+  validationMessages = {
+    'noWeight': {
+      'required': 'Weight is required.',
+      'maxlength': 'Weight cannot be more than '+ this.maxLengthWeight +' characters long.',
+      'pattern': 'Weight must contain only valid values.',
+      'exceed': 'Weight must not exceed the range values.',
+      'less': 'Weight must not be less than 0.'
+    },
+    'noHeight': {
+      'required': 'Height is required.',
+      'maxlength': 'Height cannot be more than '+ this.maxLengthHeight +' characters long.',
+      'pattern': 'Height must contain only valid values.',
+      'exceed': 'Height must not exceed the range values.',
+      'less': 'Height must not be less than 0.'
+    },
+    'noHeightIn': {
+      'required': 'Height Inches is required.',
+      'maxlength': 'Height Inches cannot be more than 5 characters long.',
+      'pattern': 'Height Inches must contain only valid values.',
+      'exceed': 'Height Inches must not exceed the range values.',
+      'less': 'Height Inches must not be less than 0.'
+    },
+    'noWaist': {
+      'required': 'Waist is required.',
+      'maxlength': 'Waist cannot be more than '+ this.maxLengthWaist +' characters long.',
+      'pattern': 'Waist must contain only valid values.',
+      'exceed': 'Waist must not exceed the range values.',
+      'less': 'Waist must not be less than the range values.'
+    },
+    'noHip': {
+      'required': 'Hip is required.',
+      'maxlength': 'Hip cannot be more than '+ this.maxLengthHip +' characters long.',
+      'pattern': 'Hip must contain only valid values.',
+      'exceed': 'Hip must not exceed the range values.',
+      'less': 'Hip must not be less than the range values.'
+    },
+  }
   constructor(public navCtrl: NavController, 
               public navParams: NavParams, 
               public formBuilder: FormBuilder, 
               public storage: Storage,
-              public alertCtrl: AlertController) {
+              public alertCtrl: AlertController,
+              public loadingCtrl: LoadingController) {
   	this.userProfileForm = formBuilder.group({
   		  gender: ['M', Validators.compose([Validators.required])],
         birth: ['', Validators.compose([Validators.required])],
         weight: ['kg', Validators.compose([Validators.required])],
         noWeight: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
           Validators.required,
-          Validators.maxLength(5),
+          Validators.maxLength(6),
           MaxValidator.maxValueKg
         ])],
         kiloRange: [''],  
@@ -66,17 +111,12 @@ export class UserProfilePage {
         heightIn: ['in', Validators.compose([Validators.required])],
         noHeight: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
           Validators.required,
-          Validators.maxLength(5),
+          Validators.maxLength(6),
           MaxValidator.maxValueHeightCm
-        ])],
-        noHeightFt: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
-          Validators.required,
-          Validators.maxLength(1),
-          MaxValidator.maxValueHeightFt
         ])],
         noHeightIn: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
           Validators.required,
-          Validators.maxLength(1),
+          Validators.maxLength(5),
           MaxValidator.maxValueHeightIn
         ])],
         cmRange: [''],
@@ -98,10 +138,31 @@ export class UserProfilePage {
         cmHipRange: [''],
         inHipRange: [''], 
   	});
+    this.userProfileForm.valueChanges
+		.debounceTime(100)
+		.subscribe(data => this.onValueChanged(data));
   }
 
   ionViewDidLoad() {
+    this.loadTimeout = true;
     console.log('ionViewDidLoad UserProfilePage');
+  }
+
+  onValueChanged(data?: any) {
+    if (!this.userProfileForm) { return; }
+    const form = this.userProfileForm;
+    for (const field in this.formErrors) {
+      // clear previous error message
+      this.formErrors[field] = [];
+      this.userProfileForm[field] = '';
+      const control = form.get(field);
+      if (control && control.dirty && !control.valid) {
+        const messages = this.validationMessages[field];
+        for (const key in control.errors) {
+          this.formErrors[field].push(messages[key]);
+        }
+      }
+    }
   }
 
   //pass user profile details to result
@@ -261,10 +322,10 @@ export class UserProfilePage {
       if(!this.weightKg){
         this.weightKg = true;
         this.weightLb = false;
-        this.maxLengthWeight = 5;
-        this.userProfileForm.controls["noWeight"].setValidators([Validators.required,
+        this.maxLengthWeight = 6;
+        this.userProfileForm.controls['noWeight'].setValidators([Validators.required,
           Validators.pattern('^[0-9]+(\.[0-9]{2})?$'), 
-          Validators.maxLength(5),
+          Validators.maxLength(6),
           MaxValidator.maxValueKg
         ]);
         let conv = this.convertToKg(this.userProfileForm.value.noWeight);
@@ -275,10 +336,10 @@ export class UserProfilePage {
       if(!this.weightLb){
         this.weightKg = false;
         this.weightLb = true;
-        this.maxLengthWeight = 6;
-        this.userProfileForm.controls["noWeight"].setValidators([Validators.required,
+        this.maxLengthWeight = 7;
+        this.userProfileForm.controls['noWeight'].setValidators([Validators.required,
           Validators.pattern('^[0-9]+(\.[0-9]{2})?$'), 
-          Validators.maxLength(6),
+          Validators.maxLength(7),
           MaxValidator.maxValueLb
         ]);
         let conv = this.convertToLb(this.userProfileForm.value.noWeight);
@@ -315,6 +376,12 @@ export class UserProfilePage {
   heightTypeChange(){
     if(this.userProfileForm.value.height=="cm"){
       if(!this.cm){
+        this.maxLengthHeight = 6;
+        this.userProfileForm.controls['noHeight'].setValidators([Validators.required,
+          Validators.pattern('^[0-9]+(\.[0-9]{2})?$'), 
+          Validators.maxLength(6),
+          MaxValidator.maxValueHeightCm
+        ]);
         let feet = this.userProfileForm.value.noHeight*12;
         let inch = this.userProfileForm.value.noHeightIn;
         if(inch=='' || inch==null){
@@ -328,6 +395,12 @@ export class UserProfilePage {
       this.cm = true;
       this.ft = false;
     }else{
+      this.maxLengthHeight = 1;
+      this.userProfileForm.controls['noHeight'].setValidators([Validators.required,
+        Validators.pattern('^[0-9]+(\.[0-9]{2})?$'), 
+        Validators.maxLength(1),
+        MaxValidator.maxValueHeightFt
+      ]);
       if(!this.ft && this.userProfileForm.value.noHeight!=0){
         let computedHeight = Math.round((this.userProfileForm.value.noHeight/2.54)*100)/100;
         let toInch = Math.round((computedHeight/12)*100)/100;

@@ -21,6 +21,7 @@
  
 <ion-content padding>
     <form [formGroup]="userProfileForm">
+      <!--gender-->
       <ion-card>
         <ion-item>
           <ion-label>Gender:</ion-label>
@@ -30,12 +31,14 @@
           </ion-select>
         </ion-item>
       </ion-card>
+      <!--birth-->
       <ion-card>
         <ion-item>
           <ion-label>Date of Birth</ion-label>
           <ion-datetime displayFormat="MMMM DD, YYYY" formControlName="birth" placeholder="MMMM-DD-YYYY"></ion-datetime>
         </ion-item>
       </ion-card>
+      <!--weight-->
       <ion-card>
         <ion-item>
           <ion-label>Weight:</ion-label>
@@ -55,7 +58,13 @@
             <ion-option value="lb">Pound</ion-option>
           </ion-select>
         </ion-item>
+        <div *ngIf="formErrors.noWeight">
+          <div style="text-align:center" *ngFor="let errors of formErrors.noWeight" >
+            <p style="font-style:italic;color:red">{{errors}}<p>
+          </div>
+        </div>
       </ion-card>
+      <!--height-->
       <ion-card>
         <ion-item>
           <ion-range (ionChange)="cmHeightChange()" *ngIf="cm" formControlName="cmRange" min="0" max="275" pin="true" color="dark" >
@@ -82,7 +91,18 @@
             <ion-option value="in">Inches</ion-option>
           </ion-select>
         </ion-item>
+        <div *ngIf="formErrors.noHeight">
+          <div style="text-align:center" *ngFor="let errors of formErrors.noHeight" >
+            <p style="font-style:italic;color:red">{{errors}}<p>
+          </div>
+        </div>
+        <div *ngIf="formErrors.noHeightIn">
+          <div style="text-align:center" *ngFor="let errors of formErrors.noHeightIn" >
+            <p style="font-style:italic;color:red">{{errors}}<p>
+          </div>
+        </div>
       </ion-card>
+      <!--waist-->
       <ion-card>
         <ion-item>
           <ion-label>Waist Circumference:</ion-label>
@@ -102,7 +122,13 @@
             <ion-option value="in">Inches</ion-option>
           </ion-select>
         </ion-item>
+        <div *ngIf="formErrors.noWaist">
+          <div style="text-align:center" *ngFor="let errors of formErrors.noWaist" >
+            <p style="font-style:italic;color:red">{{errors}}<p>
+          </div>
+        </div>
       </ion-card>
+      <!--hip-->
       <ion-card>
         <ion-item>
           <ion-label>Hip Circumference:</ion-label>
@@ -122,6 +148,11 @@
             <ion-option value="in">Inches</ion-option>
           </ion-select>
         </ion-item>
+        <div *ngIf="formErrors.noHip">
+          <div style="text-align:center" *ngFor="let errors of formErrors.noHip" >
+            <p style="font-style:italic;color:red">{{errors}}<p>
+          </div>
+        </div>
       </ion-card> 
     </form>
 </ion-content>
