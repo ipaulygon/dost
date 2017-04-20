@@ -69,9 +69,11 @@
     <br>
     <ion-card style="text-align: center; background-color: #009688; color: white">
       <ion-card-content style="font-size: 16px">
-        {{message}}<br>
-        <span *ngIf="abnormal">Classified as <b style="color:red">{{status}}</b></span>
-        <span *ngIf="normal">Classified as <b style="color: #B2EBF2">{{status}}</b></span>
+        {{message}}
+        <p *ngIf="classification">
+          <span *ngIf="abnormal">Classified as <b style="color:red">{{status}}</b></span>
+          <span *ngIf="normal">Classified as <b style="color: #B2EBF2">{{status}}</b></span>
+        </p>
       </ion-card-content>
     </ion-card>
   </ion-card>  

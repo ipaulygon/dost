@@ -71,13 +71,12 @@
             Desirable Body Weight
           </ion-card-header>
           <ion-card-content>
-            <h1>{{dbw}}</h1>
-            <p>Maintain your weight between these values <br>{{dbwRange}}</p>
-            <h3>
-              Classified as
-              <span *ngIf="!dbwNormal"><b style="color:red">{{dbwStatus}}</b></span>
-              <span *ngIf="dbwNormal"><b style="color:green">{{dbwStatus}}</b></span>  
-            </h3> 
+            <h1 *ngIf="classification">{{dbw}}</h1>
+            <div *ngIf="classification">Maintain your weight between these values<br>{{dbwRange}}</div>
+            <div *ngIf="classification">
+              <span *ngIf="!dbwNormal">Classified as <b style="color:red">{{dbwStatus}}</b></span>
+              <span *ngIf="dbwNormal">Classified as <b style="color:green">{{dbwStatus}}</b></span>  
+            </div> 
           </ion-card-content>
         </ion-card> 
     </ion-card>

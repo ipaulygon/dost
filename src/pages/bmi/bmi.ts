@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MaxValidator } from '../../validators/max';
 
 /*
   Generated class for the Bmi page.
@@ -24,19 +25,36 @@ export class BmiPage {
   status : any;
   abnormal : boolean = false;
   normal : boolean = false;
+  classification: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public alertCtrl: AlertController, public storage: Storage) {
     this.bmiForm = formBuilder.group({
         gender: ['M', Validators.compose([Validators.required])],
         birth: ['', Validators.compose([Validators.required])],
         weight: ['kg', Validators.compose([Validators.required])],
-        noWeight: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),Validators.required])],
+        noWeight: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
+          Validators.required,
+          Validators.maxLength(5),
+          MaxValidator.maxValueKg
+        ])],
         kiloRange: [''],
         poundRange: [''],
         height: ['cm', Validators.compose([Validators.required])],
         heightIn: ['in', Validators.compose([Validators.required])],
-        noHeight: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),Validators.required])],
-        noHeightFt: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),Validators.required])],
-        noHeightIn: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),Validators.required])],
+        noHeight: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
+          Validators.required,
+          Validators.maxLength(5),
+          MaxValidator.maxValueHeightCm
+        ])],
+        noHeightFt: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
+          Validators.required,
+          Validators.maxLength(1),
+          MaxValidator.maxValueHeightFt
+        ])],
+        noHeightIn: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
+          Validators.required,
+          Validators.maxLength(1),
+          MaxValidator.maxValueHeightIn
+        ])],
         cmRange: [''],
         ftRange: [''],
     });
@@ -96,7 +114,11 @@ export class BmiPage {
   weightTypeChange(){
     if(this.bmiForm.value.weight=="kg"){
       if(!this.kilo){
-        //ommit 0.99999999
+        this.bmiForm.controls["noWeight"].setValidators([Validators.required,
+          Validators.pattern('^[0-9]+(\.[0-9]{2})?$'), 
+          Validators.maxLength(5),
+          MaxValidator.maxValueKg
+        ]);
         let convertedWeight = Math.round((this.bmiForm.value.noWeight/2.2)*10)/10;
         this.bmiForm.controls['noWeight'].setValue(convertedWeight);
         this.bmiForm.controls['kiloRange'].setValue(convertedWeight);
@@ -105,7 +127,11 @@ export class BmiPage {
       this.pound = false;
     }else{
       if(!this.pound){
-        //ommit 0.99999999
+        this.bmiForm.controls["noWeight"].setValidators([Validators.required,
+          Validators.pattern('^[0-9]+(\.[0-9]{2})?$'), 
+          Validators.maxLength(6),
+          MaxValidator.maxValueLb
+        ]);
         let convertedWeight = Math.round((this.bmiForm.value.noWeight*2.2)*10)/10;
         this.bmiForm.controls['noWeight'].setValue(convertedWeight);
         this.bmiForm.controls['poundRange'].setValue(convertedWeight);
@@ -184,6 +210,7 @@ export class BmiPage {
   submit(){
     if(this.bmiForm.valid){
       if(this.bmiForm.value.noWeight!=0 && this.bmiForm.value.noHeight!=0 && this.bmiForm.value.birthDate!=0){
+        this.classification = true;
         let weight = 0;
         let height = 0;
         if(!this.kilo){
@@ -210,7 +237,7 @@ export class BmiPage {
         let gender = this.bmiForm.value.gender;
         //start BMI
         let bmi = Math.round((weight/(height*height))*100)/100;
-        this.message = "Your BMI is " + bmi + "kg/m²";
+        this.message = "Your BMI is " + bmi + " kg/m²";
         if(age<=18 && month>0){
           this.storage.get('bmi'+gender+age.toString()+month.toString()).then((val)=>{
             if(bmi<val[0]){
@@ -250,6 +277,10 @@ export class BmiPage {
             this.abnormal = true; this.normal = false; this.status = "OBESE";
           }
         }
+      }
+      else{
+        this.classification = false;
+        this.message = "Please complete the following inputs to compute your BMI";
       }
     }
   }

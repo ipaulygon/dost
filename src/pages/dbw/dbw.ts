@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { MaxValidator } from '../../validators/max';
 
 /*
   Generated class for the Dbw page.
@@ -25,19 +26,36 @@ export class DbwPage {
   dbwRange: any;
   dbwStatus: any;
   dbwNormal : boolean;
+  classification: boolean = false;
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public storage: Storage, public alertCtrl: AlertController) {
     this.dbwForm = formBuilder.group({
         gender: ['M', Validators.compose([Validators.required])],
         birth: ['', Validators.compose([Validators.required])],
         weight: ['kg', Validators.compose([Validators.required])],
-        noWeight: ['0', Validators.compose([Validators.pattern('[0-9.]*'),Validators.required])],
+        noWeight: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
+          Validators.required,
+          Validators.maxLength(5),
+          MaxValidator.maxValueKg
+        ])],
         kiloRange: [''],
         poundRange: [''],
         height: ['cm', Validators.compose([Validators.required])],
         heightIn: ['in', Validators.compose([Validators.required])],
-        noHeight: ['0', Validators.compose([Validators.pattern('[0-9.]*'),Validators.required])],
-        noHeightFt: ['0', Validators.compose([Validators.pattern('[0-9]*'),Validators.required])],
-        noHeightIn: ['0', Validators.compose([Validators.pattern('[0-9.]*'),Validators.required])],
+        noHeight: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
+          Validators.required,
+          Validators.maxLength(5),
+          MaxValidator.maxValueHeightCm
+        ])],
+        noHeightFt: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
+          Validators.required,
+          Validators.maxLength(1),
+          MaxValidator.maxValueHeightFt
+        ])],
+        noHeightIn: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
+          Validators.required,
+          Validators.maxLength(1),
+          MaxValidator.maxValueHeightIn
+        ])],
         cmRange: [''],
         ftRange: [''],
     });
@@ -131,7 +149,11 @@ export class DbwPage {
   weightTypeChange(){
     if(this.dbwForm.value.weight=="kg"){
       if(!this.kilo){
-        //ommit 0.99999999
+        this.dbwForm.controls["noWeight"].setValidators([Validators.required,
+          Validators.pattern('^[0-9]+(\.[0-9]{2})?$'), 
+          Validators.maxLength(5),
+          MaxValidator.maxValueKg
+        ]);
         let convertedWeight = Math.round((this.dbwForm.value.noWeight/2.2)*10)/10;
         this.dbwForm.controls['noWeight'].setValue(convertedWeight);
         this.dbwForm.controls['kiloRange'].setValue(convertedWeight);
@@ -140,7 +162,11 @@ export class DbwPage {
       this.pound = false;
     }else{
       if(!this.pound){
-        //ommit 0.99999999
+        this.dbwForm.controls["noWeight"].setValidators([Validators.required,
+          Validators.pattern('^[0-9]+(\.[0-9]{2})?$'), 
+          Validators.maxLength(6),
+          MaxValidator.maxValueLb
+        ]);
         let convertedWeight = Math.round((this.dbwForm.value.noWeight*2.2)*10)/10;
         this.dbwForm.controls['noWeight'].setValue(convertedWeight);
         this.dbwForm.controls['poundRange'].setValue(convertedWeight);
@@ -183,84 +209,93 @@ export class DbwPage {
   }
 
   submit(){
-    this.age = this.getAge();
-    let weight = 0;
-    let height = 0;
-    if(!this.kilo){
-      weight = Math.round((this.dbwForm.value.noWeight/2.2)*100)/100;
-    }else{
-      weight = this.dbwForm.value.noWeight;
-    }
-    //end of weight
-    if(this.ft){
-      let feet = this.dbwForm.value.noHeight*12;
-      let inch = this.dbwForm.value.noHeightIn;
-      if(inch=='' || inch==null){
-        inch = 0;
-      }
-      let toInch = eval(feet+"+"+inch);
-      height = Math.round((toInch*2.54)*100)/100;
-    }else{
-      height = this.dbwForm.value.noHeight;
-    }
-    console.log(this.dbwForm.value.birth);
-    console.log(height);
-    let age = this.getAge();
-    let month = this.getMonth();
-    let gender = this.dbwForm.value.gender;
-    let p = Math.round(((height-100)*.1)*100)/100;
-    let dbw = parseInt((Math.round(((height-100)-(p))*100)/100).toFixed(2));
-    let dbwCut = dbw*0.1;
-    let dbwMin = dbw-dbwCut;
-    let dbwMax = dbw+dbwCut;
-    if(height!=0 && this.dbwForm.value.birth!=''){
-      if(age<10 && month>0){
-        this.storage.get('wfa'+gender+age.toString()+month.toString()).then((val)=>{
-          if(weight<=val[0]){
-            this.dbwNormal = false; this.dbwStatus = "SEVERELY WASTED";
-          }else if(weight>val[0] && weight<val[1]){
-            this.dbwNormal = false; this.dbwStatus = "WASTED";
-          }else if(weight>=val[1] && weight<=val[5]){
-            this.dbwNormal = true; this.dbwStatus = "NORMAL";
-          }else if(weight>val[5] && weight<val[6]){
-            this.dbwNormal = false; this.dbwStatus = "OVERWEIGHT";
-          }else if(weight>=val[6]){
-            this.dbwNormal = false; this.dbwStatus = "OBESE";
-          }
-          this.dbwRange = val[1]+" kg - "+val[5]+" kg";
-        });
-      }else if(age<=10 && month==0){
-        this.storage.get('wfa'+gender+age.toString()).then((val)=>{
-          if(weight<=val[0]){
-            this.dbwNormal = false; this.dbwStatus = "SEVERELY WASTED";
-          }else if(weight>val[0] && weight<val[1]){
-            this.dbwNormal = false; this.dbwStatus = "WASTED";
-          }else if(weight>=val[1] && weight<=val[5]){
-            this.dbwNormal = true; this.dbwStatus = "NORMAL";
-          }else if(weight>val[5] && weight<val[6]){
-            this.dbwNormal = false; this.dbwStatus = "OVERWEIGHT";
-          }else if(weight>=val[6]){
-            this.dbwNormal = false; this.dbwStatus = "OBESE";
-          }
-          this.dbwRange = val[1]+" kg - "+val[5]+" kg";
-        });
-      }else if(age>=10 && age<19){
-        this.dbwRange = "";
-        this.dbwStatus = "UNDEFINED";
-        this.dbwNormal = true;
-      }else{
-        this.dbw = "Your desirable body weight is " + dbw + " kg";
-        this.dbwRange = dbwMin+" kg - "+dbwMax+" kg";
-        if(weight>=dbwMin && weight<=dbwMax){
-          this.dbwNormal = true;
-          this.dbwStatus = "NORMAL";
-        }else if(weight<dbwMin){
-          this.dbwNormal = false;
-          this.dbwStatus = "UNDERWEIGHT";
-        }else if(weight>dbwMax){
-          this.dbwNormal = false;
-          this.dbwStatus = "OVERWEIGHT";
+    if(this.dbwForm.valid){
+      if(this.dbwForm.value.noWeight!=0 && this.dbwForm.value.noHeight!=0 && this.dbwForm.value.birthDate!=0){
+        this.classification = true;
+        this.age = this.getAge();
+        let weight = 0;
+        let height = 0;
+        if(!this.kilo){
+          weight = Math.round((this.dbwForm.value.noWeight/2.2)*100)/100;
+        }else{
+          weight = this.dbwForm.value.noWeight;
         }
+        //end of weight
+        if(this.ft){
+          let feet = this.dbwForm.value.noHeight*12;
+          let inch = this.dbwForm.value.noHeightIn;
+          if(inch=='' || inch==null){
+            inch = 0;
+          }
+          let toInch = eval(feet+"+"+inch);
+          height = Math.round((toInch*2.54)*100)/100;
+        }else{
+          height = this.dbwForm.value.noHeight;
+        }
+        console.log(this.dbwForm.value.birth);
+        console.log(height);
+        let age = this.getAge();
+        let month = this.getMonth();
+        let gender = this.dbwForm.value.gender;
+        let p = Math.round(((height-100)*.1)*100)/100;
+        let dbw = parseInt((Math.round(((height-100)-(p))*100)/100).toFixed(2));
+        let dbwCut = dbw*0.1;
+        let dbwMin = dbw-dbwCut;
+        let dbwMax = dbw+dbwCut;
+        if(height!=0 && this.dbwForm.value.birth!=''){
+          if(age<10 && month>0){
+            this.storage.get('wfa'+gender+age.toString()+month.toString()).then((val)=>{
+              if(weight<=val[0]){
+                this.dbwNormal = false; this.dbwStatus = "SEVERELY WASTED";
+              }else if(weight>val[0] && weight<val[1]){
+                this.dbwNormal = false; this.dbwStatus = "WASTED";
+              }else if(weight>=val[1] && weight<=val[5]){
+                this.dbwNormal = true; this.dbwStatus = "NORMAL";
+              }else if(weight>val[5] && weight<val[6]){
+                this.dbwNormal = false; this.dbwStatus = "OVERWEIGHT";
+              }else if(weight>=val[6]){
+                this.dbwNormal = false; this.dbwStatus = "OBESE";
+              }
+              this.dbwRange = val[1]+" kg - "+val[5]+" kg";
+            });
+          }else if(age<=10 && month==0){
+            this.storage.get('wfa'+gender+age.toString()).then((val)=>{
+              if(weight<=val[0]){
+                this.dbwNormal = false; this.dbwStatus = "SEVERELY WASTED";
+              }else if(weight>val[0] && weight<val[1]){
+                this.dbwNormal = false; this.dbwStatus = "WASTED";
+              }else if(weight>=val[1] && weight<=val[5]){
+                this.dbwNormal = true; this.dbwStatus = "NORMAL";
+              }else if(weight>val[5] && weight<val[6]){
+                this.dbwNormal = false; this.dbwStatus = "OVERWEIGHT";
+              }else if(weight>=val[6]){
+                this.dbwNormal = false; this.dbwStatus = "OBESE";
+              }
+              this.dbwRange = val[1]+" kg - "+val[5]+" kg";
+            });
+          }else if(age>=10 && age<19){
+            this.dbwRange = "";
+            this.dbwStatus = "UNDEFINED";
+            this.dbwNormal = true;
+          }else{
+            this.dbw = "Your desirable body weight is " + dbw + " kg";
+            this.dbwRange = dbwMin+" kg - "+dbwMax+" kg";
+            if(weight>=dbwMin && weight<=dbwMax){
+              this.dbwNormal = true;
+              this.dbwStatus = "NORMAL";
+            }else if(weight<dbwMin){
+              this.dbwNormal = false;
+              this.dbwStatus = "UNDERWEIGHT";
+            }else if(weight>dbwMax){
+              this.dbwNormal = false;
+              this.dbwStatus = "OVERWEIGHT";
+            }
+          }
+        }
+      }
+      else{
+        this.classification = false;
+        this.message = "Please complete the following inputs to compute your BMI";
       }
     }
   }
