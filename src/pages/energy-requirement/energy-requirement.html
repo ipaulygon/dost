@@ -8,140 +8,87 @@
 </ion-header>
 
 <ion-content padding no-lines no-shadow>
-  <ion-card>
-    <form [formGroup]="formGroup" >
-      <ion-list>
-        <ion-item>
-          <ion-label>Gender:</ion-label>
-            <ion-select [(ngModel)]="gender" name="gender" formControlName="gender" (ionChange) = "genderChanged()">
-              <ion-option value="Male">Male</ion-option>
-              <ion-option value="Female">Female</ion-option>
-            </ion-select>
-        </ion-item>
-        <ion-item>
-          <ion-label>Age Range:</ion-label>
-          <ion-select [(ngModel)]="ageRange" name="ageRange" formControlName="ageRange" (ionChange) = "ageRangeChanged()">
-            <ion-option value="1-2">Children, 1-2</ion-option>
-            <ion-option value="3-5">Children, 3-5</ion-option>
-            <ion-option value="6-9">Children, 6-9</ion-option>
-            <ion-option value="10-12">Children, 10-12</ion-option>
-            <ion-option value="13-15">Adolescents, 13-15</ion-option>
-            <ion-option value="16-18">Adolescents, 16-18</ion-option>
-            <ion-option value="19+">Adult, 19 and above</ion-option>
-          </ion-select>
-        </ion-item>
-      </ion-list>
-    </form>
-  </ion-card>
-
-  <ion-card>
-    <form [formGroup]="adultFormGroup">
-      <ion-list *ngIf = "isAdult">
-        <ion-item style="text-align: center; overflow: hidden"  text-wrap>
-          <p><em>Enter your <strong>height</strong> or move the slider and select your <strong>physical activity</strong></em></p>
-        </ion-item>
-        <ion-item>
-          <ion-label>Height:</ion-label>
-          <ion-range *ngIf="unitMeasureAbbrev == 'cm'" [(ngModel)]="height" (ionChange) = "heightChanged()" name="height" pin="true" color="dark" min="{{heightMin}}" max="{{heightMax}}" [ngModelOptions]="{standalone: true}" step="0.01">
-            <ion-label name="heightMin" range-left>{{heightMin}}&ensp;{{unitMeasureAbbrev}}</ion-label>
-            <ion-label name="heightMax" range-right>{{heightMax}}&ensp;{{unitMeasureAbbrev}}</ion-label>
-          </ion-range>
-          <ion-range *ngIf="unitMeasureAbbrev == 'ft'" [(ngModel)]="ft" (ionChange) = "heightChanged()" name="ft" pin="true" color="dark" min="{{heightMin}}" max="{{heightMax}}" [ngModelOptions]="{standalone: true}">
-            <ion-label name="heightMin" range-left>{{heightMin}}&ensp;{{unitMeasureAbbrev}}</ion-label>
-            <ion-label name="heightMax" range-right>{{heightMax}}&ensp;{{unitMeasureAbbrev}}</ion-label>
-          </ion-range>
-        </ion-item>
-        <ion-item>
-          <ion-input type="number" *ngIf="unitMeasureAbbrev == 'cm'" [(ngModel)]="height" formControlName="height" step="0.01" minlength="{{inputMinLength}}" maxlength="{{inputMaxLength}}"></ion-input>
-          <ion-input type="number" *ngIf="unitMeasureAbbrev == 'ft'" [(ngModel)]="ft" formControlName="ft" maxlength="{{inputMaxLength}}"></ion-input>
-          <ion-select [(ngModel)] = "unitMeasure" name="unitMeasure" (ionChange)="unitChanged()" [ngModelOptions]="{standalone: true}">
-            <ion-option value ="Centimeters">Centimeters</ion-option>
-            <ion-option value ="Feet" >Feet</ion-option>
-          </ion-select>
-        </ion-item>
-        <ion-item *ngIf="unitMeasureAbbrev == 'ft'">
-          <ion-input type="number" [(ngModel)]="in" minlength="{{inputMinLengthInch}}" maxlength="{{inputMaxLengthInch}}" [formControl]="inControl"></ion-input>
-          <ion-select disabled color="dark" [(ngModel)] = "inchSelect" [ngModelOptions]="{standalone: true}">
-            <ion-option value ="Inches">Inches</ion-option>
-          </ion-select>
-        </ion-item>
-        <ion-item>
-          <ion-label>Physical activity:</ion-label>
-          <ion-select [(ngModel)]="physicalActivity" name="physicalActivity" formControlName="physicalActivity" (ionChange) = "physicalActivityChanged()">
-            <ion-option value="Sedentary">Sedentary</ion-option>
-            <ion-option value="Light">Light</ion-option>
-            <ion-option value="Moderate">Moderate</ion-option>
-            <ion-option value="Heavy">Very Active</ion-option>
-          </ion-select>
-        </ion-item>
-        <ion-item *ngIf="physicalActivity">
-        <p text-wrap>{{physicalActivityDesc}}</p>
-        </ion-item>
-      </ion-list>
-    </form>
-  </ion-card>
-
-  <ion-card *ngIf = "showOutput" text-wrap>
-    <ion-card-content style="font-size: 20px; text-align: center;">
-      <div *ngIf = "isAdult" style="text-align: center;">
-        <p>Your desirable body weight:</p>
-        <p><b style="color:green">{{desirableBodyWeightKg}}&ensp;kgs</b>&ensp;-&ensp;<b style="color:green">{{desirableBodyWeightLb}}&ensp;lbs</b></p>
+  <form [formGroup]="energyForm">
+    <!--gender-->
+    <ion-card>
+      <ion-item>
+        <ion-label>Gender:</ion-label>
+        <ion-select formControlName="gender">
+          <ion-option value="M">Male</ion-option>
+          <ion-option value="F">Female</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-card>
+    <!--age-->
+    <ion-card>
+      <ion-item>
+        <ion-label>Age Range:</ion-label>
+        <ion-select formControlName="ageRange">
+          <ion-option value="1">Children, 1-2</ion-option>
+          <ion-option value="2">Children, 3-5</ion-option>
+          <ion-option value="3">Children, 6-9</ion-option>
+          <ion-option value="4">Children, 10-12</ion-option>
+          <ion-option value="5">Adolescents, 13-15</ion-option>
+          <ion-option value="6">Adolescents, 16-18</ion-option>
+          <ion-option value="7">Adult, 19 and above</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-card>
+    <!--height-->
+    <ion-card *ngIf="energyForm.value.ageRange==7">
+      <ion-item>
+        <ion-range (ionChange)="cmHeightChange()" *ngIf="cm" formControlName="cmRange" min="0" max="275" pin="true" color="dark" >
+          <ion-label range-left>0 cm</ion-label>
+          <ion-label range-right>275 cm</ion-label>
+        </ion-range>
+        <ion-range (ionChange)="ftHeightChange()" *ngIf="ft" formControlName="ftRange" min="0" max="9" pin="true" color="dark" >
+          <ion-label range-left>0 ft</ion-label>
+          <ion-label range-right>9 ft</ion-label>
+        </ion-range>
+        <ion-label>Height:</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-input (blur)="setHeightRange()" maxlength="{{maxLengthHeightCm}}" *ngIf="cm" type="number" formControlName="noHeight"></ion-input>
+        <ion-input (blur)="setHeightRange()" maxlength="{{maxLengthHeightFt}}" *ngIf="ft" type="number" formControlName="noHeight"></ion-input>
+        <ion-select (ionChange)="heightTypeChange()" formControlName="height">
+          <ion-option value="cm">Centimeters</ion-option>
+          <ion-option value="ft">Feet</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="ft">
+        <ion-input maxlength="{{maxLengthHeightIn}}" type="number" formControlName="noHeightIn"></ion-input>
+        <ion-select formControlName="heightIn" disabled>
+          <ion-option value="in">Inches</ion-option>
+        </ion-select>
+      </ion-item>
+      <div *ngIf="formErrors.noHeight">
+        <div style="text-align:center" *ngFor="let errors of formErrors.noHeight" >
+          <p style="font-style:italic;color:red">{{errors}}<p>
+        </div>
       </div>
-      <span></span>
-      <span>You need&ensp; </span>
-      <span ><b style="color:green">{{energyRqmt}}&ensp;kcal</b>&ensp;per day as distributed as follows:</span>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card *ngIf = "showOutput" text-wrap>
-    <ion-card-title style="font-size: 20px; text-align: center"><b>Macronutrient Distribution</b></ion-card-title>
-    <ion-card-content>
-      <ion-card>
-        <ion-card-content style="background-color: #FFEB3B; color: black">
-          <span style="font-size: 20px;">Carbohydrates: {{carbsPercentage}}%</span><br>
-          <span style="font-size: 15px; text-align: center">{{carbsGrams}} grams</span>
-          <ion-range *ngIf="modifyDistribution" [(ngModel)]= "carbsPercentage" (ionChange) = "calculateDistribution()" pin="true" color="dark" min="{{minCarbs}}" max="{{maxCarbs}}" [ngModelOptions]="{standalone: true}">
-            <ion-label range-left>{{minCarbs}}%</ion-label>
-            <ion-label range-right>{{maxCarbs}}%</ion-label>
-          </ion-range>
-        </ion-card-content>
-      </ion-card>
-      <ion-card>
-        <ion-card-content style="background-color: #FF9800; color: black">
-          <span style="font-size: 20px;">Protein: {{proteinPercentage}}%</span><br>
-          <span style="font-size: 15px; text-align: center">{{proteinGrams}} grams</span>
-          <ion-range *ngIf="modifyDistribution" [(ngModel)]= "proteinPercentage" (ionChange) = "calculateDistribution()" pin="true" color="dark" min="{{minProtein}}" max="{{maxProtein}}" [ngModelOptions]="{standalone: true}">
-            <ion-label range-left>{{minProtein}}%</ion-label>
-            <ion-label range-right>{{maxProtein}}%</ion-label>
-          </ion-range>
-        </ion-card-content>
-      </ion-card>
-      <ion-card>
-        <ion-card-content style="background-color: #03A9F4; color: black">
-          <span style="font-size: 20px;">Fat: {{fatPercentage}}%</span><br>
-          <span style="font-size: 15px; text-align: center">{{fatGrams}} grams</span>
-          <ion-range *ngIf="modifyDistribution" [(ngModel)]= "fatPercentage" (ionChange) = "calculateDistribution()" pin="true" color="dark" min="{{minFat}}" max="{{maxFat}}" [ngModelOptions]="{standalone: true}">
-            <ion-label range-left>{{minFat}}%</ion-label>
-            <ion-label range-right>{{maxFat}}%</ion-label>
-          </ion-range>
-        </ion-card-content>
-      </ion-card>
-      <p style="text-align: center" *ngIf="!modifyDistribution" (click) = "modifyDistributionClicked($event)"><em>Click here to modify Macronutrient Distribution.</em></p>
-      <div *ngIf="modifyDistribution" style="text-align: center;">
-        <p>Total percentage must equal to 100</p><br>
-        <p style="font-size: 15px;">Current Total: <b *ngIf= "totalPercentage == 100" style="color: green;">{{totalPercentage}}</b><b *ngIf= "totalPercentage != 100" style="color: red;">{{totalPercentage}}</b></p><br>
-        <button ion-button icon-left (click) = "resetClicked($event)">
-          <ion-icon name="refresh"></ion-icon>
-            Reset
-        </button>
-        <button ion-button icon-left (click) = "okClicked($event)">
-          <ion-icon name="checkmark"></ion-icon>
-            OK
-        </button>
+      <div *ngIf="formErrors.noHeightIn">
+        <div style="text-align:center" *ngFor="let errors of formErrors.noHeightIn" >
+          <p style="font-style:italic;color:red">{{errors}}<p>
+        </div>
       </div>
-    </ion-card-content>
-  </ion-card>
-
-
-
+      <ion-item>
+        <ion-label>Physical activity:</ion-label>
+        <ion-select formControlName="activity">
+          <ion-option value="30">Sedentary</ion-option>
+          <ion-option value="35">Light</ion-option>
+          <ion-option value="40">Moderate</ion-option>
+          <ion-option value="45">Very Active</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-card>
+    <!--result-->
+    <ion-card style="text-align: center; background-color: #009688; color: white">
+      <ion-card-content *ngIf="!result" style="font-size: 16px">
+        {{message}}
+      </ion-card-content>
+      <ion-card-content *ngIf="result" style="font-size: 16px">
+        You need <b style="color:green">{{kcal}} kcal</b> a day!
+      </ion-card-content>
+    </ion-card>
+  </form>
 </ion-content>

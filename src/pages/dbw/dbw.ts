@@ -258,6 +258,7 @@ export class DbwPage {
     this.age = this.getAge();
     if(this.age<19){
       this.heightCard = false;
+      this.cm = true;
       this.dbwForm.controls['noHeight'].setValue(1);
       this.dbwForm.controls['noHeightIn'].setValue(0);
       this.dbwForm.controls['cmRange'].setValue(0)

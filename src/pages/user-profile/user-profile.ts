@@ -167,15 +167,6 @@ export class UserProfilePage {
     this.navCtrl.push(HelpPage);
   }
 
-  numberError(){
-    let alert = this.alertCtrl.create({
-      title: 'Oops!',
-      subTitle: 'Please enter a valid number',
-      buttons: ['OK']
-    });
-    alert.present();
-  }
-
   convertToInch(val)
   {
     return Math.round(eval(val+'/'+2.54)*100)/100;

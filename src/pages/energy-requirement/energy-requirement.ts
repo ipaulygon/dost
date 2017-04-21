@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import 'rxjs/add/operator/debounceTime';
+import { NavController, NavParams } from 'ionic-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MaxValidator } from '../../validators/max';
 
 @Component({
   selector: 'page-energy-requirement',
@@ -9,477 +9,227 @@ import 'rxjs/add/operator/debounceTime';
 })
 export class EnergyRequirementPage {
 
-  gender:any = "Male";
-  ageRange:any = "--Age Group--";
-
-  height: number = 122;
-  heightMin: any = 122;
-  heightMax: any = 243;
-  unitMeasure: any = "Centimeters";
-  unitMeasureAbbrev:any = 'cm';
-
-  ft:number = 4;
-  in:number = 0;
-
-  energyRqmt: number;
-
-  inchSelect = 'Inches';
-
-  physicalActivity: any = "Sedentary";
-  physicalActivityDesc: any;
-  physicalActivityValue: number = 30;
-
-  desirableBodyWeightKg: any;
-  desirableBodyWeightLb: any;
-
-  formGroup: FormGroup;
-  adultFormGroup: FormGroup;
-
-  isAdult = false;
-  showOutput = false;
-  heightValid = false;
-
-  inputMinLength = 3;
-  inputMaxLength = 6;
-  inputMinLengthInch=0;
-  inputMaxLengthInch=2;
-
-  inControl: FormControl;
-
-  carbsPercentage: number = .65;
-  proteinPercentage: number = .15;
-  fatPercentage: number = .20;
-
-  carbsPercentageDefault: number = .65;
-  proteinPercentageDefault: number = .15;
-  fatPercentageDefault: number = .20;
-
-  /*newCarbsPercentage: number = .65;
-  newProteinPercentage: number = .15;
-  newFatPercentage: number = .20;*/
-
-  carbsGrams: number;
-  proteinGrams: number;
-  fatGrams: number;
-
-  minProtein: number;
-  maxProtein: number;
-  minCarbs: number;
-  maxCarbs: number;
-  minFat: number;
-  maxFat: number;
-
-  modifyDistribution = true;
-
-  totalPercentage: number;
-
+  energyForm: FormGroup;
+  //units
+  cm: boolean = true;
+	ft: boolean;
+  maxLengthHeight: number = 6;
+  maxLengthHeightIn: number = 5;
+  //energy
+  minProtein: number = 6;
+  maxProtein: number = 15;
+  minFat: number = 25;
+  maxFat: number = 35;
+  minCarb: number = 50;
+  maxCarb: number = 69;
+  //output
+  result: boolean = true;
+  kcal: number =  620;
+  message : string = "Please complete the following inputs to compute your Energy Requirement";
+  formErrors = {
+    'noWeight': [],
+    'noHeight': [],
+    'noHeightIn': [],
+    'noWaist': [],
+    'noHip': [],
+  };
+  validationMessages = {
+    'noHeight': {
+      'required': 'Height is required.',
+      'maxlength': 'Height cannot be more than '+ this.maxLengthHeight +' characters long.',
+      'pattern': 'Height must contain only valid values.',
+      'exceed': 'Height must not exceed the range values.',
+      'less': 'Height must not be less than 0.'
+    },
+    'noHeightIn': {
+      'required': 'Height Inches is required.',
+      'maxlength': 'Height Inches cannot be more than 5 characters long.',
+      'pattern': 'Height Inches must contain only valid values.',
+      'exceed': 'Height Inches must not exceed the range values.',
+      'less': 'Height Inches must not be less than 0.'
+    },
+  }
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-              public formBuilder:FormBuilder, public toastCtrl:ToastController,
-              public alertCtrl:AlertController) {
-    this.formGroup = formBuilder.group({
-      gender: ['', Validators.compose([Validators.required])],
-      ageRange: ['', Validators.compose([Validators.required])]
+              public formBuilder:FormBuilder) {
+    this.energyForm = formBuilder.group({
+      gender: ['M', Validators.compose([Validators.required])],
+      ageRange: ['1', Validators.compose([Validators.required])],
+      activity: ['30', Validators.compose([Validators.required])],
+      height: ['cm', Validators.compose([Validators.required])],
+      heightIn: ['in', Validators.compose([Validators.required])],
+      noHeight: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
+        Validators.required,
+        Validators.maxLength(6),
+        MaxValidator.maxValueHeightCm
+      ])],
+      noHeightIn: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
+        Validators.required,
+        Validators.maxLength(5),
+        MaxValidator.maxValueHeightIn
+      ])],
+      cmRange: [''],
+      ftRange: [''],
     });
+    this.energyForm.valueChanges
+		.debounceTime(100)
+		.subscribe(data => this.onValueChanged(data));
+    this.energyForm.valueChanges
+		.debounceTime(100)
+		.subscribe(data => this.submit());
+  }
 
-    this.adultFormGroup = formBuilder.group({
-      height: ['',Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),Validators.required])],
-      physicalActivity: ['',Validators.compose([Validators.required])],
-      ft: ['']
-   });
-
-   	this.adultFormGroup.get('height').valueChanges
-		.debounceTime(2000)
-		.subscribe(data => this.heightChanged());
-
-    this.adultFormGroup.get('ft').valueChanges
-		.debounceTime(2000)
-		.subscribe(data => this.heightChanged());
-
-    this.inControl = new FormControl();
-    this.inControl.valueChanges
-    .debounceTime(2000)
-    .subscribe(data => this.heightChanged());
- 
+  onValueChanged(data?: any) {
+    if (!this.energyForm) { return; }
+    const form = this.energyForm;
+    for (const field in this.formErrors) {
+      // clear previous error message
+      this.formErrors[field] = [];
+      this.energyForm[field] = '';
+      const control = form.get(field);
+      if (control && control.dirty && !control.valid) {
+        const messages = this.validationMessages[field];
+        for (const key in control.errors) {
+          this.formErrors[field].push(messages[key]);
+        }
+      }
+    }
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EnergyRequirementPage');
   }
 
-  genderChanged(){
-    this.showOutput = false;
-    this.ageRangeChanged();
+  cmHeightChange(){
+    this.energyForm.controls['noHeight'].setValue(this.energyForm.value.cmRange);
   }
 
-  ageRangeChanged(){
-    this.showOutput = false;
-
-    if(this.ageRange =="1-2"){
-      this.minProtein = 6;
-      this.maxProtein = 15;
-
-      this.minFat = 20;
-      this.maxFat = 35;
- 
-      this.minCarbs = 50;
-      this.maxCarbs= 69;
-    }
-    else if(this.ageRange =="19+"){
-      this.minProtein = 10;
-      this.maxProtein = 15;
-
-      this.minFat = 15;
-      this.maxFat = 30;
- 
-      this.minCarbs = 55;
-      this.maxCarbs = 75;
-    }
-    else{
-      this.minProtein = 6;
-      this.maxProtein = 15;
-
-      this.minFat = 15;
-      this.maxFat = 30;
- 
-      this.minCarbs = 55;
-      this.maxCarbs = 79;
-    }
-
-    if(this.ageRange == "19+"){
-      this.showOutput = false;
-      this.isAdult = true;
-    }
-    else{
-      this.isAdult = false;
-    }
-
-    this.carbsPercentage = this.carbsPercentageDefault;
-    this.proteinPercentage = this.proteinPercentageDefault;
-    this.fatPercentage = this.fatPercentageDefault;
-    this.submit();
+  ftHeightChange(){
+    this.energyForm.controls['noHeight'].setValue(this.energyForm.value.ftRange);
   }
 
-  unitChanged(){
-    
-    this.showOutput = false;
-    if(this.unitMeasure == 'Centimeters'){
-      let inch = 0;
-      this.heightMin = 122;
-      this.heightMax = 243;
-      this.unitMeasureAbbrev = 'cm';
-      //this.height = parseFloat((this.height / 0.032808).toFixed(2));
-      inch = this.ft * 12;
-      let inc = parseInt((inch).toString()) + parseInt((this.in).toString())
-      let cm =  inc * 2.54;
-      cm = parseFloat((cm).toFixed(2));
-      this.height = cm;
-      console.log(inch + " " + cm + " " + this.height + " " + this.in+ " " + inc);
-      this.inputMinLength = 3;
-      this.inputMaxLength = 6;
+  setHeightRange(){
+    if(this.energyForm.value.height=="cm"){
+      this.energyForm.controls['cmRange'].setValue(this.energyForm.value.noHeight);
+    }else{
+      this.energyForm.controls['ftRange'].setValue(this.energyForm.value.noHeight);
     }
-    else if(this.unitMeasure == 'Feet'){
-      this.heightMin = 4;
-      this.heightMax = 8;
-      this.unitMeasureAbbrev = 'ft';
-      let inc = this.height/2.54;
-      let ft = parseInt((inc/12).toString());
-      this.ft = ft;
-      this.in = parseInt((inc % 12).toFixed(0));
-      console.log(ft + " " + inc + " " + this.in);
-      //let height = parseFloat((this.height *  0.032808).toFixed(2));
-     // let upperLower = height.toString().split('.');
-     // this.ft = parseFloat(upperLower[0]);
-      //this.in = parseFloat(upperLower[1]);
-      this.inputMinLength = 1;
-      this.inputMaxLength = 1;
-      this.inputMinLengthInch = 1;
-      this.inputMaxLengthInch = 1;
-
-      //console.log(height+" "+ upperLower+" "+upperLower[0]+" "+upperLower[1]);
-    }
-    this.heightChanged();
-  }//end of unitChanged
-
-  heightChanged(){
-    var message:string;
-    this.heightValid = false;
-    this.showOutput = false;
-
-    if(this.unitMeasure == "Centimeters"){
-      if(this.adultFormGroup.get('height').valid){
-        if((Number(this.height) > 121) && (Number(this.height) < 243.7)){
-          this.heightValid = true;
-        }
-        else{
-          this.heightValid = false;
-        }
-      }
-      else{
-        this.heightValid = false;
-      }
-      message = "Please enter a valid number greater than 121.9 cm but less than 243.8 cm or a number with atleast 2 decimal places.";
-    }
-    else if(this.unitMeasure == "Feet"){
-      if(!(Number.isNaN(this.ft))){
-          if((Number(this.ft) > 3) && (Number(this.ft) < 9)){
-            if(this.in != 0){
-              if((Number(this.in) > 0) && (Number(this.in) < 12)){
-                this.heightValid = true;
-              }
-              else{
-                this.heightValid = false;
-                message = "Please enter a valid number greater than less than 12in.";
-              }
-            }
-            else{
-              this.heightValid = true;
-            }
-          }
-          else{
-            this.heightValid = false;
-            message = "Please enter a valid number greater than 3ft but less than 9ft";
-          }
-        }
-        else{
-          this.heightValid = false;
-          message = "Please enter a valid number greater than 3ft but less than 9ft";
-        }
-    }
-/*
-    if(this.adultFormGroup.get('height').valid){
-      if(this.unitMeasure == "Centimeters"){
-        if((Number(this.height) > 121) && (Number(this.height) < 243.7)){
-          this.heightValid = true;
-        }
-        else{
-          this.heightValid = false;
-        }
-      }
-      else if(this.unitMeasure == "Feet"){
-        if((this.adultFormGroup.get('ft').valid) && (Math.ceil((this.ft)) === this.ft)){
-          if((Number(this.ft) > 3) && (Number(this.ft) < 9)){
-            if(this.in != 0){
-              if((Number(this.in) >= 0) && (Number(this.in) < 12)){
-                this.heightValid = true;
-              }
-            }
-            else{
-              this.heightValid = true;
-            }
-          }
-          else{
-            this.heightValid = false;
-          }
-        }
-        else{
-          this.heightValid = false;
-        }
-      }
-    }
-    else{
-      this.heightValid = false;
-    }*/
-
-    if(this.heightValid == false){
-      let alert = this.alertCtrl.create({
-      message: message,
-      buttons: 
-      [{
-          text: 'Ok',
-          handler: data => {
-          }
-        }]
-    });
-      alert.present();
-    }
-
-    this.submit();
-  }//end of height changed
-
-  physicalActivityChanged(){
-    if(this.physicalActivity == "Sedentary"){
-      this.physicalActivityDesc = "Driving, computer work, ironing, cooking; sits and stands most of the day;" +
-                    "rarely gets any physical activity during the whole day.";
-      this.physicalActivityValue = 30;
-    }
-    else if (this.physicalActivity == "Light"){
-      this.physicalActivityDesc = "Child care, garage work, electrical trades exercises or walks 3-5 times per week at a slow pace of 2.5 - 3 mph for less than 30 minutes per session.";
-      this.physicalActivityValue = 35;
   }
-    else if (this.physicalActivity == "Moderate"){
-      this.physicalActivityDesc = "Heavy housework, yard work, carrying a load, cycling, tennis, dancing; exercises or walks 3.5 - 4 mph for one hour 3-5 times per week.";
-      this.physicalActivityValue = 40;
-   }
-    else if (this.physicalActivity == "Heavy"){
-      this.physicalActivityDesc = "Heavy manual labor such as construction work, digging, climbing, carrying a load uphill, professional sports; exercises 3-5 times per week for 1 1/2 hours per session.";
-      this.physicalActivityValue = 45;
+
+  heightTypeChange(){
+    if(this.energyForm.value.height=="cm"){
+      if(!this.cm){
+        this.maxLengthHeight = 6;
+        this.energyForm.controls['noHeight'].setValidators([Validators.required,
+          Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'), 
+          Validators.maxLength(6),
+          MaxValidator.maxValueHeightCm
+        ]);
+        let feet = this.energyForm.value.noHeight*12;
+        let inch = this.energyForm.value.noHeightIn;
+        if(inch=='' || inch==null){
+          inch = 0;
+        }
+        let toInch = eval(feet+"+"+inch);
+        let cm = Math.round((toInch*2.54)*100)/100;
+        this.energyForm.controls['noHeight'].setValue(cm);
+        this.energyForm.controls['cmRange'].setValue(cm);
+      }
+      this.cm = true;
+      this.ft = false;
+    }else{
+      this.maxLengthHeight = 1;
+      this.energyForm.controls['noHeight'].setValidators([Validators.required,
+        Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'), 
+        Validators.maxLength(1),
+        MaxValidator.maxValueHeightFt
+      ]);
+      if(!this.ft && this.energyForm.value.noHeight!=0){
+        let computedHeight = Math.round((this.energyForm.value.noHeight/2.54)*100)/100;
+        let toInch = Math.round((computedHeight/12)*100)/100;
+        let height = toInch.toString().split(".");
+        if(height[1]=="" || height[1]==null){
+          height[1] = "0";
+        }
+        let feet = height[0];
+        let inch = Math.round((eval(("0."+height[1])+"*"+12))*100)/100;
+        this.energyForm.controls['noHeight'].setValue(feet);
+        this.energyForm.controls['noHeightIn'].setValue(inch);
+        this.energyForm.controls['ftRange'].setValue(feet);
+      }
+      this.cm = false;
+      this.ft = true;
     }
-    this.submit();
   }
 
   submit(){
-    var cm: number, dbwKg_raw:number;
-    this.modifyDistribution = false;
-    this.carbsPercentage = .65;
-    this.proteinPercentage = .15;
-    this.fatPercentage = .20;
-    if(this.isAdult){
-      if(((this.formGroup.valid) && (this.adultFormGroup.valid))&&(this.heightValid)){
-        if(this.unitMeasureAbbrev == "cm"){
-          dbwKg_raw = parseFloat(((this.height - 100)-((this.height - 100)*0.1)).toFixed(3));
-          this.desirableBodyWeightKg = dbwKg_raw.toFixed(1);
-          this.desirableBodyWeightLb = (dbwKg_raw * 2.2).toFixed(1);
-          this.energyRqmt = dbwKg_raw * this.physicalActivityValue;
-        }
-        else if(this.unitMeasureAbbrev == "ft"){
-          if(this.in != 0){
-            let inch = this.ft * 12;
-            let inc = parseInt((inch).toString()) + parseInt((this.in).toString())
-            cm =  inc * 2.54;
-            cm = parseFloat((cm).toFixed(2));
-            //cm = parseFloat((ftInch /  0.032808).toFixed(3));
+    if(this.energyForm.valid){
+      this.result = true;
+      if(this.energyForm.value.ageRange==1){
+        this.kcal = (this.energyForm.value.gender=='M') ? 1000 : 920;
+        this.minProtein = 6; this.maxProtein = 15;
+        this.minFat = 25; this.maxFat = 35;
+        this.minCarb = 50; this.maxCarb = 69;
+      }else if(this.energyForm.value.ageRange==2){
+        this.kcal = (this.energyForm.value.gender=='M') ? 1350 : 1260;
+        this.minProtein = 6; this.maxProtein = 15;
+        this.minFat = 15; this.maxFat = 30;
+        this.minCarb = 55; this.maxCarb = 79;
+      }else if(this.energyForm.value.ageRange==3){
+        this.kcal = (this.energyForm.value.gender=='M') ? 1600 : 1470;
+        this.minProtein = 6; this.maxProtein = 15;
+        this.minFat = 15; this.maxFat = 30;
+        this.minCarb = 55; this.maxCarb = 79;
+      }else if(this.energyForm.value.ageRange==4){
+        this.kcal = (this.energyForm.value.gender=='M') ? 2060 : 1980;
+        this.minProtein = 6; this.maxProtein = 15;
+        this.minFat = 15; this.maxFat = 30;
+        this.minCarb = 55; this.maxCarb = 79;
+      }else if(this.energyForm.value.ageRange==5){
+        this.kcal = (this.energyForm.value.gender=='M') ? 2700 : 2170;
+        this.minProtein = 6; this.maxProtein = 15;
+        this.minFat = 15; this.maxFat = 30;
+        this.minCarb = 55; this.maxCarb = 79;
+      }else if(this.energyForm.value.ageRange==6){
+        this.kcal = (this.energyForm.value.gender=='M') ? 3010 : 630;
+        this.minProtein = 6; this.maxProtein = 15;
+        this.minFat = 15; this.maxFat = 30;
+        this.minCarb = 55; this.maxCarb = 79;
+      }else{
+        this.minProtein = 10; this.maxProtein = 15;
+        this.minFat = 15; this.maxFat = 30;
+        this.minCarb = 55; this.maxCarb = 75;
+        this.result = (this.energyForm.value.noHeight!=0) ? true : false;
+        if(this.result){
+          let height = 0;
+          if(this.ft){
+            let feet = this.energyForm.value.noHeight*12;
+            let inch = this.energyForm.value.noHeightIn;
+            if(inch=='' || inch==null){
+              inch = 0;
+            }
+            let toInch = eval(feet+"+"+inch);
+            height = Math.round((toInch*2.54)*100)/100;
+          }else{
+            height = this.energyForm.value.noHeight;
           }
-          else{
-            let inch = this.ft * 12;
-            let inc = parseInt((inch).toString()) + parseInt((this.in).toString())
-            cm =  inc * 2.54;
-            cm = parseFloat((cm).toFixed(2));
-            //cm = parseFloat((this.ft /  0.032808).toFixed(3));
+          let activity = this.energyForm.value.activity;
+          let p = Math.round(((height-100)*.1)*100)/100;
+          let dbw = parseInt((Math.round(((height-100)-(p))*100)/100).toFixed(2));
+          let kcal = dbw*activity;
+          if(kcal % 50 < 25){
+            kcal -= (kcal % 50);
           }
-          dbwKg_raw = parseFloat(((cm - 100)-((cm - 100)*0.1)).toFixed(3));
-          this.desirableBodyWeightKg = dbwKg_raw.toFixed(1);
-          this.desirableBodyWeightLb = (dbwKg_raw * 2.2).toFixed(1);
-          this.energyRqmt = dbwKg_raw * this.physicalActivityValue;
-        }
-        console.log(dbwKg_raw,this.energyRqmt);
-        //this.energyRqmt = Math.floor(this.energyRqmt / 50.0) * 50.0;
-        if(this.energyRqmt % 50 < 25){
-          this.energyRqmt -= (this.energyRqmt % 50);
-        }
-        else if(this.energyRqmt % 50 > 25){
-          this.energyRqmt += (50 - (this.energyRqmt % 50));
-        }
-        else if(this.energyRqmt % 50 == 25){
-          this.energyRqmt += 25;
-        }
-        this.calculateDistribution();
-        this.showOutput = true;
+          else if(kcal % 50 > 25){
+            kcal += (50 - (kcal % 50));
+          }
+          else if(kcal % 50 == 25){
+            kcal += 25;
+          }
+          this.kcal = kcal;
+        }//check if valid 
       }
-      else
-      console.log(this.formGroup.status+" "+this.adultFormGroup.status+" "+this.heightValid);
-    }
-    else{
-      if(this.formGroup.valid){
-        if(this.gender == 'Male'){
-          if(this.ageRange == '1-2'){
-            this.energyRqmt = 1000;
-          }
-          else if(this.ageRange == '3-5'){
-            this.energyRqmt = 1350;
-          }
-          else if(this.ageRange == '6-9'){
-            this.energyRqmt = 1600;
-          }
-          else if(this.ageRange == '10-12'){
-            this.energyRqmt = 2060;
-          }
-          else if(this.ageRange == '13-15'){
-            this.energyRqmt = 2700;
-          }
-          else if(this.ageRange == '16-18'){
-            this.energyRqmt = 3010;
-          }
-          this.calculateDistribution();
-          this.showOutput = true;
-      }//end of if male
-      else if(this.gender == 'Female'){
-          if(this.ageRange == '1-2'){
-            this.energyRqmt = 920;
-          }
-          else if(this.ageRange == '3-5'){
-            this.energyRqmt = 1260;
-          }
-          else if(this.ageRange == '6-9'){
-            this.energyRqmt = 1470;
-          }
-          else if(this.ageRange == '10-12'){
-            this.energyRqmt = 1980;
-          }
-          else if(this.ageRange == '13-15'){
-            this.energyRqmt = 2170;
-          }
-          else if(this.ageRange == '16-18'){
-            this.energyRqmt = 2280;
-          }
-          this.calculateDistribution();
-          this.showOutput = true;
-      }
-    }
-  }
-}//end of submit
-
-  calculateDistribution(){
-    var carbs:number, protein:number, fat:number;
-
-    if(this.modifyDistribution){
-      carbs = this.carbsPercentage / 100;
-      protein = this.proteinPercentage / 100;
-      fat = this.fatPercentage / 100;
-    }
-    else{
-      carbs = this.carbsPercentage;
-      this.carbsPercentage *= 100;
-
-      protein = this.proteinPercentage;
-      this.proteinPercentage *= 100;
-
-      fat = this.fatPercentage;
-      this.fatPercentage *= 100;
-    }
-      let carbsGrams = (this.energyRqmt * carbs) / 4;
-      this.carbsGrams = Math.round( carbsGrams / 5 ) * 5;
-
-      let proteinGrams = (this.energyRqmt * protein) / 4;
-      this.proteinGrams = Math.round( proteinGrams / 5 ) * 5;
-
-      let fatGrams = (this.energyRqmt * fat) / 9;
-      this.fatGrams = Math.round( fatGrams / 5 ) * 5;
-
-      this.totalPercentage = this.carbsPercentage + this.proteinPercentage + this.fatPercentage;
-  }
-
-  modifyDistributionClicked(){
-    this.modifyDistribution = true;
-  }
-
-  resetClicked(){
-    this.carbsPercentage = this.carbsPercentageDefault;
-    this.proteinPercentage = this.proteinPercentageDefault;
-    this.fatPercentage = this.fatPercentageDefault;
-    this.modifyDistribution = false;
-    this.calculateDistribution();
-
-  }
-
-  okClicked(){  
-    if(this.totalPercentage == 100){
-      this.modifyDistribution = false;
-      let toast = this.toastCtrl.create({
-        message: 'Changes saved',
-        duration: 3000,
-        position: 'top',
-        showCloseButton: true
-      });
-      toast.present();
-    }
-    else{
-      let toast = this.toastCtrl.create({
-        message: 'Percentage does not equal to 100!',
-        duration: 3000,
-        position: 'top',
-        showCloseButton: true
-      });
-      toast.present();
+    }else{
+      this.result = false;
     }
   }
 }//end of class
