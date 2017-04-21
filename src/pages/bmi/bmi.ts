@@ -26,69 +26,104 @@ export class BmiPage {
   abnormal : boolean = false;
   normal : boolean = false;
   classification: boolean = false;
+  maxLengthWeight: number =  6;
+  maxLengthHeight: number = 6;
+  maxLengthHeightIn: number = 5;
+  formErrors = {
+    'noWeight': [],
+    'noHeight': [],
+    'noHeightIn': [],
+  };
+
+  validationMessages = {
+    'noWeight': {
+      'required': 'Weight is required.',
+      'maxlength': 'Weight cannot be more than '+ this.maxLengthWeight +' characters long.',
+      'pattern': 'Weight must contain only valid values.',
+      'exceed': 'Weight must not exceed the range values.',
+      'less': 'Weight must not be less than 0.'
+    },
+    'noHeight': {
+      'required': 'Height is required.',
+      'maxlength': 'Height cannot be more than '+ this.maxLengthHeight +' characters long.',
+      'pattern': 'Height must contain only valid values.',
+      'exceed': 'Height must not exceed the range values.',
+      'less': 'Height must not be less than 0.'
+    },
+    'noHeightIn': {
+      'required': 'Height Inches is required.',
+      'maxlength': 'Height Inches cannot be more than 5 characters long.',
+      'pattern': 'Height Inches must contain only valid values.',
+      'exceed': 'Height Inches must not exceed the range values.',
+      'less': 'Height Inches must not be less than 0.'
+    }
+  }
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public alertCtrl: AlertController, public storage: Storage) {
     this.bmiForm = formBuilder.group({
         gender: ['M', Validators.compose([Validators.required])],
         birth: ['', Validators.compose([Validators.required])],
         weight: ['kg', Validators.compose([Validators.required])],
-        noWeight: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
+        noWeight: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
           Validators.required,
-          Validators.maxLength(5),
+          Validators.maxLength(6),
           MaxValidator.maxValueKg
         ])],
-        kiloRange: [''],
+        kiloRange: [''],  
         poundRange: [''],
         height: ['cm', Validators.compose([Validators.required])],
         heightIn: ['in', Validators.compose([Validators.required])],
-        noHeight: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
+        noHeight: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
           Validators.required,
-          Validators.maxLength(5),
+          Validators.maxLength(6),
           MaxValidator.maxValueHeightCm
         ])],
-        noHeightFt: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
+        noHeightIn: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
           Validators.required,
-          Validators.maxLength(1),
-          MaxValidator.maxValueHeightFt
-        ])],
-        noHeightIn: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
-          Validators.required,
-          Validators.maxLength(1),
+          Validators.maxLength(5),
           MaxValidator.maxValueHeightIn
         ])],
         cmRange: [''],
         ftRange: [''],
     });
+    this.bmiForm.valueChanges
+		.debounceTime(100)
+		.subscribe(data => this.onValueChanged(data));
+    this.bmiForm.valueChanges
+		.debounceTime(100)
+		.subscribe(data => this.submit());
   }
 
-  validate(){
-    if(!this.bmiForm.controls['noHeight'].valid || !this.bmiForm.controls['noHeightFt'].valid || !this.bmiForm.controls['noHeightIn'].valid || !this.bmiForm.controls['noWeight'].valid){
-      let alert = this.alertCtrl.create({
-        title: 'Oops!',
-        subTitle: 'Please enter a valid number',
-        buttons: ['OK']
-      });
-      alert.present();
+  onValueChanged(data?: any) {
+    if (!this.bmiForm) { return; }
+    const form = this.bmiForm;
+    for (const field in this.formErrors) {
+      // clear previous error message
+      this.formErrors[field] = [];
+      this.bmiForm[field] = '';
+      const control = form.get(field);
+      if (control && control.dirty && !control.valid) {
+        const messages = this.validationMessages[field];
+        for (const key in control.errors) {
+          this.formErrors[field].push(messages[key]);
+        }
+      }
     }
   }
 
   kiloChange(){
     this.bmiForm.controls['noWeight'].setValue(this.bmiForm.value.kiloRange);
-    this.submit();
   }
 
   poundChange(){
     this.bmiForm.controls['noWeight'].setValue(this.bmiForm.value.poundRange);
-    this.submit();
   }
   
   cmChange(){
     this.bmiForm.controls['noHeight'].setValue(this.bmiForm.value.cmRange);
-    this.submit();
   }
 
   ftChange(){
     this.bmiForm.controls['noHeight'].setValue(this.bmiForm.value.ftRange);
-    this.submit();
   }
 
   weightChange(){
@@ -97,8 +132,6 @@ export class BmiPage {
     }else{
       this.bmiForm.controls['poundRange'].setValue(this.bmiForm.value.noWeight);
     }
-    this.validate();
-    this.submit();
   }
 
   heightChange(){
@@ -107,16 +140,15 @@ export class BmiPage {
     }else{
       this.bmiForm.controls['ftRange'].setValue(this.bmiForm.value.noHeight);
     }
-    this.validate();
-    this.submit();
   }
 
   weightTypeChange(){
     if(this.bmiForm.value.weight=="kg"){
       if(!this.kilo){
-        this.bmiForm.controls["noWeight"].setValidators([Validators.required,
-          Validators.pattern('^[0-9]+(\.[0-9]{2})?$'), 
-          Validators.maxLength(5),
+        this.maxLengthWeight = 6;
+        this.bmiForm.controls['noWeight'].setValidators([Validators.required,
+          Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'), 
+          Validators.maxLength(6),
           MaxValidator.maxValueKg
         ]);
         let convertedWeight = Math.round((this.bmiForm.value.noWeight/2.2)*10)/10;
@@ -127,9 +159,10 @@ export class BmiPage {
       this.pound = false;
     }else{
       if(!this.pound){
-        this.bmiForm.controls["noWeight"].setValidators([Validators.required,
-          Validators.pattern('^[0-9]+(\.[0-9]{2})?$'), 
-          Validators.maxLength(6),
+        this.maxLengthWeight = 7;
+        this.bmiForm.controls['noWeight'].setValidators([Validators.required,
+          Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'), 
+          Validators.maxLength(7),
           MaxValidator.maxValueLb
         ]);
         let convertedWeight = Math.round((this.bmiForm.value.noWeight*2.2)*10)/10;
@@ -144,6 +177,12 @@ export class BmiPage {
   heightTypeChange(){
     if(this.bmiForm.value.height=="cm"){
       if(!this.cm){
+        this.maxLengthHeight = 6;
+        this.bmiForm.controls['noHeight'].setValidators([Validators.required,
+          Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'), 
+          Validators.maxLength(6),
+          MaxValidator.maxValueHeightCm
+        ]);
         let feet = this.bmiForm.value.noHeight*12;
         let inch = this.bmiForm.value.noHeightIn;
         if(inch=='' || inch==null){
@@ -157,6 +196,12 @@ export class BmiPage {
       this.cm = true;
       this.ft = false;
     }else{
+      this.maxLengthHeight = 1;
+      this.bmiForm.controls['noHeight'].setValidators([Validators.required,
+        Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'), 
+        Validators.maxLength(1),
+        MaxValidator.maxValueHeightFt
+      ]);
       if(!this.ft && this.bmiForm.value.noHeight!=0){
         let computedHeight = Math.round((this.bmiForm.value.noHeight/2.54)*100)/100;
         let toInch = Math.round((computedHeight/12)*100)/100;
@@ -277,11 +322,13 @@ export class BmiPage {
             this.abnormal = true; this.normal = false; this.status = "OBESE";
           }
         }
-      }
-      else{
+      }else{
         this.classification = false;
         this.message = "Please complete the following inputs to compute your BMI";
       }
+    }else{
+      this.classification = false;
+      this.message = "Please complete the following inputs to compute your BMI";
     }
   }
 

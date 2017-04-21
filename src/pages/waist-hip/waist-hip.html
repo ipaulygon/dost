@@ -9,63 +9,81 @@
 
 
 <ion-content padding>
-  <ion-card>
-    <form [formGroup]="waistHipForm">
-    <ion-item>
-      <ion-label>Gender:</ion-label>
-      <ion-select formControlName="gender" (ionChange)="getRatio()">
-        <ion-option value="male">Male</ion-option>
-        <ion-option value="female">Female</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-range min="51" max="180" pin="true" color="dark" *ngIf="cmWaist" formControlName="cmWaistRange" (ionChange)="cmWaistChange(); getRatio()">
-        <ion-label range-left>51 cm</ion-label>
-        <ion-label range-right>180 cm</ion-label>
-      </ion-range>
-      <ion-range min="20" max="80" pin="true" color="dark" *ngIf="inWaist" formControlName="inWaistRange" (ionChange)="inWaistChange(); getRatio()">
-        <ion-label range-left>20 in</ion-label>
-        <ion-label range-right>80 in</ion-label>
-      </ion-range>
-      <ion-label>Waist Circumference:</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-input type="number" formControlName="noWaist" (blur)="setWaistRange(); getRatio()"></ion-input>
-      <ion-select (ionChange)="waistUnitChange(); getRatio();" formControlName="waist">
-        <ion-option value="cm">Centimeters</ion-option>
-        <ion-option value="in">Inches</ion-option>
-      </ion-select>
-    </ion-item>
 
-     <ion-item>
-      <ion-range min="51" max="180" pin="true" color="dark" *ngIf="cmHip" formControlName="cmHipRange" (ionChange)="cmHipChange(); getRatio()">
-        <ion-label range-left>51 cm</ion-label>
-        <ion-label range-right>180 cm</ion-label>
-      </ion-range>
-      <ion-range min="20" max="80" pin="true" color="dark" *ngIf="inHip" formControlName="inHipRange" (ionChange)="inHipChange(); getRatio()">
-        <ion-label range-left>20 in</ion-label>
-        <ion-label range-right>80 in</ion-label>
-      </ion-range>
-      <ion-label>Hip Circumference:</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-input type="number" formControlName="noHip" (blur)="setHipRange(); getRatio()"></ion-input>
-      <ion-select (ionChange)="hipUnitChange(); getRatio();" formControlName="hip">
-        <ion-option value="cm">Centimeters</ion-option>
-        <ion-option value="in">Inches</ion-option>
-      </ion-select>
-    </ion-item>
-  </form>
-  <br>
+  <form [formGroup]="waistHipForm">
+    <!--gender-->
     <ion-card>
-    <ion-card-header style="text-align: center;">
-      <h2>RESULT</h2>
-    </ion-card-header>
-
-    <ion-card-content style="text-align: center;">
-      <!-- Add card content here! -->
-      Your waist-hip ratio is {{ratio}} which may indicate <b>{{ (isOnRisk) ? "HIGHER RISK" : "LOWER RISK" }}</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.
+      <ion-item>
+        <ion-label>Gender:</ion-label>
+        <ion-select formControlName="gender">
+          <ion-option value="M">Male</ion-option>
+          <ion-option value="F">Female</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-card>
+    <!--waist-->
+    <ion-card>
+      <ion-item>
+        <ion-range min="51" max="180" pin="true" color="dark" *ngIf="cmWaist" formControlName="cmWaistRange" (ionChange)="cmWaistChange()">
+          <ion-label range-left>51 cm</ion-label>
+          <ion-label range-right>180 cm</ion-label>
+        </ion-range>
+        <ion-range min="20" max="80" pin="true" color="dark" *ngIf="inWaist" formControlName="inWaistRange" (ionChange)="inWaistChange()">
+          <ion-label range-left>20 in</ion-label>
+          <ion-label range-right>80 in</ion-label>
+        </ion-range>
+        <ion-label>Waist Circumference:</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-input type="number" formControlName="noWaist" (blur)="setWaistRange()"></ion-input>
+        <ion-select (ionChange)="waistUnitChange()" formControlName="waist">
+          <ion-option value="cm">Centimeters</ion-option>
+          <ion-option value="in">Inches</ion-option>
+        </ion-select>
+      </ion-item>
+      <div *ngIf="formErrors.noWaist">
+        <div style="text-align:center" *ngFor="let errors of formErrors.noWaist" >
+          <p style="font-style:italic;color:red">{{errors}}<p>
+        </div>
+      </div>
+    </ion-card>
+    <!--hip-->
+    <ion-card>
+      <ion-item>
+        <ion-range min="51" max="180" pin="true" color="dark" *ngIf="cmHip" formControlName="cmHipRange" (ionChange)="cmHipChange()">
+          <ion-label range-left>51 cm</ion-label>
+          <ion-label range-right>180 cm</ion-label>
+        </ion-range>
+        <ion-range min="20" max="80" pin="true" color="dark" *ngIf="inHip" formControlName="inHipRange" (ionChange)="inHipChange()">
+          <ion-label range-left>20 in</ion-label>
+          <ion-label range-right>80 in</ion-label>
+        </ion-range>
+        <ion-label>Hip Circumference:</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-input type="number" formControlName="noHip" (blur)="setHipRange()"></ion-input>
+        <ion-select (ionChange)="hipUnitChange()" formControlName="hip">
+          <ion-option value="cm">Centimeters</ion-option>
+          <ion-option value="in">Inches</ion-option>
+        </ion-select>
+      </ion-item>
+      <div *ngIf="formErrors.noHip">
+        <div style="text-align:center" *ngFor="let errors of formErrors.noHip" >
+          <p style="font-style:italic;color:red">{{errors}}<p>
+        </div>
+      </div>
+    </ion-card>
+  </form>
+  <ion-card style="text-align: center; background-color: #009688; color: white">
+    <ion-card-content style="font-size: 16px">
+      {{message}}
+      <div *ngIf="result">
+        Your waist-hip ratio is <b>{{ratio}}</b> which may indicate <br>
+        <b *ngIf="isOnRisk" style="color:red">HIGHER RISK</b>
+          <b *ngIf="!isOnRisk" style="color:#B2EBF2">LOWER RISK</b> 
+        <br>
+        of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.
+      </div>
     </ion-card-content>
-  </ion-card>
   </ion-card>
 </ion-content>

@@ -9,36 +9,52 @@
 
 
 <ion-content padding>
-  <form [formGroup]="formGroup">
-    <ion-list>
+  <form [formGroup]="waistForm">
+    <!--gender-->
+    <ion-card>
       <ion-item>
         <ion-label>Gender</ion-label>
-        <ion-select name="gender" (ionChange)="genderChanged()" formControlName="gender" [(ngModel)] = "gender">
-          <ion-option value = "male">Male</ion-option>
-          <ion-option value = "female">Female</ion-option>
+        <ion-select formControlName="gender">
+          <ion-option value="M">Male</ion-option>
+          <ion-option value="F">Female</ion-option>
         </ion-select>
       </ion-item>
+    </ion-card>
+    <!--waist-->
+    <ion-card>
       <ion-item>
-        <ion-label>Waist Circumference:</ion-label>
-          <ion-range [(ngModel)]="waistCircum" (ionChange) = "waistCircumChanged()" pin="true" color="dark" min="{{minCircum}}" max="{{maxCircum}}" [ngModelOptions]="{standalone: true}" step="0.01">
-            <ion-label name="minCircum" range-left>{{minCircum}}&ensp;{{unitMeasureAbbrev}}</ion-label>
-            <ion-label name="maxCircum" range-right>{{maxCircum}}&ensp;{{unitMeasureAbbrev}}</ion-label>
+          <ion-label>Waist Circumference:</ion-label>
+          <ion-range min="51" max="180" pin="true" color="dark" (ionChange)="cmWaistChange()" *ngIf="waistCm" formControlName="cmWaistRange">
+            <ion-label range-left>51 cm</ion-label>
+            <ion-label range-right>180 cm</ion-label>
           </ion-range>
-      </ion-item>
-      <ion-item>
-          <ion-input [(ngModel)]="waistCircum" (ionChange) = "waistCircumChanged()" type="number" step="0.01" formControlName="waistCircum" minlength = "{{inputMinCircum}}" maxlength="{{inputMaxCircum}}"></ion-input>
-          <ion-select (ionChange) = "unitChanged()" name="unitMeasure" [(ngModel)] = "unitMeasure" [ngModelOptions]="{standalone: true}">
-            <ion-option value ="centimeters">Centimeters</ion-option>
-            <ion-option value ="inches" >Inches</ion-option>
+          <ion-range min="20" max="71" pin="true" color="dark" (ionChange)="inWaistChange()" *ngIf="waistIn" formControlName="inWaistRange">
+            <ion-label range-left>20 in</ion-label>
+            <ion-label range-right>71 in</ion-label>
+          </ion-range>
+        </ion-item>
+        <ion-item>
+          <ion-input type="number" maxlength="{{maxLengthWaist}}" formControlName="noWaist" (blur)="setWaistRange()"></ion-input>
+          <ion-select formControlName="waist" (ionChange)="waistUnitChange()">
+            <ion-option value="cm">Centimeters</ion-option>
+            <ion-option value="in">Inches</ion-option>
           </ion-select>
         </ion-item>
-    </ion-list>
+        <div *ngIf="formErrors.noWaist">
+          <div style="text-align:center" *ngFor="let errors of formErrors.noWaist" >
+            <p style="font-style:italic;color:red">{{errors}}<p>
+          </div>
+        </div>
+    </ion-card>
   </form>
-  <ion-card *ngIf = "showOutput" text-wrap>
-    <ion-card-content  style="font-size: 25px;text-align: center;">
-        <p *ngIf = "!riskIsLow">Your waist circumference is above the cut-off value of greater than {{cutOff}} cm which may indicate <b style="color:red">HIGH RISK</b> of developing cardiovascular diseases and type-2 diabetes.</p>
-        <p *ngIf = "riskIsLow">Your waist circumference is within the cut-off value of less than {{cutOff}} cm which may indicate <b style="color:green">LOW RISK</b> of developing cardiovascular diseases and type-2 diabetes.</p>
-      
+  <ion-card style="text-align: center; background-color: #009688; color: white">
+    <ion-card-content style="font-size: 16px">
+      {{message}}
+      <div *ngIf="classification">
+        <span *ngIf="!riskIsLow">Your waist circumference is above the cut-off value of greater than {{cutOff}} cm which may indicate <b style="color:red">HIGH RISK</b> of developing cardiovascular diseases and type-2 diabetes.</span>
+        <span *ngIf="riskIsLow">Your waist circumference is within the cut-off value of less than {{cutOff}} cm which may indicate <b style="color:#B2EBF2">LOW RISK</b> of developing cardiovascular diseases and type-2 diabetes.</span>
+      </div>
     </ion-card-content>
   </ion-card>
 </ion-content>
+ 

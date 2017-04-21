@@ -9,19 +9,26 @@
 
 
 <ion-content padding no-lines class="container">
-  <ion-card>
-    <form [formGroup]="bmiForm">
+  <form [formGroup]="bmiForm">
+    <!--gender-->
+    <ion-card>
       <ion-item>
         <ion-label>Gender:</ion-label>
-        <ion-select (ionChange)="submit()" formControlName="gender">
+        <ion-select formControlName="gender">
           <ion-option value="M">Male</ion-option>
           <ion-option value="F">Female</ion-option>
         </ion-select>
       </ion-item>
+    </ion-card>
+    <!--birth-->
+    <ion-card>
       <ion-item>
         <ion-label>Date of Birth</ion-label>
-        <ion-datetime (ionChange)="submit()" displayFormat="MMMM DD, YYYY" formControlName="birth" placeholder="MMMM-DD-YYYY"></ion-datetime>
+        <ion-datetime displayFormat="MMMM DD, YYYY" formControlName="birth" placeholder="MM-DD-YYYY"></ion-datetime>
       </ion-item>
+    </ion-card>
+    <!--weight-->
+    <ion-card>
       <ion-item>
         <ion-range (ionChange)="kiloChange()" *ngIf="kilo" formControlName="kiloRange" min="0" max="635" pin="true" color="dark" >
           <ion-label range-left>0 kg</ion-label>
@@ -40,6 +47,14 @@
           <ion-option value="lb">Pound</ion-option>
         </ion-select>
       </ion-item>
+      <div *ngIf="formErrors.noWeight">
+        <div style="text-align:center" *ngFor="let errors of formErrors.noWeight" >
+          <p style="font-style:italic;color:red">{{errors}}<p>
+        </div>
+      </div>
+    </ion-card>
+    <!--height-->
+    <ion-card>
       <ion-item>
         <ion-range (ionChange)="cmChange()" *ngIf="cm" formControlName="cmRange" min="0" max="275" pin="true" color="dark" >
           <ion-label range-left>0 cm</ion-label>
@@ -60,21 +75,30 @@
         </ion-select>
       </ion-item>
       <ion-item *ngIf="ft">
-        <ion-input (blur)="submit()" type="number" formControlName="noHeightIn"></ion-input>
+        <ion-input type="number" formControlName="noHeightIn"></ion-input>
         <ion-select formControlName="heightIn" disabled>
           <ion-option value="in">Inches</ion-option>
         </ion-select>
-      </ion-item> 
-    </form>
-    <br>
-    <ion-card style="text-align: center; background-color: #009688; color: white">
-      <ion-card-content style="font-size: 16px">
-        {{message}}
-        <p *ngIf="classification">
-          <span *ngIf="abnormal">Classified as <b style="color:red">{{status}}</b></span>
-          <span *ngIf="normal">Classified as <b style="color: #B2EBF2">{{status}}</b></span>
-        </p>
-      </ion-card-content>
+      </ion-item>
+      <div *ngIf="formErrors.noHeight">
+        <div style="text-align:center" *ngFor="let errors of formErrors.noHeight" >
+          <p style="font-style:italic;color:red">{{errors}}<p>
+        </div>
+      </div>
+      <div *ngIf="formErrors.noHeightIn">
+        <div style="text-align:center" *ngFor="let errors of formErrors.noHeightIn" >
+          <p style="font-style:italic;color:red">{{errors}}<p>
+        </div>
+      </div>
     </ion-card>
-  </ion-card>  
+  </form>
+  <ion-card style="text-align: center; background-color: #009688; color: white">
+    <ion-card-content style="font-size: 16px">
+      {{message}}
+      <p *ngIf="classification">
+        <span *ngIf="abnormal">Classified as <b style="color:red">{{status}}</b></span>
+        <span *ngIf="normal">Classified as <b style="color: #B2EBF2">{{status}}</b></span>
+      </p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

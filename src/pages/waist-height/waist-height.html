@@ -10,67 +10,82 @@
 
 <ion-content padding>
 	<form [formGroup]="waistHeightForm">
-    <ion-item>
-      <ion-label>Gender:</ion-label>
-      <ion-select (ionChange)="getRatio();" formControlName="gender">
-        <ion-option value="male">Male</ion-option>
-        <ion-option value="female">Female</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <ion-range min="51" max="180" pin="true" color="dark" *ngIf="cmWaist" formControlName="cmWaistRange" (ionChange)="cmWaistChange(); getRatio();">
-        <ion-label range-left>51 cm</ion-label>
-        <ion-label range-right>180 cm</ion-label>
-      </ion-range>
-      <ion-range min="20" max="80" pin="true" color="dark" *ngIf="in" formControlName="inWaistRange" (ionChange)="inWaistChange(); getRatio();">
-        <ion-label range-left>20 in</ion-label>
-        <ion-label range-right>80 in</ion-label>
-      </ion-range>
-      <ion-label>Waist Circumference:</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-input type="number" formControlName="noWaist" (blur)="setWaistRange(); getRatio();"></ion-input>
-      <ion-select (ionChange)="waistUnitChange(); getRatio();" formControlName="waist">
-        <ion-option value="cm">Centimeters</ion-option>
-        <ion-option value="in">Inches</ion-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item>
-      <ion-range (ionChange)="cmChange(); getRatio();" *ngIf="cmHeight" formControlName="cmRange" min="0" max="275" pin="true" color="dark" >
-        <ion-label range-left>0 cm</ion-label>
-        <ion-label range-right>275 cm</ion-label>
-      </ion-range>
-      <ion-range (ionChange)="ftChange(); getRatio();" *ngIf="ft" formControlName="ftRange" min="0" max="9" pin="true" color="dark" >
-        <ion-label range-left>0 ft</ion-label>
-        <ion-label range-right>9 ft</ion-label>
-      </ion-range>
-      <ion-label>Height:</ion-label>
-    </ion-item>
-    <ion-item>
-      <ion-input *ngIf="cmHeight" type="number" formControlName="noHeight" (blur)="setHeightRange();getRatio();"></ion-input>
-      <ion-input *ngIf="ft" type="number" formControlName="noHeight" (blur)="setHeightRange();getRatio();"></ion-input>
-      <ion-select (ionChange)="heightTypeChange(); getRatio();" formControlName="height">
-        <ion-option value="cm">Centimeters</ion-option>
-        <ion-option value="ft">Feet</ion-option>
-      </ion-select>
-    </ion-item>
-    <ion-item *ngIf="ft">
-      <ion-input type="number" formControlName="noHeightIn" (blur)="getRatio();"></ion-input>
-      <ion-select formControlName="heightIn" disabled>
-        <ion-option value="in">Inches</ion-option>
-      </ion-select>
-    </ion-item> 
-  </form>
-  <br>
+    <!--waist-->
     <ion-card>
-    <ion-card-header style="text-align: center;">
-      <h2>RESULT</h2>
-    </ion-card-header>
-
-    <ion-card-content style="text-align: center;">
-      <!-- Add card content here! -->
-      Your waist-height ratio is {{ratio}} which may indicate <b>{{ (isOnRisk) ? "HIGHER RISK" : "LOWER RISK" }}</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.
+      <ion-item>
+        <ion-range min="51" max="180" pin="true" color="dark" *ngIf="cmWaist" formControlName="cmWaistRange" (ionChange)="cmWaistChange()">
+          <ion-label range-left>51 cm</ion-label>
+          <ion-label range-right>180 cm</ion-label>
+        </ion-range>
+        <ion-range min="20" max="80" pin="true" color="dark" *ngIf="in" formControlName="inWaistRange" (ionChange)="inWaistChange()">
+          <ion-label range-left>20 in</ion-label>
+          <ion-label range-right>80 in</ion-label>
+        </ion-range>
+        <ion-label>Waist Circumference:</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-input type="number" formControlName="noWaist" (blur)="setWaistRange()"></ion-input>
+        <ion-select (ionChange)="waistUnitChange()" formControlName="waist">
+          <ion-option value="cm">Centimeters</ion-option>
+          <ion-option value="in">Inches</ion-option>
+        </ion-select>
+      </ion-item>
+      <div *ngIf="formErrors.noWaist">
+        <div style="text-align:center" *ngFor="let errors of formErrors.noWaist" >
+          <p style="font-style:italic;color:red">{{errors}}<p>
+        </div>
+      </div>
+    </ion-card>
+    <!--height-->
+    <ion-card>
+      <ion-item>
+        <ion-range (ionChange)="cmChange()" *ngIf="cmHeight" formControlName="cmRange" min="0" max="275" pin="true" color="dark" >
+          <ion-label range-left>0 cm</ion-label>
+          <ion-label range-right>275 cm</ion-label>
+        </ion-range>
+        <ion-range (ionChange)="ftChange()" *ngIf="ft" formControlName="ftRange" min="0" max="9" pin="true" color="dark" >
+          <ion-label range-left>0 ft</ion-label>
+          <ion-label range-right>9 ft</ion-label>
+        </ion-range>
+        <ion-label>Height:</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-input *ngIf="cmHeight" type="number" formControlName="noHeight" (blur)="setHeightRange()"></ion-input>
+        <ion-input *ngIf="ft" type="number" formControlName="noHeight" (blur)="setHeightRange()"></ion-input>
+        <ion-select (ionChange)="heightTypeChange()" formControlName="height">
+          <ion-option value="cm">Centimeters</ion-option>
+          <ion-option value="ft">Feet</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="ft">
+        <ion-input type="number" formControlName="noHeightIn"></ion-input>
+        <ion-select formControlName="heightIn" disabled>
+          <ion-option value="in">Inches</ion-option>
+        </ion-select>
+      </ion-item> 
+      <div *ngIf="formErrors.noHeight">
+        <div style="text-align:center" *ngFor="let errors of formErrors.noHeight" >
+          <p style="font-style:italic;color:red">{{errors}}<p>
+        </div>
+      </div>
+      <div *ngIf="formErrors.noHeightIn">
+        <div style="text-align:center" *ngFor="let errors of formErrors.noHeightIn" >
+          <p style="font-style:italic;color:red">{{errors}}<p>
+        </div>
+      </div>
+    </ion-card>
+  </form>
+  <ion-card style="text-align: center; background-color: #009688; color: white">
+    <ion-card-content style="font-size: 16px">
+      {{message}}
+      <div *ngIf="result">
+        Your waist-height ratio is <b>{{ratio}}</b> which may indicate <br>
+        <b *ngIf="isOnRisk" style="color:red">HIGHER RISK</b>
+        <b *ngIf="!isOnRisk" style="color:#B2EBF2">LOWER RISK</b>
+        <br>
+        of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.
+      </div>
+      
     </ion-card-content>
   </ion-card>
 </ion-content>

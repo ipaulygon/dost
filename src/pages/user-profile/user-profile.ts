@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 import { MaxValidator } from '../../validators/max';
 
 import { ResultsPage } from '../results/results';
@@ -27,24 +26,11 @@ export class UserProfilePage {
 	waistIn: boolean;
 	hipCm: boolean = true;
 	hipIn: boolean;
-  bmiCard: any = "Please complete birthdate, height & weight";
-  dbwCard: any = "Please complete birthdate & height";
-  energyCard: any = "Please complete birthdate & height";
-  waistCirCard: any = "Please complete waist circumference";
-  waistHipCard: any = "Please complete waist circumference & hip circumference";
-  waistHeightCard: any = "Please complete height & waist circumference";
-  bmiMessage: string;
-  bmiAbnormal: boolean;
-  bmiNormal: boolean;
-  bmiStatus: string;
-  waistHeightRatio;
-  waistHeightStatus: boolean;
   maxLengthWeight: number =  6;
   maxLengthHeight: number = 6;
   maxLengthHeightIn: number = 5;
   maxLengthHip: number = 6;
   maxLengthWaist: number = 6;
-  loadTimeout: boolean = false;
   formErrors = {
     'noWeight': [],
     'noHeight': [],
@@ -100,7 +86,7 @@ export class UserProfilePage {
   		  gender: ['M', Validators.compose([Validators.required])],
         birth: ['', Validators.compose([Validators.required])],
         weight: ['kg', Validators.compose([Validators.required])],
-        noWeight: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
+        noWeight: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
           Validators.required,
           Validators.maxLength(6),
           MaxValidator.maxValueKg
@@ -109,12 +95,12 @@ export class UserProfilePage {
         poundRange: [''],
         height: ['cm', Validators.compose([Validators.required])],
         heightIn: ['in', Validators.compose([Validators.required])],
-        noHeight: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
+        noHeight: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
           Validators.required,
           Validators.maxLength(6),
           MaxValidator.maxValueHeightCm
         ])],
-        noHeightIn: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
+        noHeightIn: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
           Validators.required,
           Validators.maxLength(5),
           MaxValidator.maxValueHeightIn
@@ -122,13 +108,13 @@ export class UserProfilePage {
         cmRange: [''],
         ftRange: [''],
         waist: ['cm', Validators.compose([Validators.required])],
-        noWaist: ['51', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
+        noWaist: ['51', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
           Validators.required,
           Validators.maxLength(6),
           MaxValidator.maxValueWaistCm
         ])],
         hip: ['cm', Validators.compose([Validators.required])],
-        noHip: ['51', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),
+        noHip: ['51', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
           Validators.required,
           Validators.maxLength(6),
           MaxValidator.maxValueHipCm
@@ -144,7 +130,6 @@ export class UserProfilePage {
   }
 
   ionViewDidLoad() {
-    this.loadTimeout = true;
     console.log('ionViewDidLoad UserProfilePage');
   }
 
@@ -260,7 +245,7 @@ export class UserProfilePage {
         this.waistIn = false;
         this.maxLengthWaist = 6;
         this.userProfileForm.controls["noWaist"].setValidators([Validators.required,
-          Validators.pattern('^[0-9]+(\.[0-9]{2})?$'), 
+          Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'), 
           Validators.maxLength(6),
           MaxValidator.maxValueWaistCm
         ]);
@@ -274,7 +259,7 @@ export class UserProfilePage {
         this.waistIn = true;
         this.maxLengthWaist = 5;
         this.userProfileForm.controls["noWaist"].setValidators([Validators.required,
-          Validators.pattern('^[0-9]+(\.[0-9]{2})?$'), 
+          Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'), 
           Validators.maxLength(5),
           MaxValidator.maxValueWaistIn
         ]);
@@ -292,7 +277,7 @@ export class UserProfilePage {
         this.hipIn = false;
         this.maxLengthHip = 6;
         this.userProfileForm.controls["noHip"].setValidators([Validators.required,
-          Validators.pattern('^[0-9]+(\.[0-9]{2})?$'), 
+          Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'), 
           Validators.maxLength(6),
           MaxValidator.maxValueHipCm
         ]);
@@ -306,7 +291,7 @@ export class UserProfilePage {
         this.hipIn = true;
         this.maxLengthHip = 5;
         this.userProfileForm.controls["noHip"].setValidators([Validators.required,
-          Validators.pattern('^[0-9]+(\.[0-9]{2})?$'), 
+          Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'), 
           Validators.maxLength(5),
           MaxValidator.maxValueHipIn
         ]);
@@ -324,7 +309,7 @@ export class UserProfilePage {
         this.weightLb = false;
         this.maxLengthWeight = 6;
         this.userProfileForm.controls['noWeight'].setValidators([Validators.required,
-          Validators.pattern('^[0-9]+(\.[0-9]{2})?$'), 
+          Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'), 
           Validators.maxLength(6),
           MaxValidator.maxValueKg
         ]);
@@ -338,7 +323,7 @@ export class UserProfilePage {
         this.weightLb = true;
         this.maxLengthWeight = 7;
         this.userProfileForm.controls['noWeight'].setValidators([Validators.required,
-          Validators.pattern('^[0-9]+(\.[0-9]{2})?$'), 
+          Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'), 
           Validators.maxLength(7),
           MaxValidator.maxValueLb
         ]);
@@ -378,7 +363,7 @@ export class UserProfilePage {
       if(!this.cm){
         this.maxLengthHeight = 6;
         this.userProfileForm.controls['noHeight'].setValidators([Validators.required,
-          Validators.pattern('^[0-9]+(\.[0-9]{2})?$'), 
+          Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'), 
           Validators.maxLength(6),
           MaxValidator.maxValueHeightCm
         ]);
@@ -397,7 +382,7 @@ export class UserProfilePage {
     }else{
       this.maxLengthHeight = 1;
       this.userProfileForm.controls['noHeight'].setValidators([Validators.required,
-        Validators.pattern('^[0-9]+(\.[0-9]{2})?$'), 
+        Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'), 
         Validators.maxLength(1),
         MaxValidator.maxValueHeightFt
       ]);

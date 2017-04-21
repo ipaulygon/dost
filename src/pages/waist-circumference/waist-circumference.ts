@@ -1,170 +1,151 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams ,AlertController} from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MaxValidator } from '../../validators/max';
 
 @Component({
   selector: 'page-waist-circumference',
   templateUrl: 'waist-circumference.html'
 })
 export class WaistCircumferencePage {
+  waistForm: FormGroup;
+  riskIsLow: boolean = true;
+  cutOff : number = 94;
+  waistCm: boolean = true;
+	waistIn: boolean;
+  maxLengthWaist: number = 6;
+  message: string = "";
+  classification: boolean = true;
+  formErrors = {
+    'noWaist': [],
+  };
 
-  gender:any = "male";
-
-  formGroup: FormGroup;
-
-  minCircum: number = 51;
-  maxCircum: number = 180;
-
-  inputMinCircum: number;
-  inputMaxCircum: number;
-
-  unitMeasure: any = "centimeters";
-  unitMeasureAbbrev: any = "cm";
-
-  waistCircum: any = 51;
-
-  riskIsLow = false;
-  cutOff : any;
-
-  waistCircumValid = false;
-  showOutput = false;
-
+  validationMessages = {
+    'noWaist': {
+      'required': 'Waist is required.',
+      'maxlength': 'Waist cannot be more than '+ this.maxLengthWaist +' characters long.',
+      'pattern': 'Waist must contain only valid values.',
+      'exceed': 'Waist must not exceed the range values.',
+      'less': 'Waist must not be less than the range values.'
+    },
+  }
   constructor(public alertctrl:AlertController,public formBuilder:FormBuilder,public navCtrl: NavController, public navParams: NavParams) {
-    this.formGroup = formBuilder.group({
-      gender: ['', Validators.compose([Validators.required])],
-      waistCircum: ['', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{2})?$'),Validators.required])]
+    this.waistForm = formBuilder.group({
+      gender: ['M', Validators.compose([Validators.required])],
+      waist: ['cm', Validators.compose([Validators.required])],
+      noWaist: ['51', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
+        Validators.required,
+        Validators.maxLength(6),
+        MaxValidator.maxValueWaistCm
+      ])],
+      cmWaistRange: [''],
+      inWaistRange: [''],
     });
-    this.formGroup.get('waistCircum').valueChanges
-		.debounceTime(1000)
-		.subscribe(data => this.waistCircumChanged());
+    this.waistForm.valueChanges
+		.debounceTime(100)
+		.subscribe(data => this.onValueChanged(data));
+    this.waistForm.valueChanges
+		.debounceTime(100)
+		.subscribe(data => this.submit());
+  }
 
+  onValueChanged(data?: any) {
+    if (!this.waistForm) { return; }
+    const form = this.waistForm;
+    for (const field in this.formErrors) {
+      // clear previous error message
+      this.formErrors[field] = [];
+      this.waistForm[field] = '';
+      const control = form.get(field);
+      if (control && control.dirty && !control.valid) {
+        const messages = this.validationMessages[field];
+        for (const key in control.errors) {
+          this.formErrors[field].push(messages[key]);
+        }
+      }
+    }
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad WaistCircumferencePage');
   }
 
-  genderChanged(){
-    this.showOutput = false;
-    this.waistCircumChanged();
+  cmWaistChange(){
+    this.waistForm.controls['noWaist'].setValue(this.waistForm.value.cmWaistRange);
   }
 
-  waistCircumChanged(){
-    this.showOutput = false;
-    this.waistCircumValid = false;
-
-    if(this.unitMeasure == "centimeters"){
-
-      let alert = this.alertctrl.create({
-            message: "Please enter a valid number greater than 51 cm but less than 180 cm or a number with atleast 2 decimal places.",
-            buttons: 
-            [{
-                text: 'Ok',
-                handler: data => {
-                }
-            }]
-        });
-
-      if(this.formGroup.get('waistCircum').valid){
-        if((this.waistCircum >= 51) && (this.waistCircum <= 180)){
-          if(this.gender == "male"){
-            this.cutOff = 94;
-            if(this.waistCircum < 94){
-              this.riskIsLow = true;
-            }
-            else if(this.waistCircum >= 94){
-              this.riskIsLow = false;
-            }
-          }
-          else if(this.gender == "female"){
-            this.cutOff = 80;
-            if(this.waistCircum < 80){
-              this.riskIsLow = true;
-            }
-            else if(this.waistCircum >= 80){
-              this.riskIsLow = false;
-            }
-          }
-          this.waistCircumValid = true;
-        }
-        else{
-          alert.present();
-        }
-      }
-      else{
-        alert.present();
-      }
-    }
-    else if(this.unitMeasure == "inches"){
-
-      let alert = this.alertctrl.create({
-            message: "Please enter a valid number greater than 20 inches but less than 71 inches or a number with atleast 2 decimal places.",
-            buttons: 
-            [{
-                text: 'Ok',
-                handler: data => {
-                }
-            }]
-          });
-
-      if(this.formGroup.get('waistCircum').valid){
-        let cm = parseFloat((this.waistCircum * 2.54).toFixed(3));
-        if((this.waistCircum >= 20) && (this.waistCircum <= 71)){
-          if(this.gender == "male"){
-            if(cm < 94){
-              this.riskIsLow = true;
-            }
-            else if(cm >= 94){
-              this.riskIsLow = false;
-            }
-          }
-          else if(this.gender == "female"){
-            if(cm < 80){
-              this.riskIsLow = true;
-            }
-            else if(cm >= 80){
-              this.riskIsLow = false;
-            }
-          }
-          this.waistCircumValid = true;
-        }
-        else{
-          alert.present();
-        }
-      }//end of if circum is valid
-      else{
-        alert.present();
-      }
-    }//end of inches
-    this.submit();
+  inWaistChange(){
+    this.waistForm.controls['noWaist'].setValue(this.waistForm.value.inWaistRange);
   }
 
-  unitChanged(){
-    this.showOutput = false;
-    if(this.unitMeasure == "centimeters"){
-      this.minCircum = 51;
-      this.maxCircum = 180;
-      this.unitMeasureAbbrev = "cm";
-      this.waistCircum = (this.waistCircum * 2.54).toFixed(1);
-      this.inputMinCircum = 2;
-      this.inputMaxCircum = 6;
+  setWaistRange(){
+    if(this.waistForm.value.waist=="cm"){
+      this.waistForm.controls['cmWaistRange'].setValue(this.waistForm.value.noWaist);
+    }else{
+      this.waistForm.controls['inWaistRange'].setValue(this.waistForm.value.noWaist);
     }
-    else{
-      this.minCircum = 20;
-      this.maxCircum = 71;
-      this.unitMeasureAbbrev = "in";
-      this.waistCircum = (this.waistCircum / 2.54).toFixed(1);
-      this.inputMinCircum = 2;
-      this.inputMaxCircum = 5;
+  }
+
+  convertToInch(val)
+  {
+    return Math.round(eval(val+'/'+2.54)*100)/100;
+  }
+
+  convertToCm(val)
+  {
+    return Math.round(eval(val+'*'+2.54)*100)/100;
+  }
+
+  waistUnitChange(){
+    if(this.waistForm.value.waist=="cm"){
+      if(!this.waistCm){
+        this.waistCm = true;
+        this.waistIn = false;
+        this.maxLengthWaist = 6;
+        this.waistForm.controls["noWaist"].setValidators([Validators.required,
+          Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'), 
+          Validators.maxLength(6),
+          MaxValidator.maxValueWaistCm
+        ]);
+        let inConv = this.convertToCm(this.waistForm.value.noWaist);
+        this.waistForm.controls['noWaist'].setValue(inConv);
+        this.waistForm.controls['cmWaistRange'].setValue(inConv);
+      }
+    }else{
+      if(!this.waistIn){
+        this.waistCm = false;
+        this.waistIn = true;
+        this.maxLengthWaist = 5;
+        this.waistForm.controls["noWaist"].setValidators([Validators.required,
+          Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'), 
+          Validators.maxLength(5),
+          MaxValidator.maxValueWaistIn
+        ]);
+        let cmConv = this.convertToInch(this.waistForm.value.noWaist);
+        this.waistForm.controls['noWaist'].setValue(cmConv);
+        this.waistForm.controls['inWaistRange'].setValue(cmConv);
+      }
     }
-    this.submit();
   }
 
   submit(){
-    this.showOutput = false;
-    if((this.formGroup.valid)&&(this.waistCircumValid)){
-      this.showOutput = true;
+    if(this.waistForm.valid){
+      this.classification = true;
+      this.message = "";
+      if(this.waistForm.value.gender=='M'){
+        this.cutOff = 94;
+      }else{
+        this.cutOff = 80;
+      }
+      if(this.waistCm){
+        this.riskIsLow = (this.waistForm.value.noWaist >= this.cutOff)? false : true;
+      }else{
+        let convertedWaist = this.convertToCm(this.waistForm.value.noWaist);
+        this.riskIsLow = (convertedWaist >= this.cutOff)? false : true;
+      }
+    }else{
+      this.classification = false;
+      this.message = "Please complete the following inputs to compute your Waist Circumference status";
     }
-    console.log(this.formGroup.status+" "+this.waistCircumValid);
   }
 }
