@@ -46,7 +46,7 @@
   <preference name="FadeSplashScreenDuration" value="300"/>
   <preference name="SplashShowOnlyFirstTime" value="false"/>
   <preference name="StatusBarOverlaysWebView" value="true" />
-  <preference name="StatusBarBackgroundColor" value="#0097A7"/>
+  <preference name="StatusBarBackgroundColor" value="#43C6C7"/>
   <preference name="AutoHideSplashScreen" value="false"/>
   <preference name="SplashScreen" value="screen"/>
   <preference name="SplashScreenDelay" value="1000"/>

@@ -87,7 +87,19 @@
         {{message}}
       </ion-card-content>
       <ion-card-content *ngIf="result" style="font-size: 16px">
-        You need <b style="color:green">{{kcal}} kcal</b> a day!
+        You need <b style="color:white">{{kcal}} kcal</b> a day!
+      </ion-card-content>
+      <ion-card-content style="background-color: #FFE598; color: black">
+        <span style="font-size: 20px;">Protein: {{protein}}%</span><br>
+        <span style="font-size: 15px; text-align: center">{{proteinG}} grams</span>
+      </ion-card-content>
+      <ion-card-content style="background-color: #FBBC84; color: black">
+        <span style="font-size: 20px;">Fat: {{fat}}%</span><br>
+        <span style="font-size: 15px; text-align: center">{{fatG}} grams</span>
+      </ion-card-content>
+      <ion-card-content style="background-color: #FFF5C3; color: black">
+        <span style="font-size: 20px;">Carbohydrates: {{carb}}%</span><br>
+        <span style="font-size: 15px; text-align: center">{{carbG}} grams</span>
       </ion-card-content>
     </ion-card>
   </form>

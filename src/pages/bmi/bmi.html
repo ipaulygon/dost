@@ -49,7 +49,7 @@
       </ion-item>
       <div *ngIf="formErrors.noWeight">
         <div style="text-align:center" *ngFor="let errors of formErrors.noWeight" >
-          <p class="negativeResult" style="font-style:italic;">{{errors}}<p>
+          <p style="font-style:italic; color: #EF5350;">{{errors}}<p>
         </div>
       </div>
     </ion-card>
@@ -82,20 +82,20 @@
       </ion-item>
       <div *ngIf="formErrors.noHeight">
         <div style="text-align:center" *ngFor="let errors of formErrors.noHeight" >
-          <p class="negativeResult" style="font-style:italic;">{{errors}}<p>
+          <p style="font-style:italic;color: #EF5350;">{{errors}}<p>
         </div>
       </div>
       <div *ngIf="formErrors.noHeightIn">
         <div style="text-align:center" *ngFor="let errors of formErrors.noHeightIn" >
-          <p class="negativeResult" style="font-style:italic;">{{errors}}<p>
+          <p style="font-style:italic;color: #EF5350;">{{errors}}<p>
         </div>
       </div>
     </ion-card>
   </form>
-  <ion-card style="text-align: center; background-color: #009688; color: white">
+  <ion-card style="text-align: center; background-color: transparent; color: black; box-shadow: inset 200px 200px 300px 200px rgba(255,255,255,0.7);">
     <ion-card-content style="font-size: 16px">
       {{message}}
-      <p *ngIf="classification" style="font-size: 20px">
+      <p *ngIf="classification" style="font-size: 20px; color: black;">
         <span *ngIf="abnormal">Classified as <b class="negativeResult" >{{status}}</b></span>
         <span *ngIf="normal" >Classified as <b class="positiveResult">{{status}}</b></span>
       </p>

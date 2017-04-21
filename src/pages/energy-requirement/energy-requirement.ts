@@ -22,6 +22,12 @@ export class EnergyRequirementPage {
   maxFat: number = 35;
   minCarb: number = 50;
   maxCarb: number = 69;
+  protein: number = 15;
+  fat: number = 30;
+  carb: number = 55;
+  proteinG: number;
+  fatG: number;
+  carbG: number;
   //output
   result: boolean = true;
   kcal: number =  620;
@@ -70,6 +76,7 @@ export class EnergyRequirementPage {
       cmRange: [''],
       ftRange: [''],
     });
+    this.submit();
     this.energyForm.valueChanges
 		.debounceTime(100)
 		.subscribe(data => this.onValueChanged(data));
@@ -169,35 +176,42 @@ export class EnergyRequirementPage {
         this.minProtein = 6; this.maxProtein = 15;
         this.minFat = 25; this.maxFat = 35;
         this.minCarb = 50; this.maxCarb = 69;
+        this.protein = 15; this.fat = 30; this.carb = 55;
       }else if(this.energyForm.value.ageRange==2){
         this.kcal = (this.energyForm.value.gender=='M') ? 1350 : 1260;
         this.minProtein = 6; this.maxProtein = 15;
         this.minFat = 15; this.maxFat = 30;
         this.minCarb = 55; this.maxCarb = 79;
+        this.protein = 15; this.fat = 20; this.carb = 65;
       }else if(this.energyForm.value.ageRange==3){
         this.kcal = (this.energyForm.value.gender=='M') ? 1600 : 1470;
         this.minProtein = 6; this.maxProtein = 15;
         this.minFat = 15; this.maxFat = 30;
         this.minCarb = 55; this.maxCarb = 79;
+        this.protein = 15; this.fat = 20; this.carb = 65;
       }else if(this.energyForm.value.ageRange==4){
         this.kcal = (this.energyForm.value.gender=='M') ? 2060 : 1980;
         this.minProtein = 6; this.maxProtein = 15;
         this.minFat = 15; this.maxFat = 30;
         this.minCarb = 55; this.maxCarb = 79;
+        this.protein = 15; this.fat = 20; this.carb = 65;
       }else if(this.energyForm.value.ageRange==5){
         this.kcal = (this.energyForm.value.gender=='M') ? 2700 : 2170;
         this.minProtein = 6; this.maxProtein = 15;
         this.minFat = 15; this.maxFat = 30;
         this.minCarb = 55; this.maxCarb = 79;
+        this.protein = 15; this.fat = 20; this.carb = 65;
       }else if(this.energyForm.value.ageRange==6){
         this.kcal = (this.energyForm.value.gender=='M') ? 3010 : 630;
         this.minProtein = 6; this.maxProtein = 15;
         this.minFat = 15; this.maxFat = 30;
         this.minCarb = 55; this.maxCarb = 79;
+        this.protein = 15; this.fat = 20; this.carb = 65;
       }else{
         this.minProtein = 10; this.maxProtein = 15;
         this.minFat = 15; this.maxFat = 30;
         this.minCarb = 55; this.maxCarb = 75;
+        this.protein = 15; this.fat = 20; this.carb = 65;
         this.result = (this.energyForm.value.noHeight!=0) ? true : false;
         if(this.result){
           let height = 0;
@@ -228,6 +242,9 @@ export class EnergyRequirementPage {
           this.kcal = kcal;
         }//check if valid 
       }
+      this.proteinG = Math.round(((this.kcal*(this.protein/100))/4)*100)/100;
+      this.fatG = Math.round(((this.kcal*(this.fat/100))/9)*100)/100;
+      this.carbG = Math.round(((this.kcal*(this.carb/100))/4)*100)/100;
     }else{
       this.result = false;
     }
