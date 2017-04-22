@@ -126,13 +126,13 @@
       <i *ngIf="!macroRange" (click)="macro()">Click here to change the ranges of the distribution.</i>
       <br>
       <button ion-button icon-left (click)="reset()" *ngIf="macroRange">
-          <ion-icon name="refresh"></ion-icon>
-            Reset
-        </button>
-        <button ion-button icon-left *ngIf="macroRange" [disabled]="macroPercent!=100" (click)="macro()">
-          <ion-icon name="checkmark"></ion-icon>
-            OK
-        </button>
+        <ion-icon name="refresh"></ion-icon>
+          Reset
+      </button>
+      <button ion-button icon-left *ngIf="macroRange" [disabled]="macroPercent!=100" (click)="macro()">
+        <ion-icon name="checkmark"></ion-icon>
+          OK
+      </button>
     </ion-card>
   </form>
 </ion-content>
