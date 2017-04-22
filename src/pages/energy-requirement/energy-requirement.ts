@@ -34,6 +34,7 @@ export class EnergyRequirementPage {
   fatG: number;
   carbG: number;
   macroPercent: number = 100;
+  activityLevel: any = "";
   //output
   result: boolean = true;
   kcal: number =  620;
@@ -81,6 +82,8 @@ export class EnergyRequirementPage {
       ])],
       cmRange: [''],
       ftRange: [''],
+      pregnant: [false],
+      lactating: [false],
     });
     this.macroForm = formBuilder.group({
       proteinRange: [this.protein],
@@ -231,7 +234,7 @@ export class EnergyRequirementPage {
   submit(){
     if(this.energyForm.valid){
       this.result = true;
-      if(this.energyForm.value.ageRange>7){
+      if(this.energyForm.value.ageRange<7){
         this.energyForm.value.noHeight = 0;
         this.energyForm.value.noHeightFt = 0;
         this.energyForm.value.noHeightIn = 0;
@@ -275,6 +278,15 @@ export class EnergyRequirementPage {
         this.minCarb = 55; this.maxCarb = 79;
         this.protein = 15; this.fat = 20; this.carb = 65;
       }else{
+        if(this.energyForm.value.activity==30){
+          this.activityLevel = "Driving, computer work, ironing, cooking; sits and stands most of the day; rarely gets any physical activity during the whole day.";
+        }else if(this.energyForm.value.activity==35){
+          this.activityLevel = "Child care, garage work, electrical trades exercises or walks 3-5 times per week at a slow pace of 2.5 - 3 mph for less than 30 minutes per session.";
+        }else if(this.energyForm.value.activity==40){
+          this.activityLevel = "Heavy housework, yard work, carrying a load, cycling, tennis, dancing; exercises or walks 3.5 - 4 mph for one hour 3-5 times per week.";
+        }else if(this.energyForm.value.activity==45){
+          this.activityLevel = "Heavy manual labor such as construction work, digging, climbing, carrying a load uphill, professional sports; exercises 3-5 times per week for 1 1/2 hours per session.";
+        }
         this.minProtein = 10; this.maxProtein = 15;
         this.minFat = 15; this.maxFat = 30;
         this.minCarb = 55; this.maxCarb = 75;
@@ -307,6 +319,10 @@ export class EnergyRequirementPage {
             kcal += 25;
           }
           this.kcal = kcal;
+          if(this.energyForm.value.gender=='F'){
+            this.kcal = (this.energyForm.value.pregnant) ? this.kcal+300 : this.kcal;
+            this.kcal = (this.energyForm.value.lactating) ? this.kcal+500 : this.kcal;
+          }
         }//check if valid 
       }
       // this.proteinG = Math.round(((this.kcal*(this.protein/100))/4)*100)/100;

@@ -80,6 +80,17 @@
           <ion-option value="45">Very Active</ion-option>
         </ion-select>
       </ion-item>
+      <h4 style="text-align:center" *ngIf="energyForm.value.ageRange==7">Description: {{activityLevel}}</h4>
+      <div *ngIf="energyForm.value.gender=='F'">
+        <ion-item>
+          <ion-label>Pregnant?</ion-label>
+          <ion-checkbox formControlName="pregnant" color="dark" checked="energyForm.value.pregnant"></ion-checkbox>
+        </ion-item>
+        <ion-item>
+          <ion-label>Lactating?</ion-label>
+          <ion-checkbox formControlName="lactating" color="dark" checked="energyForm.value.lactating"></ion-checkbox>
+        </ion-item>
+      </div>
     </ion-card>
   </form>
   <form [formGroup]="macroForm">

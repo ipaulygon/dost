@@ -82,6 +82,19 @@
           <ion-option value="45">Very Active</ion-option>
         </ion-select>
       </ion-item>
+      <h4 *ngIf="age>18">Description: {{activityLevel}}</h4>
+      <div *ngIf="gender=='F' && age>18">
+      <form [formGroup]="energyForm">
+          <ion-item>
+            <ion-label>Pregnant?</ion-label>
+            <ion-checkbox formControlName="pregnant" color="dark" checked="energyForm.value.pregnant"></ion-checkbox>
+          </ion-item>
+          <ion-item>
+            <ion-label>Lactating?</ion-label>
+            <ion-checkbox formControlName="lactating" color="dark" checked="energyForm.value.lactating"></ion-checkbox>
+          </ion-item>
+        </form>
+      </div>
     </ion-card-content>
     <ion-card-content *ngIf="!energyCard">
       Please have an input in Birthdate and Height.

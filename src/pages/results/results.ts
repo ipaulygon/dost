@@ -16,6 +16,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class ResultsPage {
   
   macroForm: FormGroup;
+  energyForm: FormGroup;
   gender: string;
   birthday: string;
   weight: number;
@@ -64,7 +65,7 @@ export class ResultsPage {
   energySee : boolean = false;
   kcal: number;
   activity: number = 30;
-
+  activityLevel: any = "";
   //waistCir
   waistCircOnRisk: boolean = false;
   waistCirCard: boolean = true;
@@ -93,6 +94,10 @@ export class ResultsPage {
     this.waist = this.navParams.get("waist");
     this.hip = this.navParams.get("hip");
     this.age = this.getAge();
+    this.energyForm = formBuilder.group({
+      pregnant: [false],
+      lactating: [false],
+    });
     this.macroForm = formBuilder.group({
       proteinRange: [this.protein],
       fatRange: [this.fat],
@@ -124,6 +129,9 @@ export class ResultsPage {
     this.macroForm.valueChanges
 		.debounceTime(100)
 		.subscribe(data => this.computePercent());
+    this.energyForm.valueChanges
+		.debounceTime(100)
+		.subscribe(data => this.energyResult());
   }
 
   ionViewDidLoad() {
@@ -192,6 +200,7 @@ export class ResultsPage {
     let proteinG = (this.kcal*(this.protein/100))/4;
     this.proteinG = Math.round(proteinG/5)*5;
   }
+
   fatChange(){
     this.fat = this.macroForm.value.fatRange;
     let fatG = (this.kcal*(this.fat/100))/9;
@@ -205,6 +214,15 @@ export class ResultsPage {
   }
 
   energyResult(){
+    if(this.activity==30){
+      this.activityLevel = "Driving, computer work, ironing, cooking; sits and stands most of the day; rarely gets any physical activity during the whole day.";
+    }else if(this.activity==35){
+      this.activityLevel = "Child care, garage work, electrical trades exercises or walks 3-5 times per week at a slow pace of 2.5 - 3 mph for less than 30 minutes per session.";
+    }else if(this.activity==40){
+      this.activityLevel = "Heavy housework, yard work, carrying a load, cycling, tennis, dancing; exercises or walks 3.5 - 4 mph for one hour 3-5 times per week.";
+    }else if(this.activity==45){
+      this.activityLevel = "Heavy manual labor such as construction work, digging, climbing, carrying a load uphill, professional sports; exercises 3-5 times per week for 1 1/2 hours per session.";
+    }
     if(this.age>=1 && this.age<=2){
       this.kcal = (this.gender=='M') ? 1000 : 920;
       this.minProtein = 6; this.maxProtein = 15;
@@ -260,6 +278,10 @@ export class ResultsPage {
         kcal += 25;
       }
       this.kcal = kcal;
+      if(this.gender=='F'){
+        this.kcal = (this.energyForm.value.pregnant) ? this.kcal+300 : this.kcal;
+        this.kcal = (this.energyForm.value.lactating) ? this.kcal+500 : this.kcal;
+      }
     }
     // this.proteinG = Math.round(((this.kcal*(this.protein/100))/4)*100)/100;
     // this.fatG = Math.round(((this.kcal*(this.fat/100))/9)*100)/100;
