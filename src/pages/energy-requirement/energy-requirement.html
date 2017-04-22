@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Energy Requirement</ion-title>
+    <ion-title>Energy Expenditure</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -63,12 +63,12 @@
       </ion-item>
       <div *ngIf="formErrors.noHeight">
         <div style="text-align:center" *ngFor="let errors of formErrors.noHeight" >
-          <p class="negativeResult" style="font-style:italic;">{{errors}}<p>
+          <p style="font-style:italic; color: #C33825">{{errors}}<p>
         </div>
       </div>
       <div *ngIf="formErrors.noHeightIn">
         <div style="text-align:center" *ngFor="let errors of formErrors.noHeightIn" >
-          <p class="negativeResult" style="font-style:italic;">{{errors}}<p>
+          <p style="font-style:italic; color: #C33825">{{errors}}<p>
         </div>
       </div>
       <ion-item>
@@ -118,18 +118,18 @@
       </ion-card-content>
       <br>
       <div *ngIf="macroRange" style="text-align:center">
-        <span class="negativeResult" *ngIf="macroPercent!=100" ><b>{{macroPercent}} %</b></span>
+        <span style="color: #C33825" *ngIf="macroPercent!=100" ><b>{{macroPercent}} %</b></span>
         <span *ngIf="macroPercent==100" style="color:white"><b>{{macroPercent}} %</b></span><br>
         <br>
         <i>Note: You should have a total percentage of 100%</i>
       </div>
       <i *ngIf="!macroRange" (click)="macro()">Click here to change the ranges of the distribution.</i>
       <br>
-      <button ion-button icon-left (click)="reset()" *ngIf="macroRange">
+      <button color="light" outline ion-button icon-left (click)="reset()" *ngIf="macroRange">
         <ion-icon name="refresh"></ion-icon>
           Reset
       </button>
-      <button ion-button icon-left *ngIf="macroRange" [disabled]="macroPercent!=100" (click)="macro()">
+      <button color="light" outline ion-button icon-left *ngIf="macroRange" [disabled]="macroPercent!=100" (click)="macro()">
         <ion-icon name="checkmark"></ion-icon>
           OK
       </button>

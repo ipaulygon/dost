@@ -743,7 +743,7 @@ export class MyApp {
       { title: 'User Profile', component: UserProfilePage },
       { title: 'Body Mass Index', component: BmiPage },
       { title: 'Desirable Body Weight', component: DbwPage },
-      { title: 'Energy Requirement', component: EnergyRequirementPage },
+      { title: 'Energy Expenditure', component: EnergyRequirementPage },
       { title: 'Waist Circumference', component: WaistCircumferencePage },
       { title: 'Waist-Hip Ratio', component: WaistHipPage },
       { title: 'Waist-Height Ratio', component: WaistHeightPage },

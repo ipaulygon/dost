@@ -32,7 +32,7 @@
       </ion-item>
       <div *ngIf="formErrors.noWaist">
         <div style="text-align:center" *ngFor="let errors of formErrors.noWaist" >
-          <p style="font-style:italic;" class="negativeResult">{{errors}}<p>
+          <p style="font-style:italic; color: #C33825" >{{errors}}<p>
         </div>
       </div>
     </ion-card>
@@ -65,12 +65,12 @@
       </ion-item> 
       <div *ngIf="formErrors.noHeight">
         <div style="text-align:center" *ngFor="let errors of formErrors.noHeight" >
-          <p style="font-style:italic;" class="negativeResult">{{errors}}<p>
+          <p style="font-style:italic; color: #C33825">{{errors}}<p>
         </div>
       </div>
       <div *ngIf="formErrors.noHeightIn">
         <div style="text-align:center" *ngFor="let errors of formErrors.noHeightIn" >
-          <p style="font-style:italic;" class="negativeResult">{{errors}}<p>
+          <p style="font-style:italic; color: #C33825">{{errors}}<p>
         </div>
       </div>
     </ion-card>
