@@ -20,8 +20,8 @@
     <ion-card-content *ngIf="bmiCard">
       <h1>{{bmi}} kg/m²</h1>
       <div>
-        <span *ngIf="bmiAbnormal">Classified as <b class="negativeResult">{{bmiStatus}}</b></span>
-        <span *ngIf="bmiNormal">Classified as <b class="positiveResult">{{bmiStatus}}</b></span>
+        <span *ngIf="bmiAbnormal">Classified as <b style="color:red">{{bmiStatus}}</b></span>
+        <span *ngIf="bmiNormal">Classified as <b style="color:green">{{bmiStatus}}</b></span>
       </div>
     </ion-card-content>
     <ion-card-content *ngIf="!bmiCard">
@@ -30,8 +30,8 @@
     <ion-card-content *ngIf="bmiSee && bmiCard">
       <p>This may indicate that you have a</p>
       <h3>
-        <span *ngIf="bmiNormal" class="negativeResult">LOWER RISK</span>
-        <span *ngIf="!bmiNormal" class="positiveResult">HIGHER RISK</span>
+        <span *ngIf="bmiNormal" style="color:green">LOWER RISK</span>
+        <span *ngIf="!bmiNormal" style="color:red">HIGHER RISK</span>
       </h3>
       <p>of acquiring heart diseases, hypertension, type 2 diabetes and some types of cancer.</p>
     </ion-card-content>
@@ -48,8 +48,8 @@
       <p>Maintain your weight between these values <br>{{dbwRange}}</p>
       <h3>
         Classified as
-        <span *ngIf="!dbwNormal"><b class="negativeResult">{{dbwStatus}}</b></span>
-        <span *ngIf="dbwNormal"><b class="positiveResult">{{dbwStatus}}</b></span>  
+        <span *ngIf="!dbwNormal"><b style="color:red">{{dbwStatus}}</b></span>
+        <span *ngIf="dbwNormal"><b style="color:green">{{dbwStatus}}</b></span>  
       </h3> 
     </ion-card-content>
     <ion-card-content *ngIf="!dbwCard">
@@ -87,52 +87,6 @@
       Please have an input in Birthdate and Height.
     </ion-card-content>
     <ion-card-content *ngIf="energySee && energyCard">
-<<<<<<< HEAD
-      <ion-card-title style="font-size: 20px; text-align: center"><b>Macronutrient Distribution</b></ion-card-title>
-      <ion-card-content>
-        <ion-card>
-          <ion-card-content style="background-color: #FFEB3B; color: black">
-            <span style="font-size: 20px;">Carbohydrates: {{carbsPercentage}}%</span><br>
-            <span style="font-size: 15px; text-align: center">{{carbsGrams}} grams</span>
-            <ion-range *ngIf="modifyDistribution" [(ngModel)]= "carbsPercentage" (ionChange) = "calculateDistribution()" pin="true" color="dark" min="{{minCarbs}}" max="{{maxCarbs}}" [ngModelOptions]="{standalone: true}">
-              <ion-label range-left>{{minCarbs}}%</ion-label>
-              <ion-label range-right>{{maxCarbs}}%</ion-label>
-            </ion-range>
-          </ion-card-content>
-        </ion-card>
-        <ion-card>
-          <ion-card-content style="background-color: #FF9800; color: black">
-            <span style="font-size: 20px;">Protein: {{proteinPercentage}}%</span><br>
-            <span style="font-size: 15px; text-align: center">{{proteinGrams}} grams</span>
-            <ion-range *ngIf="modifyDistribution" [(ngModel)]= "proteinPercentage" (ionChange) = "calculateDistribution()" pin="true" color="dark" min="{{minProtein}}" max="{{maxProtein}}" [ngModelOptions]="{standalone: true}">
-              <ion-label range-left>{{minProtein}}%</ion-label>
-              <ion-label range-right>{{maxProtein}}%</ion-label>
-            </ion-range>
-          </ion-card-content>
-        </ion-card>
-        <ion-card>
-          <ion-card-content style="background-color: #03A9F4; color: black">
-            <span style="font-size: 20px;">Fat: {{fatPercentage}}%</span><br>
-            <span style="font-size: 15px; text-align: center">{{fatGrams}} grams</span>
-            <ion-range *ngIf="modifyDistribution" [(ngModel)]= "fatPercentage" (ionChange) = "calculateDistribution()" pin="true" color="dark" min="{{minFat}}" max="{{maxFat}}" [ngModelOptions]="{standalone: true}">
-              <ion-label range-left>{{minFat}}%</ion-label>
-              <ion-label range-right>{{maxFat}}%</ion-label>
-            </ion-range>
-          </ion-card-content>
-        </ion-card>
-        <p style="text-align: center" *ngIf="!modifyDistribution" (click) = "modifyDistributionClicked($event)"><em>Click here to modify Macronutrient Distribution.</em></p>
-        <div *ngIf="modifyDistribution" style="text-align: center;">
-          <p>Total percentage must equal to 100</p><br>
-          <p>Current Total: <b *ngIf= "totalPercentage == 100" class="positiveResult">{{totalPercentage}}</b><b *ngIf= "totalPercentage != 100" class="negativeResult">{{totalPercentage}}</b></p><br>
-          <button ion-button icon-left (click) = "resetClicked($event)">
-            <ion-icon name="refresh"></ion-icon>
-              Reset
-          </button>
-          <button ion-button icon-left (click) = "okClicked($event)">
-            <ion-icon name="checkmark"></ion-icon>
-              OK
-          </button>
-=======
       <form [formGroup]="macroForm">
         <ion-card-title style="font-size: 20px; text-align: center"><b>Macronutrient Distribution</b></ion-card-title>
         <ion-card-content style="background-color: #FFE598; color: black">
@@ -165,7 +119,6 @@
           <span *ngIf="macroPercent==100" style="color:white"><b>{{macroPercent}} %</b></span><br>
           <br>
           <i>Note: You should have a total percentage of 100%</i>
->>>>>>> c9a5ac25fcfe82945290ccee02fa029239415fe7
         </div>
         <i *ngIf="!macroRange" (click)="macro()">Click here to change the ranges of the distribution.</i>
         <br>
@@ -198,8 +151,8 @@
     <ion-card-content *ngIf="waistCirCard">
       <p>Your waist circumference is on</p>
       <h1>
-        <span *ngIf="!waistCircOnRisk"><b class="negativeResult">HIGH RISK</b></span>
-        <span *ngIf="waistCircOnRisk"><b class="positiveResult">LOW RISK</b></span>
+        <span *ngIf="!waistCircOnRisk"><b style="color:red">HIGH RISK</b></span>
+        <span *ngIf="waistCircOnRisk"><b style="color:green">LOW RISK</b></span>
       </h1>
       <div>
          of developing cardiovascular diseases and type-2 diabetes.
@@ -220,8 +173,8 @@
         {{ whRatio }}
       </h1>
       <div>
-        <span *ngIf="whOnRisk">which may indicate <b class="negativeResult">HIGH RISK</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.</span>
-        <span *ngIf="!whOnRisk">which may indicate <b class="positiveResult">LOW RISK</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.</span>
+        <span *ngIf="whOnRisk">which may indicate <b style="color:red">HIGH RISK</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.</span>
+        <span *ngIf="!whOnRisk">which may indicate <b style="color:green">LOW RISK</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.</span>
       </div>
     </ion-card-content>
     <ion-card-content *ngIf="!whCard">
@@ -239,8 +192,8 @@
         {{ whgtRatio }}
       </h1>
       <div>
-        <span *ngIf="whgtOnRisk">which may indicate <b class="negativeResult">HIGH RISK</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.</span>
-        <span *ngIf="!whgtOnRisk">which may indicate <b class="positiveResult">LOW RISK</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.</span>
+        <span *ngIf="whgtOnRisk">which may indicate <b style="color:red">HIGH RISK</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.</span>
+        <span *ngIf="!whgtOnRisk">which may indicate <b style="color:green">LOW RISK</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.</span>
       </div>
     </ion-card-content>
     <ion-card-content *ngIf="!whgtCard">
