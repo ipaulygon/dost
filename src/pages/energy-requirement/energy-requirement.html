@@ -81,6 +81,8 @@
         </ion-select>
       </ion-item>
     </ion-card>
+  </form>
+  <form [formGroup]="macroForm">
     <!--result-->
     <ion-card style="text-align: center; background-color: #009688; color: white">
       <ion-card-content *ngIf="!result" style="font-size: 16px">
@@ -89,18 +91,48 @@
       <ion-card-content *ngIf="result" style="font-size: 16px">
         You need <b style="color:white">{{kcal}} kcal</b> a day!
       </ion-card-content>
+      <ion-card-title style="font-size: 20px; text-align: center"><b>Macronutrient Distribution</b></ion-card-title>
       <ion-card-content style="background-color: #FFE598; color: black">
         <span style="font-size: 20px;">Protein: {{protein}}%</span><br>
         <span style="font-size: 15px; text-align: center">{{proteinG}} grams</span>
+        <ion-range (ionChange)="proteinChange()" *ngIf="macroRange" color="dark" min="{{minProtein}}" max="{{maxProtein}}" formControlName="proteinRange">
+          <ion-label range-left>{{minProtein}}%</ion-label>
+          <ion-label range-right>{{maxProtein}}%</ion-label>
+        </ion-range>
       </ion-card-content>
       <ion-card-content style="background-color: #FBBC84; color: black">
         <span style="font-size: 20px;">Fat: {{fat}}%</span><br>
         <span style="font-size: 15px; text-align: center">{{fatG}} grams</span>
+        <ion-range (ionChange)="fatChange()" *ngIf="macroRange" color="dark" min="{{minFat}}" max="{{maxFat}}" formControlName="fatRange">
+          <ion-label range-left>{{minFat}}%</ion-label>
+          <ion-label range-right>{{maxFat}}%</ion-label>
+        </ion-range>
       </ion-card-content>
       <ion-card-content style="background-color: #FFF5C3; color: black">
         <span style="font-size: 20px;">Carbohydrates: {{carb}}%</span><br>
         <span style="font-size: 15px; text-align: center">{{carbG}} grams</span>
+        <ion-range (ionChange)="carbChange()" *ngIf="macroRange" color="dark" min="{{minCarb}}" max="{{maxCarb}}" formControlName="carbRange">
+          <ion-label range-left>{{minCarb}}%</ion-label>
+          <ion-label range-right>{{maxCarb}}%</ion-label>
+        </ion-range>
       </ion-card-content>
+      <br>
+      <div *ngIf="macroRange" style="text-align:center">
+        <span *ngIf="macroPercent!=100" style="color:red"><b>{{macroPercent}} %</b></span>
+        <span *ngIf="macroPercent==100" style="color:white"><b>{{macroPercent}} %</b></span><br>
+        <br>
+        <i>Note: You should a total percentage of 100%</i>
+      </div>
+      <i *ngIf="!macroRange" (click)="macro()">Click here to change the ranges of the distribution.</i>
+      <br>
+      <button ion-button icon-left (click)="reset()" *ngIf="macroRange">
+          <ion-icon name="refresh"></ion-icon>
+            Reset
+        </button>
+        <button ion-button icon-left *ngIf="macroRange" [disabled]="macroPercent!=100" (click)="macro()">
+          <ion-icon name="checkmark"></ion-icon>
+            OK
+        </button>
     </ion-card>
   </form>
 </ion-content>

@@ -10,11 +10,13 @@ import { MaxValidator } from '../../validators/max';
 export class EnergyRequirementPage {
 
   energyForm: FormGroup;
+  macroForm: FormGroup;
   //units
   cm: boolean = true;
 	ft: boolean;
   maxLengthHeight: number = 6;
   maxLengthHeightIn: number = 5;
+  macroRange: boolean = false;
   //energy
   minProtein: number = 6;
   maxProtein: number = 15;
@@ -25,9 +27,13 @@ export class EnergyRequirementPage {
   protein: number = 15;
   fat: number = 30;
   carb: number = 55;
+  proteinReset: number;
+  fatReset: number;
+  carbReset: number;
   proteinG: number;
   fatG: number;
   carbG: number;
+  macroPercent: number = 100;
   //output
   result: boolean = true;
   kcal: number =  620;
@@ -76,6 +82,11 @@ export class EnergyRequirementPage {
       cmRange: [''],
       ftRange: [''],
     });
+    this.macroForm = formBuilder.group({
+      proteinRange: [this.protein],
+      fatRange: [this.fat],
+      carbRange: [this.carb],
+    });
     this.submit();
     this.energyForm.valueChanges
 		.debounceTime(100)
@@ -83,6 +94,9 @@ export class EnergyRequirementPage {
     this.energyForm.valueChanges
 		.debounceTime(100)
 		.subscribe(data => this.submit());
+    this.macroForm.valueChanges
+		.debounceTime(100)
+		.subscribe(data => this.computePercent());
   }
 
   onValueChanged(data?: any) {
@@ -104,6 +118,46 @@ export class EnergyRequirementPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad EnergyRequirementPage');
+  }
+
+  macro(){
+    if(!this.macroRange){
+      this.proteinReset = this.protein;
+      this.fatReset = this.fat;
+      this.carbReset = this.carb;
+    }
+    this.macroRange = (this.macroRange) ? false : true;
+  }
+
+  reset(){
+    this.macroForm.controls['proteinRange'].setValue(this.proteinReset);
+    this.macroForm.controls['fatRange'].setValue(this.fatReset);
+    this.macroForm.controls['carbRange'].setValue(this.carbReset);
+    this.protein = this.proteinReset;
+    this.fat = this.fatReset;
+    this.carb = this.carbReset;
+    this.computePercent();
+  }
+
+  computePercent(){
+    this.macroPercent = this.protein + this.fat + this.carb;
+  }
+
+  proteinChange(){
+    this.protein = this.macroForm.value.proteinRange;
+    let proteinG = (this.kcal*(this.protein/100))/4;
+    this.proteinG = Math.round(proteinG/5)*5;
+  }
+  fatChange(){
+    this.fat = this.macroForm.value.fatRange;
+    let fatG = (this.kcal*(this.fat/100))/9;
+    this.fatG = Math.round(fatG/5)*5;
+  }
+
+  carbChange(){
+    this.carb = this.macroForm.value.carbRange;
+    let carbG = (this.kcal*(this.carb/100))/4;
+    this.carbG = Math.round(carbG/5)*5;
   }
 
   cmHeightChange(){
@@ -171,6 +225,13 @@ export class EnergyRequirementPage {
   submit(){
     if(this.energyForm.valid){
       this.result = true;
+      if(this.energyForm.value.ageRange>7){
+        this.energyForm.value.noHeight = 0;
+        this.energyForm.value.noHeightFt = 0;
+        this.energyForm.value.noHeightIn = 0;
+        this.energyForm.controls['cmRange'].setValue(0);
+        this.energyForm.controls['ftRange'].setValue(0);
+      }
       if(this.energyForm.value.ageRange==1){
         this.kcal = (this.energyForm.value.gender=='M') ? 1000 : 920;
         this.minProtein = 6; this.maxProtein = 15;
@@ -202,7 +263,7 @@ export class EnergyRequirementPage {
         this.minCarb = 55; this.maxCarb = 79;
         this.protein = 15; this.fat = 20; this.carb = 65;
       }else if(this.energyForm.value.ageRange==6){
-        this.kcal = (this.energyForm.value.gender=='M') ? 3010 : 630;
+        this.kcal = (this.energyForm.value.gender=='M') ? 3010 : 2280;
         this.minProtein = 6; this.maxProtein = 15;
         this.minFat = 15; this.maxFat = 30;
         this.minCarb = 55; this.maxCarb = 79;
@@ -242,9 +303,18 @@ export class EnergyRequirementPage {
           this.kcal = kcal;
         }//check if valid 
       }
-      this.proteinG = Math.round(((this.kcal*(this.protein/100))/4)*100)/100;
-      this.fatG = Math.round(((this.kcal*(this.fat/100))/9)*100)/100;
-      this.carbG = Math.round(((this.kcal*(this.carb/100))/4)*100)/100;
+      // this.proteinG = Math.round(((this.kcal*(this.protein/100))/4)*100)/100;
+      // this.fatG = Math.round(((this.kcal*(this.fat/100))/9)*100)/100;
+      // this.carbG = Math.round(((this.kcal*(this.carb/100))/4)*100)/100;
+      this.macroForm.controls['proteinRange'].setValue(this.protein);
+      this.macroForm.controls['fatRange'].setValue(this.fat);
+      this.macroForm.controls['carbRange'].setValue(this.carb);
+      let proteinG = (this.kcal*(this.protein/100))/4;
+      let fatG = (this.kcal*(this.fat/100))/9;
+      let carbG = (this.kcal*(this.carb/100))/4;
+      this.proteinG = Math.round(proteinG/5)*5;
+      this.fatG = Math.round(fatG/5)*5;
+      this.carbG = Math.round(carbG/5)*5;
     }else{
       this.result = false;
     }
