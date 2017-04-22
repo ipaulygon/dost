@@ -20,8 +20,8 @@
     <ion-card-content *ngIf="bmiCard">
       <h1>{{bmi}} kg/m²</h1>
       <div>
-        <span *ngIf="bmiAbnormal">Classified as <b style="color:red">{{bmiStatus}}</b></span>
-        <span *ngIf="bmiNormal">Classified as <b style="color:green">{{bmiStatus}}</b></span>
+        <span *ngIf="bmiAbnormal">Classified as <b style="color: #C33825;">{{bmiStatus}}</b></span>
+        <span *ngIf="bmiNormal">Classified as <b style="color: #01A185;">{{bmiStatus}}</b></span>
       </div>
     </ion-card-content>
     <ion-card-content *ngIf="!bmiCard">
@@ -30,8 +30,8 @@
     <ion-card-content *ngIf="bmiSee && bmiCard">
       <p>This may indicate that you have a</p>
       <h3>
-        <span *ngIf="bmiNormal" style="color:green">LOWER RISK</span>
-        <span *ngIf="!bmiNormal" style="color:red">HIGHER RISK</span>
+        <span *ngIf="bmiNormal" style="color: #01A185;">LOWER RISK</span>
+        <span *ngIf="!bmiNormal" style="color: #C33825;">HIGHER RISK</span>
       </h3>
       <p>of acquiring heart diseases, hypertension, type 2 diabetes and some types of cancer.</p>
     </ion-card-content>
@@ -48,8 +48,8 @@
       <p>Maintain your weight between these values <br>{{dbwRange}}</p>
       <h3>
         Classified as
-        <span *ngIf="!dbwNormal"><b style="color:red">{{dbwStatus}}</b></span>
-        <span *ngIf="dbwNormal"><b style="color:green">{{dbwStatus}}</b></span>  
+        <span *ngIf="!dbwNormal"><b style="color: #C33825;">{{dbwStatus}}</b></span>
+        <span *ngIf="dbwNormal"><b style="color: #01A185;">{{dbwStatus}}</b></span>  
       </h3> 
     </ion-card-content>
     <ion-card-content *ngIf="!dbwCard">
@@ -115,7 +115,7 @@
         </ion-card-content>
         <br>
         <div *ngIf="macroRange" style="text-align:center">
-          <span *ngIf="macroPercent!=100" style="color:red"><b>{{macroPercent}} %</b></span>
+          <span *ngIf="macroPercent!=100" style="color: #C33825;"><b>{{macroPercent}} %</b></span>
           <span *ngIf="macroPercent==100" style="color:white"><b>{{macroPercent}} %</b></span><br>
           <br>
           <i>Note: You should have a total percentage of 100%</i>
@@ -151,8 +151,8 @@
     <ion-card-content *ngIf="waistCirCard">
       <p>Your waist circumference is on</p>
       <h1>
-        <span *ngIf="!waistCircOnRisk"><b style="color:red">HIGH RISK</b></span>
-        <span *ngIf="waistCircOnRisk"><b style="color:green">LOW RISK</b></span>
+        <span *ngIf="!waistCircOnRisk"><b style="color: #C33825;">HIGH RISK</b></span>
+        <span *ngIf="waistCircOnRisk"><b style="color: #01A185;">LOW RISK</b></span>
       </h1>
       <div>
          of developing cardiovascular diseases and type-2 diabetes.
@@ -173,8 +173,8 @@
         {{ whRatio }}
       </h1>
       <div>
-        <span *ngIf="whOnRisk">which may indicate <b style="color:red">HIGH RISK</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.</span>
-        <span *ngIf="!whOnRisk">which may indicate <b style="color:green">LOW RISK</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.</span>
+        <span *ngIf="whOnRisk">which may indicate <b style="color: #C33825;">HIGH RISK</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.</span>
+        <span *ngIf="!whOnRisk">which may indicate <b style="color: #01A185;">LOW RISK</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.</span>
       </div>
     </ion-card-content>
     <ion-card-content *ngIf="!whCard">
@@ -192,8 +192,8 @@
         {{ whgtRatio }}
       </h1>
       <div>
-        <span *ngIf="whgtOnRisk">which may indicate <b style="color:red">HIGH RISK</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.</span>
-        <span *ngIf="!whgtOnRisk">which may indicate <b style="color:green">LOW RISK</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.</span>
+        <span *ngIf="whgtOnRisk">which may indicate <b style="color: #C33825;">HIGH RISK</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.</span>
+        <span *ngIf="!whgtOnRisk">which may indicate <b style="color: #01A185;">LOW RISK</b> of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.</span>
       </div>
     </ion-card-content>
     <ion-card-content *ngIf="!whgtCard">

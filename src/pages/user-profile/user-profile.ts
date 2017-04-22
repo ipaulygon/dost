@@ -167,28 +167,28 @@ export class UserProfilePage {
     this.navCtrl.push(HelpPage);
   }
 
-  convertToInch(val)
-  {
+  convertToInch(val){
+    val = (val=='') ? 0 : val;
     return Math.round(eval(val+'/'+2.54)*100)/100;
   }
 
-  convertToCm(val)
-  {
+  convertToCm(val){
+    val = (val=='') ? 0 : val;
     return Math.round(eval(val+'*'+2.54)*100)/100;
   }
 
-  convertToKg(val)
-  {
+  convertToKg(val){
+    val = (val=='') ? 0 : val;
   	return Math.round((val/2.2)*10)/10;
   }
 
-  convertToLb(val)
-  {
+  convertToLb(val){
+    val = (val=='') ? 0 : val;
   	return Math.round((val*2.2)*10)/10;
   }
 
-  ft2cm(ft, inch)
-  {
+  ft2cm(ft, inch){
+    ft = (ft=='') ? 0 : ft;
     let feet = ft*12;
     if(inch=='' || inch==null){
       inch = 0;
@@ -351,6 +351,7 @@ export class UserProfilePage {
 
   heightTypeChange(){
     if(this.userProfileForm.value.height=="cm"){
+      console.log(this.userProfileForm.value.noHeight);
       if(!this.cm){
         this.maxLengthHeight = 6;
         this.userProfileForm.controls['noHeight'].setValidators([Validators.required,
@@ -371,24 +372,30 @@ export class UserProfilePage {
       this.cm = true;
       this.ft = false;
     }else{
-      this.maxLengthHeight = 1;
-      this.userProfileForm.controls['noHeight'].setValidators([Validators.required,
-        Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'), 
-        Validators.maxLength(1),
-        MaxValidator.maxValueHeightFt
-      ]);
-      if(!this.ft && this.userProfileForm.value.noHeight!=0){
-        let computedHeight = Math.round((this.userProfileForm.value.noHeight/2.54)*100)/100;
-        let toInch = Math.round((computedHeight/12)*100)/100;
-        let height = toInch.toString().split(".");
-        if(height[1]=="" || height[1]==null){
-          height[1] = "0";
+      if(!this.ft){
+        this.maxLengthHeight = 1;
+        this.userProfileForm.controls['noHeight'].setValidators([Validators.required,
+          Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'), 
+          Validators.maxLength(1),
+          MaxValidator.maxValueHeightFt
+        ]);
+        if(this.userProfileForm.value.noHeight!=0){
+          let computedHeight = Math.round((this.userProfileForm.value.noHeight/2.54)*100)/100;
+          let toInch = Math.round((computedHeight/12)*100)/100;
+          let height = toInch.toString().split(".");
+          if(height[1]=="" || height[1]==null){
+            height[1] = "0";
+          }
+          let feet = height[0];
+          let inch = Math.round((eval(("0."+height[1])+"*"+12))*100)/100;
+          this.userProfileForm.controls['noHeight'].setValue(feet);
+          this.userProfileForm.controls['noHeightIn'].setValue(inch);
+          this.userProfileForm.controls['ftRange'].setValue(feet);
+        }else{
+          this.userProfileForm.controls['noHeight'].setValue(0);
+          this.userProfileForm.controls['noHeightIn'].setValue(0);
+          this.userProfileForm.controls['ftRange'].setValue(0);
         }
-        let feet = height[0];
-        let inch = Math.round((eval(("0."+height[1])+"*"+12))*100)/100;
-        this.userProfileForm.controls['noHeight'].setValue(feet);
-        this.userProfileForm.controls['noHeightIn'].setValue(inch);
-        this.userProfileForm.controls['ftRange'].setValue(feet);
       }
       this.cm = false;
       this.ft = true;
