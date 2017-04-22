@@ -1,4 +1,4 @@
-<ion-header no-border>
+<ion-header>
   <ion-navbar>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
@@ -32,7 +32,7 @@
       </ion-item>
       <div *ngIf="formErrors.noWaist">
         <div style="text-align:center" *ngFor="let errors of formErrors.noWaist" >
-          <p style="font-style:italic;color:red">{{errors}}<p>
+          <p style="font-style:italic;" class="negativeResult">{{errors}}<p>
         </div>
       </div>
     </ion-card>
@@ -65,12 +65,12 @@
       </ion-item> 
       <div *ngIf="formErrors.noHeight">
         <div style="text-align:center" *ngFor="let errors of formErrors.noHeight" >
-          <p style="font-style:italic;color:red">{{errors}}<p>
+          <p style="font-style:italic;" class="negativeResult">{{errors}}<p>
         </div>
       </div>
       <div *ngIf="formErrors.noHeightIn">
         <div style="text-align:center" *ngFor="let errors of formErrors.noHeightIn" >
-          <p style="font-style:italic;color:red">{{errors}}<p>
+          <p style="font-style:italic;" class="negativeResult">{{errors}}<p>
         </div>
       </div>
     </ion-card>
@@ -80,8 +80,8 @@
       {{message}}
       <div *ngIf="result">
         Your waist-height ratio is <b>{{ratio}}</b> which may indicate <br>
-        <b *ngIf="isOnRisk" style="color:red">HIGHER RISK</b>
-        <b *ngIf="!isOnRisk" style="color:#B2EBF2">LOWER RISK</b>
+        <b *ngIf="isOnRisk" class="negativeResult">HIGHER RISK</b>
+        <b *ngIf="!isOnRisk" class="positiveResult">LOWER RISK</b>
         <br>
         of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.
       </div>

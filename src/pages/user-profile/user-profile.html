@@ -60,7 +60,7 @@
         </ion-item>
         <div *ngIf="formErrors.noWeight">
           <div style="text-align:center" *ngFor="let errors of formErrors.noWeight" >
-            <p style="font-style:italic;color:red">{{errors}}<p>
+            <p class="negativeResult" style="font-style:italic;">{{errors}}<p>
           </div>
         </div>
       </ion-card>
@@ -93,12 +93,12 @@
         </ion-item>
         <div *ngIf="formErrors.noHeight">
           <div style="text-align:center" *ngFor="let errors of formErrors.noHeight" >
-            <p style="font-style:italic;color:red">{{errors}}<p>
+            <p class="negativeResult" style="font-style:italic;">{{errors}}<p>
           </div>
         </div>
         <div *ngIf="formErrors.noHeightIn">
           <div style="text-align:center" *ngFor="let errors of formErrors.noHeightIn" >
-            <p style="font-style:italic;color:red">{{errors}}<p>
+            <p class="negativeResult" style="font-style:italic; ">{{errors}}<p>
           </div>
         </div>
       </ion-card>
@@ -124,7 +124,7 @@
         </ion-item>
         <div *ngIf="formErrors.noWaist">
           <div style="text-align:center" *ngFor="let errors of formErrors.noWaist" >
-            <p style="font-style:italic;color:red">{{errors}}<p>
+            <p class="negativeResult" style="font-style:italic; ">{{errors}}<p>
           </div>
         </div>
       </ion-card>
@@ -150,7 +150,7 @@
         </ion-item>
         <div *ngIf="formErrors.noHip">
           <div style="text-align:center" *ngFor="let errors of formErrors.noHip" >
-            <p style="font-style:italic;color:red">{{errors}}<p>
+            <p class="negativeResult" style="font-style:italic; ">{{errors}}<p>
           </div>
         </div>
       </ion-card> 

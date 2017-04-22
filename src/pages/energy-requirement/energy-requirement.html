@@ -63,12 +63,12 @@
       </ion-item>
       <div *ngIf="formErrors.noHeight">
         <div style="text-align:center" *ngFor="let errors of formErrors.noHeight" >
-          <p style="font-style:italic;color:red">{{errors}}<p>
+          <p class="negativeResult" style="font-style:italic;">{{errors}}<p>
         </div>
       </div>
       <div *ngIf="formErrors.noHeightIn">
         <div style="text-align:center" *ngFor="let errors of formErrors.noHeightIn" >
-          <p style="font-style:italic;color:red">{{errors}}<p>
+          <p class="negativeResult" style="font-style:italic;">{{errors}}<p>
         </div>
       </div>
       <ion-item>
@@ -89,7 +89,7 @@
         {{message}}
       </ion-card-content>
       <ion-card-content *ngIf="result" style="font-size: 16px">
-        You need <b style="color:white">{{kcal}} kcal</b> a day!
+        You need <b style="color:white"><em>{{kcal}} kcal</em></b> a day!
       </ion-card-content>
       <ion-card-title style="font-size: 20px; text-align: center"><b>Macronutrient Distribution</b></ion-card-title>
       <ion-card-content style="background-color: #FFE598; color: black">
@@ -118,10 +118,10 @@
       </ion-card-content>
       <br>
       <div *ngIf="macroRange" style="text-align:center">
-        <span *ngIf="macroPercent!=100" style="color:red"><b>{{macroPercent}} %</b></span>
+        <span class="negativeResult" *ngIf="macroPercent!=100" ><b>{{macroPercent}} %</b></span>
         <span *ngIf="macroPercent==100" style="color:white"><b>{{macroPercent}} %</b></span><br>
         <br>
-        <i>Note: You should a total percentage of 100%</i>
+        <i>Note: You should have a total percentage of 100%</i>
       </div>
       <i *ngIf="!macroRange" (click)="macro()">Click here to change the ranges of the distribution.</i>
       <br>
