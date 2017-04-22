@@ -92,12 +92,7 @@
       </div>
     </ion-card>
   </form>
-  <ion-card *ngIf = "!abnormal && !normal" style="text-align: center; background-color: transparent; color: black; box-shadow: inset 200px 200px 300px 200px rgba(255,255,255,0.7);">
-    <ion-card-content style="font-size: 16px;">
-      <p>{{message}}</p>
-    </ion-card-content>
-  </ion-card>
-  <ion-card *ngIf = "abnormal" style="text-align: center; background-color: #EC6770;">
+  <ion-card *ngIf = "abnormal && classification" style="text-align: center; background-color: #EC6770;">
     <ion-card-content style="font-size: 16px;">
       <p style="color: white;">{{message}}</p>
       <p *ngIf="classification" style="font-size: 20px; color:white;">
@@ -105,12 +100,17 @@
       </p>
     </ion-card-content>
   </ion-card>
-   <ion-card *ngIf = "normal" style="text-align: center; background-color: #68C4AF;">
+   <ion-card *ngIf = "normal && classification" style="text-align: center; background-color: #68C4AF;">
     <ion-card-content style="font-size: 16px;">
       <p style="color: white;">{{message}}</p>
       <p *ngIf="classification" style="font-size: 20px;color: white;">
         <span *ngIf="normal">Classified as <b>{{status}}</b></span>
       </p>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf = "!classification" style="text-align: center; background-color: transparent; color: black; box-shadow: inset 200px 200px 300px 200px rgba(255,255,255,0.7);">
+    <ion-card-content style="font-size: 16px;">
+      <p>{{message}}</p>
     </ion-card-content>
   </ion-card>
 </ion-content>

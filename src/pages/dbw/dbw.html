@@ -1,4 +1,4 @@
-<ion-header no-border>
+<ion-header>
   <ion-navbar >
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
@@ -91,17 +91,26 @@
       </div> 
     </ion-card>
   </form>
-  <ion-card style="text-align: center">
-    <ion-card-content style="font-size: 16px; background-color: #009688; color: white" >
-      <div *ngIf="!classification">
+
+  <ion-card *ngIf="!classification" style="text-align: center; font-size: 16px; background-color: transparent; color: black; box-shadow: inset 200px 200px 300px 200px rgba(255,255,255,0.7);">
+    <ion-card-content>
         {{message}}
-      </div>
-      <div *ngIf="classification">
-        <b>{{dbw}}</b><br>
-        <p *ngIf="dbwStatus!='UNDEFINED'">Maintain your weight between these values<br><b>{{dbwRange}}</b></p>
-        <span *ngIf="!dbwNormal">Classified as <b style="color:red">{{dbwStatus}}</b></span>
-        <span *ngIf="dbwNormal">Classified as <b style="color:green">{{dbwStatus}}</b></span>  
-      </div> 
     </ion-card-content>
-  </ion-card> 
+  </ion-card>
+
+  <ion-card *ngIf="classification && dbwNormal" style="text-align: center; background-color: #68C4AF;">
+    <ion-card-content>
+        <b style="color:white; font-size: 16px;">{{dbw}}</b><br>
+        <p style="color:white; font-size: 16px;" *ngIf="dbwStatus!='UNDEFINED'">Maintain your weight between these values<br><b>{{dbwRange}}</b></p>
+        <span style="color:white; font-size: 20px;" *ngIf="dbwNormal">Classified as <b>{{dbwStatus}}</b></span>  
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="classification && !dbwNormal" style="text-align: center; background-color: #EC6770;">
+    <ion-card-content>
+        <b style="color:white; font-size: 16px;">{{dbw}}</b><br>
+        <p style="color:white; font-size: 16px;" *ngIf="dbwStatus!='UNDEFINED'">Maintain your weight between these values<br><b>{{dbwRange}}</b></p>
+        <span style="color:white; font-size: 20px;" *ngIf="!dbwNormal">Classified as <b>{{dbwStatus}}</b></span>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
