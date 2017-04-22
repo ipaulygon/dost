@@ -95,16 +95,6 @@
   <ion-card *ngIf="!classification" style="text-align: center; font-size: 16px; background-color: transparent; color: black; box-shadow: inset 200px 200px 300px 200px rgba(255,255,255,0.7);">
     <ion-card-content>
         {{message}}
-<<<<<<< HEAD
-=======
-      </div>
-      <div *ngIf="classification">
-        <b>{{dbw}}</b><br>
-        <p *ngIf="dbwStatus!='UNDEFINED'">Maintain your weight between these values<br><b>{{dbwRange}}</b></p>
-        <span *ngIf="!dbwNormal">Classified as <b style="color: #C33825;">{{dbwStatus}}</b></span>
-        <span *ngIf="dbwNormal">Classified as <b style="color: #01A185;">{{dbwStatus}}</b></span>  
-      </div> 
->>>>>>> a1369aebf0b9965308d75e570a482d74fe7a13f4
     </ion-card-content>
   </ion-card>
 
