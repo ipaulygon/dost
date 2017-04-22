@@ -86,13 +86,13 @@ export class WaistCircumferencePage {
     }
   }
 
-  convertToInch(val)
-  {
+  convertToInch(val){
+    val = (val=='') ? 0 : val;
     return Math.round(eval(val+'/'+2.54)*100)/100;
   }
 
-  convertToCm(val)
-  {
+  convertToCm(val){
+    val = (val=='') ? 0 : val;
     return Math.round(eval(val+'*'+2.54)*100)/100;
   }
 

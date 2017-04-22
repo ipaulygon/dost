@@ -198,24 +198,30 @@ export class EnergyRequirementPage {
       this.cm = true;
       this.ft = false;
     }else{
-      this.maxLengthHeight = 1;
-      this.energyForm.controls['noHeight'].setValidators([Validators.required,
-        Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'), 
-        Validators.maxLength(1),
-        MaxValidator.maxValueHeightFt
-      ]);
-      if(!this.ft && this.energyForm.value.noHeight!=0){
-        let computedHeight = Math.round((this.energyForm.value.noHeight/2.54)*100)/100;
-        let toInch = Math.round((computedHeight/12)*100)/100;
-        let height = toInch.toString().split(".");
-        if(height[1]=="" || height[1]==null){
-          height[1] = "0";
+      if(!this.ft){
+        this.maxLengthHeight = 1;
+        this.energyForm.controls['noHeight'].setValidators([Validators.required,
+          Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'), 
+          Validators.maxLength(1),
+          MaxValidator.maxValueHeightFt
+        ]);
+        if(this.energyForm.value.noHeight!=0){
+          let computedHeight = Math.round((this.energyForm.value.noHeight/2.54)*100)/100;
+          let toInch = Math.round((computedHeight/12)*100)/100;
+          let height = toInch.toString().split(".");
+          if(height[1]=="" || height[1]==null){
+            height[1] = "0";
+          }
+          let feet = height[0];
+          let inch = Math.round((eval(("0."+height[1])+"*"+12))*100)/100;
+          this.energyForm.controls['noHeight'].setValue(feet);
+          this.energyForm.controls['noHeightIn'].setValue(inch);
+          this.energyForm.controls['ftRange'].setValue(feet);
+        }else{
+          this.energyForm.controls['noHeight'].setValue(0);
+          this.energyForm.controls['noHeightIn'].setValue(0);
+          this.energyForm.controls['ftRange'].setValue(0);
         }
-        let feet = height[0];
-        let inch = Math.round((eval(("0."+height[1])+"*"+12))*100)/100;
-        this.energyForm.controls['noHeight'].setValue(feet);
-        this.energyForm.controls['noHeightIn'].setValue(inch);
-        this.energyForm.controls['ftRange'].setValue(feet);
       }
       this.cm = false;
       this.ft = true;

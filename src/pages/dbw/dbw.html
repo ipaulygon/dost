@@ -48,7 +48,7 @@
       </ion-item>
       <div *ngIf="formErrors.noWeight">
         <div style="text-align:center" *ngFor="let errors of formErrors.noWeight" >
-          <p style="font-style:italic;color:red">{{errors}}<p>
+          <p style="font-style:italic;color: #C33825;">{{errors}}<p>
         </div>
       </div>
     </ion-card>
@@ -81,12 +81,12 @@
       </ion-item>
       <div *ngIf="formErrors.noHeight">
         <div style="text-align:center" *ngFor="let errors of formErrors.noHeight" >
-          <p style="font-style:italic;color:red">{{errors}}<p>
+          <p style="font-style:italic;color: #C33825;">{{errors}}<p>
         </div>
       </div>
       <div *ngIf="formErrors.noHeightIn">
         <div style="text-align:center" *ngFor="let errors of formErrors.noHeightIn" >
-          <p style="font-style:italic;color:red">{{errors}}<p>
+          <p style="font-style:italic;color: #C33825;">{{errors}}<p>
         </div>
       </div> 
     </ion-card>
@@ -99,8 +99,8 @@
       <div *ngIf="classification">
         <b>{{dbw}}</b><br>
         <p *ngIf="dbwStatus!='UNDEFINED'">Maintain your weight between these values<br><b>{{dbwRange}}</b></p>
-        <span *ngIf="!dbwNormal">Classified as <b style="color:red">{{dbwStatus}}</b></span>
-        <span *ngIf="dbwNormal">Classified as <b style="color:green">{{dbwStatus}}</b></span>  
+        <span *ngIf="!dbwNormal">Classified as <b style="color: #C33825;">{{dbwStatus}}</b></span>
+        <span *ngIf="dbwNormal">Classified as <b style="color: #01A185;">{{dbwStatus}}</b></span>  
       </div> 
     </ion-card-content>
   </ion-card> 
