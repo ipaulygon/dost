@@ -3,6 +3,7 @@ import { Nav, Platform, LoadingController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import 'rxjs/add/operator/debounceTime';
 
 import { BmiPage } from '../pages/bmi/bmi';
 import { DbwPage } from '../pages/dbw/dbw';
