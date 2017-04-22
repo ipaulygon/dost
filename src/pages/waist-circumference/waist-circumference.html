@@ -47,13 +47,17 @@
         </div>
     </ion-card>
   </form>
-  <ion-card style="text-align: center; background-color: #009688; color: white">
+  <ion-card *ngIf="riskIsLow" style="text-align: center; background-color: #009688; color: white">
     <ion-card-content style="font-size: 16px">
       {{message}}
-      <div *ngIf="classification">
-        <span *ngIf="!riskIsLow">Your waist circumference is above the cut-off value of greater than {{cutOff}} cm which may indicate <b style="color:red">HIGH RISK</b> of developing cardiovascular diseases and type-2 diabetes.</span>
-        <span *ngIf="riskIsLow">Your waist circumference is within the cut-off value of less than {{cutOff}} cm which may indicate <b style="color:#B2EBF2">LOW RISK</b> of developing cardiovascular diseases and type-2 diabetes.</span>
-      </div>
+      <span>Your waist circumference is within the cut-off value of less than {{cutOff}} cm which may indicate <b style="font-size: 20px">LOW RISK</b> of developing cardiovascular diseases and type-2 diabetes.</span>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="!riskIsLow" style="text-align: center; background-color: #EC6770; color: white">
+    <ion-card-content style="font-size: 16px">
+      {{message}}
+      <span>Your waist circumference is above the cut-off value of greater than {{cutOff}} cm which may indicate <b style="font-size: 20px">HIGH RISK</b> of developing cardiovascular diseases and type-2 diabetes.</span>
     </ion-card-content>
   </ion-card>
 </ion-content>

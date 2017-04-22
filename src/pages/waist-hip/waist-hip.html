@@ -43,7 +43,7 @@
       </ion-item>
       <div *ngIf="formErrors.noWaist">
         <div style="text-align:center" *ngFor="let errors of formErrors.noWaist" >
-          <p style="font-style:italic;" class="negativeResult">{{errors}}<p>
+          <p style="font-style:italic; color: red;">{{errors}}<p>
         </div>
       </div>
     </ion-card>
@@ -69,18 +69,29 @@
       </ion-item>
       <div *ngIf="formErrors.noHip">
         <div style="text-align:center" *ngFor="let errors of formErrors.noHip" >
-          <p style="font-style:italic;" class="negativeResult">{{errors}}<p>
+          <p style="font-style:italic;">{{errors}}<p>
         </div>
       </div>
     </ion-card>
   </form>
-  <ion-card style="text-align: center; background-color: #009688; color: white">
+  <ion-card *ngIf="!isOnRisk" style="text-align: center; background-color: #009688; color: white">
     <ion-card-content style="font-size: 16px">
       {{message}}
       <div *ngIf="result">
         Your waist-hip ratio is <b>{{ratio}}</b> which may indicate <br>
-        <b *ngIf="isOnRisk"class="negativeResult">HIGHER RISK</b>
-          <b *ngIf="!isOnRisk" class="positiveResult">LOWER RISK</b> 
+          <b>LOWER RISK</b> 
+        <br>
+        of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.
+      </div>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card  *ngIf="isOnRisk" style="text-align: center; background-color: #EC6770; color: white">
+    <ion-card-content style="font-size: 16px">
+      {{message}}
+      <div *ngIf="result">
+        Your waist-hip ratio is <b>{{ratio}}</b> which may indicate <br>
+        <b *ngIf="isOnRisk">HIGHER RISK</b>
         <br>
         of developing obesity-related diseases like heart diseases, hypertension and type 2 diabetes.
       </div>
