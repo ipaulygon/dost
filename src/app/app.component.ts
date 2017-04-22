@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, LoadingController } from 'ionic-angular';
+import { Nav, Platform, LoadingController, MenuController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -27,7 +27,12 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public storage: Storage, public loadingCtrl: LoadingController) {
+  constructor(public platform: Platform,
+              public statusBar: StatusBar,
+              public splashScreen: SplashScreen,
+              public storage: Storage,
+              public loadingCtrl: LoadingController,
+              public menuCtrl: MenuController) {
     storage.length().then((val)=>{
       if(val==0){
         storage.set('bmiM0',[10.2,11.1,12.2,13.4,14.8,16.3,18.1]);
@@ -764,6 +769,7 @@ export class MyApp {
 
   openHelpPage(){
     this.nav.push(HelpPage);
+    this.menuCtrl.close();
   }
 
   hideSplashScreen() {
