@@ -30,12 +30,16 @@ export class BmiPage {
   maxLengthHeight: number = 6;
   maxLengthHeightIn: number = 5;
   formErrors = {
+    'birth': [],
     'noWeight': [],
     'noHeight': [],
     'noHeightIn': [],
   };
 
   validationMessages = {
+    'birth': {
+      'exceed': 'Please enter a valid birthdate. You are not from the future.',
+    },
     'noWeight': {
       'required': 'Weight is required.',
       'maxlength': 'Weight cannot be more than '+ this.maxLengthWeight +' characters long.',
@@ -61,7 +65,7 @@ export class BmiPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public alertCtrl: AlertController, public storage: Storage) {
     this.bmiForm = formBuilder.group({
         gender: ['M', Validators.compose([Validators.required])],
-        birth: ['', Validators.compose([Validators.required])],
+        birth: ['', Validators.compose([Validators.required,MaxValidator.maxBirth])],
         weight: ['kg', Validators.compose([Validators.required])],
         noWeight: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
           Validators.required,

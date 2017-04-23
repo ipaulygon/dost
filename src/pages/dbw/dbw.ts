@@ -32,12 +32,16 @@ export class DbwPage {
   maxLengthHeightIn: number = 5;
   heightCard: boolean = false;
   formErrors = {
+    'birth': [],
     'noWeight': [],
     'noHeight': [],
     'noHeightIn': [],
   };
 
   validationMessages = {
+    'birth': {
+      'exceed': 'Please enter a valid birthdate. You are not from the future.',
+    },
     'noWeight': {
       'required': 'Weight is required.',
       'maxlength': 'Weight cannot be more than '+ this.maxLengthWeight +' characters long.',
@@ -63,7 +67,7 @@ export class DbwPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public formBuilder: FormBuilder, public storage: Storage, public alertCtrl: AlertController) {
     this.dbwForm = formBuilder.group({
         gender: ['M', Validators.compose([Validators.required])],
-        birth: ['', Validators.compose([Validators.required])],
+        birth: ['', Validators.compose([Validators.required,MaxValidator.maxBirth])],
         weight: ['kg', Validators.compose([Validators.required])],
         noWeight: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
           Validators.required,

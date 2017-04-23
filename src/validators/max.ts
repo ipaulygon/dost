@@ -1,6 +1,15 @@
 import { FormControl } from '@angular/forms';
  
 export class MaxValidator {
+
+    static maxBirth(control: FormControl): any {
+        let today = new Date();
+        let birth = new Date(control.value)
+        if(birth > today){
+            return {exceed: true};
+        }
+        return null;
+    }
  
     static maxValueKg(control: FormControl): any {
         if(control.value > 635){

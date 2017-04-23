@@ -26,6 +26,11 @@
         <ion-label>Date of Birth</ion-label>
         <ion-datetime displayFormat="MMMM DD, YYYY" formControlName="birth" placeholder="MM-DD-YYYY"></ion-datetime>
       </ion-item>
+      <div *ngIf="formErrors.birth">
+        <div style="text-align:center" *ngFor="let errors of formErrors.birth" >
+          <p style="color: #C33825;font-style:italic;">{{errors}}<p>
+        </div>
+      </div>
     </ion-card>
     <!--weight-->
     <ion-card>

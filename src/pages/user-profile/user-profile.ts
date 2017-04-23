@@ -32,6 +32,7 @@ export class UserProfilePage {
   maxLengthHip: number = 6;
   maxLengthWaist: number = 6;
   formErrors = {
+    'birth': [],
     'noWeight': [],
     'noHeight': [],
     'noHeightIn': [],
@@ -40,6 +41,9 @@ export class UserProfilePage {
   };
 
   validationMessages = {
+    'birth': {
+      'exceed': 'Please enter a valid birthdate. You are not from the future.',
+    },
     'noWeight': {
       'required': 'Weight is required.',
       'maxlength': 'Weight cannot be more than '+ this.maxLengthWeight +' characters long.',
@@ -84,7 +88,7 @@ export class UserProfilePage {
               public loadingCtrl: LoadingController) {
   	this.userProfileForm = formBuilder.group({
   		  gender: ['M', Validators.compose([Validators.required])],
-        birth: ['', Validators.compose([Validators.required])],
+        birth: ['', Validators.compose([Validators.required,MaxValidator.maxBirth])],
         weight: ['kg', Validators.compose([Validators.required])],
         noWeight: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
           Validators.required,
