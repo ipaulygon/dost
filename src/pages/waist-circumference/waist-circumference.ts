@@ -14,8 +14,8 @@ export class WaistCircumferencePage {
   waistCm: boolean = true;
 	waistIn: boolean;
   maxLengthWaist: number = 6;
-  message: string = "";
-  classification: boolean = true;
+  message: string = "Please complete the following inputs to compute your Waist Circumference status";
+  classification: boolean = false;
   formErrors = {
     'noWaist': [],
   };
@@ -33,7 +33,7 @@ export class WaistCircumferencePage {
     this.waistForm = formBuilder.group({
       gender: ['M', Validators.compose([Validators.required])],
       waist: ['cm', Validators.compose([Validators.required])],
-      noWaist: ['51', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
+      noWaist: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
         Validators.required,
         Validators.maxLength(6),
         MaxValidator.maxValueWaistCm
@@ -115,10 +115,10 @@ export class WaistCircumferencePage {
       if(!this.waistIn){
         this.waistCm = false;
         this.waistIn = true;
-        this.maxLengthWaist = 5;
+        this.maxLengthWaist = 6;
         this.waistForm.controls["noWaist"].setValidators([Validators.required,
           Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'), 
-          Validators.maxLength(5),
+          Validators.maxLength(6),
           MaxValidator.maxValueWaistIn
         ]);
         let cmConv = this.convertToInch(this.waistForm.value.noWaist);
@@ -130,18 +130,20 @@ export class WaistCircumferencePage {
 
   submit(){
     if(this.waistForm.valid){
-      this.classification = true;
-      this.message = "";
-      if(this.waistForm.value.gender=='M'){
-        this.cutOff = 94;
-      }else{
-        this.cutOff = 80;
-      }
-      if(this.waistCm){
-        this.riskIsLow = (this.waistForm.value.noWaist >= this.cutOff)? false : true;
-      }else{
-        let convertedWaist = this.convertToCm(this.waistForm.value.noWaist);
-        this.riskIsLow = (convertedWaist >= this.cutOff)? false : true;
+      if(this.waistForm.value.noWaist!=0){
+        this.classification = true;
+        this.message = "";
+        if(this.waistForm.value.gender=='M'){
+          this.cutOff = 94;
+        }else{
+          this.cutOff = 80;
+        }
+        if(this.waistCm){
+          this.riskIsLow = (this.waistForm.value.noWaist >= this.cutOff)? false : true;
+        }else{
+          let convertedWaist = this.convertToCm(this.waistForm.value.noWaist);
+          this.riskIsLow = (convertedWaist >= this.cutOff)? false : true;
+        }
       }
     }else{
       this.riskIsLow = true;

@@ -62,40 +62,40 @@ export class MaxValidator {
     }
 
     static maxValueWaistCm(control: FormControl): any {
-        if(control.value > 180){
+        if(control.value > 303){
             return {exceed: true};
         }
-        if(control.value < 51){
+        if(control.value < 0){
             return {less: true};
         }
         return null;
     }
 
     static maxValueWaistIn(control: FormControl): any {
-        if(control.value > 71){
+        if(control.value > 119){
             return {exceed: true};
         }
-        if(control.value < 20){
+        if(control.value < 0){
             return {less: true};
         }
         return null;
     }
 
     static maxValueHipCm(control: FormControl): any {
-        if(control.value > 180){
+        if(control.value > 245){
             return {exceed: true};
         }
-        if(control.value < 51){
+        if(control.value < 0){
             return {less: true};
         }
         return null;
     }
 
     static maxValueHipIn(control: FormControl): any {
-        if(control.value > 71){
+        if(control.value > 96){
             return {exceed: true};
         }
-        if(control.value < 20){
+        if(control.value < 0){
             return {less: true};
         }
         return null;

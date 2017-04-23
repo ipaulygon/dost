@@ -25,8 +25,8 @@ export class WaistHipPage {
   isOnRisk : boolean = true;
   maxLengthHip: number = 6;
   maxLengthWaist: number = 6;
-  message: string = "";
-  result: boolean = true;
+  message: string = "Please complete the following inputs to compute your Waist-Hip Ratio";
+  result: boolean = false;
   formErrors = {
     'noWaist': [],
     'noHip': [],
@@ -53,13 +53,13 @@ export class WaistHipPage {
     this.waistHipForm = formBuilder.group({
     	gender: ['M', Validators.compose([Validators.required])],
       waist: ['cm', Validators.compose([Validators.required])],
-        noWaist: ['51', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
+        noWaist: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
           Validators.required,
           Validators.maxLength(6),
           MaxValidator.maxValueWaistCm
         ])],
         hip: ['cm', Validators.compose([Validators.required])],
-        noHip: ['51', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
+        noHip: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
           Validators.required,
           Validators.maxLength(6),
           MaxValidator.maxValueHipCm
@@ -132,17 +132,19 @@ export class WaistHipPage {
 
   getRatio(){
     if(this.waistHipForm.valid){
-      this.result = true;
-      this.message = "";
-      let waist = (this.waistHipForm.value.waist == 'cm') ? this.waistHipForm.value.noWaist : this.convertToCm(this.waistHipForm.value.noWaist);
-      let hip = (this.waistHipForm.value.hip == 'cm') ? this.waistHipForm.value.noHip : this.convertToCm(this.waistHipForm.value.noHip);
-      this.ratio = Math.round(eval(waist + '/' + hip)*100)/100;
-      if((this.ratio >= 0.90) && (this.waistHipForm.value.gender == 'M')){
-        this.isOnRisk = true;
-      }else if((this.ratio >= 0.85) && (this.waistHipForm.value.gender == 'F')){
-        this.isOnRisk = true;
-      }else{
-        this.isOnRisk = false;
+      if(this.waistHipForm.value.noWaist!=0 && this.waistHipForm.value.noHip!=0){
+        this.result = true;
+        this.message = "";
+        let waist = (this.waistHipForm.value.waist == 'cm') ? this.waistHipForm.value.noWaist : this.convertToCm(this.waistHipForm.value.noWaist);
+        let hip = (this.waistHipForm.value.hip == 'cm') ? this.waistHipForm.value.noHip : this.convertToCm(this.waistHipForm.value.noHip);
+        this.ratio = Math.round(eval(waist + '/' + hip)*100)/100;
+        if((this.ratio >= 0.90) && (this.waistHipForm.value.gender == 'M')){
+          this.isOnRisk = true;
+        }else if((this.ratio >= 0.85) && (this.waistHipForm.value.gender == 'F')){
+          this.isOnRisk = true;
+        }else{
+          this.isOnRisk = false;
+        }
       }
     }else{
       this.isOnRisk = false;
@@ -170,10 +172,10 @@ export class WaistHipPage {
       if(!this.inWaist){
         this.cmWaist = false;
         this.inWaist = true;
-        this.maxLengthWaist = 5;
+        this.maxLengthWaist = 6;
         this.waistHipForm.controls["noWaist"].setValidators([Validators.required,
           Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'), 
-          Validators.maxLength(5),
+          Validators.maxLength(6),
           MaxValidator.maxValueWaistIn
         ]);
         let cmConv = Math.round(eval(this.waistHipForm.value.noWaist+'/'+2.54)*100)/100;

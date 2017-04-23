@@ -73,7 +73,7 @@ export class WaistHeightPage {
         cmRange: [''],
         ftRange: [''],
         waist: ['cm', Validators.compose([Validators.required])],
-        noWaist: ['51', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
+        noWaist: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
           Validators.required,
           Validators.maxLength(6),
           MaxValidator.maxValueWaistCm
@@ -157,10 +157,10 @@ export class WaistHeightPage {
       if(!this.in){
         this.cmWaist = false;
         this.in = true;
-        this.maxLengthWaist = 5;
+        this.maxLengthWaist = 6;
         this.waistHeightForm.controls["noWaist"].setValidators([Validators.required,
           Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'), 
-          Validators.maxLength(5),
+          Validators.maxLength(6),
           MaxValidator.maxValueWaistIn
         ]);
         let cmConv = Math.round(eval(this.waistHeightForm.value.noWaist+'/'+2.54)*100)/100;
@@ -224,7 +224,7 @@ export class WaistHeightPage {
 
   getRatio(){
     if(this.waistHeightForm.valid){
-      if(this.waistHeightForm.value.noHeight!=0){
+      if(this.waistHeightForm.value.noHeight!=0 && this.waistHeightForm.value.noWaist!=0){
         this.message = "";
         this.result = true;
         let feet = this.waistHeightForm.value.noHeight*12;

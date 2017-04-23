@@ -112,13 +112,13 @@ export class UserProfilePage {
         cmRange: [''],
         ftRange: [''],
         waist: ['cm', Validators.compose([Validators.required])],
-        noWaist: ['51', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
+        noWaist: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
           Validators.required,
           Validators.maxLength(6),
           MaxValidator.maxValueWaistCm
         ])],
         hip: ['cm', Validators.compose([Validators.required])],
-        noHip: ['51', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
+        noHip: ['0', Validators.compose([Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'),
           Validators.required,
           Validators.maxLength(6),
           MaxValidator.maxValueHipCm
@@ -252,10 +252,10 @@ export class UserProfilePage {
       if(!this.waistIn){
         this.waistCm = false;
         this.waistIn = true;
-        this.maxLengthWaist = 5;
+        this.maxLengthWaist = 6;
         this.userProfileForm.controls["noWaist"].setValidators([Validators.required,
           Validators.pattern('^[0-9]+(\.[0-9]{1,2})?$'), 
-          Validators.maxLength(5),
+          Validators.maxLength(6),
           MaxValidator.maxValueWaistIn
         ]);
         let cmConv = this.convertToInch(this.userProfileForm.value.noWaist);

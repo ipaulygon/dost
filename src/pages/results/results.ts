@@ -68,14 +68,14 @@ export class ResultsPage {
   activityLevel: any = "";
   //waistCir
   waistCircOnRisk: boolean = false;
-  waistCirCard: boolean = true;
+  waistCirCard: boolean = false;
   waistCirMessage: any;
   waistCirSee : boolean = false;
 
   //waist-Hip
   whRatio: number = 0.0;
   whOnRisk: boolean = false;
-  whCard: boolean = true;
+  whCard: boolean = false;
   whMessage: any;
   whSee : boolean = false;
 
@@ -104,7 +104,11 @@ export class ResultsPage {
       carbRange: [this.carb],
     });
     if(this.height!=0){
-      this.whgtCard = true;
+      if(this.waist!=0){
+        this.whgtCard = true;
+      }else{
+        this.whgtCard = false;
+      }
       if(this.birthday!=''){
         this.energyCard = true;
         if(this.weight!=0){
@@ -117,8 +121,16 @@ export class ResultsPage {
       }else{
         this.energyCard = false;
       }
+    }
+    if(this.waist!=0){
+      this.waistCirCard = true;
+      if(this.hip!=0){
+        this.whCard = true;
+      }else{
+        this.whCard = false;
+      }
     }else{
-      this.whgtCard = false;
+      this.waistCirCard = false;
     }
     this.bmiResult();
     this.dbwResult();

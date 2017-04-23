@@ -24,13 +24,13 @@
     <!--waist-->
     <ion-card>
       <ion-item>
-        <ion-range min="51" max="180" pin="true" color="dark" *ngIf="cmWaist" formControlName="cmWaistRange" (ionChange)="cmWaistChange()">
-          <ion-label range-left>51 cm</ion-label>
-          <ion-label range-right>180 cm</ion-label>
+        <ion-range min="0" max="303" pin="true" color="dark" *ngIf="cmWaist" formControlName="cmWaistRange" (ionChange)="cmWaistChange()">
+          <ion-label range-left>0 cm</ion-label>
+          <ion-label range-right>303 cm</ion-label>
         </ion-range>
-        <ion-range min="20" max="80" pin="true" color="dark" *ngIf="inWaist" formControlName="inWaistRange" (ionChange)="inWaistChange()">
-          <ion-label range-left>20 in</ion-label>
-          <ion-label range-right>80 in</ion-label>
+        <ion-range min="0" max="119" pin="true" color="dark" *ngIf="inWaist" formControlName="inWaistRange" (ionChange)="inWaistChange()">
+          <ion-label range-left>0 in</ion-label>
+          <ion-label range-right>119 in</ion-label>
         </ion-range>
         <ion-label>Waist Circumference:</ion-label>
       </ion-item>
@@ -50,13 +50,13 @@
     <!--hip-->
     <ion-card>
       <ion-item>
-        <ion-range min="51" max="180" pin="true" color="dark" *ngIf="cmHip" formControlName="cmHipRange" (ionChange)="cmHipChange()">
-          <ion-label range-left>51 cm</ion-label>
-          <ion-label range-right>180 cm</ion-label>
+        <ion-range min="0" max="245" pin="true" color="dark" *ngIf="cmHip" formControlName="cmHipRange" (ionChange)="cmHipChange()">
+          <ion-label range-left>0 cm</ion-label>
+          <ion-label range-right>245 cm</ion-label>
         </ion-range>
-        <ion-range min="20" max="80" pin="true" color="dark" *ngIf="inHip" formControlName="inHipRange" (ionChange)="inHipChange()">
-          <ion-label range-left>20 in</ion-label>
-          <ion-label range-right>80 in</ion-label>
+        <ion-range min="0" max="96" pin="true" color="dark" *ngIf="inHip" formControlName="inHipRange" (ionChange)="inHipChange()">
+          <ion-label range-left>0 in</ion-label>
+          <ion-label range-right>96 in</ion-label>
         </ion-range>
         <ion-label>Hip Circumference:</ion-label>
       </ion-item>
