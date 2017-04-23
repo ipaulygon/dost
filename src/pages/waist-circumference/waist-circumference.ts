@@ -144,6 +144,7 @@ export class WaistCircumferencePage {
         this.riskIsLow = (convertedWaist >= this.cutOff)? false : true;
       }
     }else{
+      this.riskIsLow = true;
       this.classification = false;
       this.message = "Please complete the following inputs to compute your Waist Circumference status";
     }

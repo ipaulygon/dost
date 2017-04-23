@@ -25,8 +25,8 @@ export class WaistHipPage {
   isOnRisk : boolean = true;
   maxLengthHip: number = 6;
   maxLengthWaist: number = 6;
-  message: string = "Please complete the following inputs to compute your Waist-Hip Ratio";
-  result: boolean = false;
+  message: string = "";
+  result: boolean = true;
   formErrors = {
     'noWaist': [],
     'noHip': [],
@@ -69,7 +69,6 @@ export class WaistHipPage {
         cmHipRange: [''],
         inHipRange: [''],       
     });
-    this.getRatio();
     this.waistHipForm.valueChanges
 		.debounceTime(100)
 		.subscribe(data => this.onValueChanged(data));
@@ -146,6 +145,7 @@ export class WaistHipPage {
         this.isOnRisk = false;
       }
     }else{
+      this.isOnRisk = false;
       this.message = "Please complete the following inputs to compute your Waist-Hip Ratio";
       this.result = false;
     }
