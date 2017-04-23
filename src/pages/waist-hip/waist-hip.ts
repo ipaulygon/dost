@@ -69,6 +69,7 @@ export class WaistHipPage {
         cmHipRange: [''],
         inHipRange: [''],       
     });
+    this.getRatio();
     this.waistHipForm.valueChanges
 		.debounceTime(100)
 		.subscribe(data => this.onValueChanged(data));
