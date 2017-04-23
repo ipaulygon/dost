@@ -13,6 +13,7 @@ import { WaistHipPage } from '../pages/waist-hip/waist-hip';
 import { WaistHeightPage } from '../pages/waist-height/waist-height';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { HelpPage } from '../pages/help/help';
+import { DietPage } from '../pages/diet/diet';
 
 // import { Page2 } from '../pages/page2/page2';
 
@@ -769,6 +770,11 @@ export class MyApp {
 
   openHelpPage(){
     this.nav.push(HelpPage);
+    this.menuCtrl.close();
+  }
+
+  openDietPage(){
+    this.nav.push(DietPage);
     this.menuCtrl.close();
   }
 
